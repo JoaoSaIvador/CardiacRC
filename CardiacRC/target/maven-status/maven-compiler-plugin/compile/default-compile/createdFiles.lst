@@ -1,3 +1,8 @@
-pt\ipleiria\estg\dei\ei\dae\cardiacrc\ejbs\ConfigBean.class
 pt\ipleiria\estg\dei\ei\dae\cardiacrc\HelloApplication.class
+pt\ipleiria\estg\dei\ei\dae\cardiacrc\entities\Professional.class
 pt\ipleiria\estg\dei\ei\dae\cardiacrc\HelloResource.class
+pt\ipleiria\estg\dei\ei\dae\cardiacrc\ejbs\ConfigBean.class
+pt\ipleiria\estg\dei\ei\dae\cardiacrc\entities\Prescription.class
+pt\ipleiria\estg\dei\ei\dae\cardiacrc\entities\User.class
+pt\ipleiria\estg\dei\ei\dae\cardiacrc\entities\DataType.class
+pt\ipleiria\estg\dei\ei\dae\cardiacrc\entities\Pacient.class
