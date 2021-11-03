@@ -1,8 +1,16 @@
 package pt.ipleiria.estg.dei.ei.dae.cardiacrc.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllAdministrators",
+                query = "SELECT a FROM Administrator a ORDER BY a.name"
+        )
+})
 public class Administrator extends Person {
     public Administrator() {
     }
