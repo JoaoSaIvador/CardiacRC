@@ -4,7 +4,7 @@ import io.smallrye.common.constraint.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Table(name = "prescriptions")
 @Entity
@@ -22,10 +22,10 @@ public class Prescription implements Serializable {
     //TODO attributes missing
 
     @NotNull
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
-    private Date endDate;
+    private LocalDate endDate;
 
     @NotNull
     private String description;
@@ -33,7 +33,7 @@ public class Prescription implements Serializable {
     public Prescription() {
     }
 
-    public Prescription(int id, Professional professional, Patient patient, Date startDate, Date endDate, String description) {
+    public Prescription(int id, Professional professional, Patient patient, LocalDate startDate, LocalDate endDate, String description) {
         this.id = id;
         this.professional = professional;
         this.patient = patient;
@@ -54,11 +54,11 @@ public class Prescription implements Serializable {
         return patient;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
@@ -78,11 +78,11 @@ public class Prescription implements Serializable {
         this.patient = patient;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

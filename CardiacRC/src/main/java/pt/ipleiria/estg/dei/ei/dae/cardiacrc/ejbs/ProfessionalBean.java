@@ -58,7 +58,7 @@ public class ProfessionalBean {
         em.merge(professional);
     }
 
-    public void deleteProfessional (String username) throws MyEntityNotFoundException {
+    public void deleteProfessional(String username) throws MyEntityNotFoundException {
         Professional professional = em.find(Professional.class, username);
         if(professional == null) {
             throw new MyEntityNotFoundException("Professional not found!");
