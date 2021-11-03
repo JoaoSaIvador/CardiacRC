@@ -7,25 +7,34 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Table(name = "pacients")
+//@Table(name = "patients")
 @Entity
-public class Pacient extends User implements Serializable {
-    @Id
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllPatients",
+                query = "SELECT p FROM Patient p ORDER BY p.name"
+        )
+})
+public class Patient extends Person implements Serializable {
+    @NotNull
     private int healthNumber;
+
     @ManyToOne
     @JoinColumn(name = "professional_username")
+    @NotNull
     private Professional professional;
+
     @OneToMany
     private List<Prescription> prescriptions;
 
-    public Pacient(int healthNumber, String name, String password, String email, Professional professional) {
-        super(name, password, email);
+    public Patient(String username, int healthNumber, String name, String password, String email, Professional professional) {
+        super(username, name, password, email);
         this.healthNumber = healthNumber;
         this.professional = professional;
         prescriptions = new ArrayList<Prescription>();
     }
 
-    public Pacient() {
+    public Patient() {
         prescriptions = new ArrayList<Prescription>();
     }
 
@@ -49,7 +58,13 @@ public class Pacient extends User implements Serializable {
         return prescriptions;
     }
 
-    public void setPrescriptions(List<Prescription> prescriptions) {
-        this.prescriptions = prescriptions;
+    public void addPrescription(Prescription prescription) {
+        this.prescriptions.add(prescription);
+    }
+
+    public void removePrescription(Prescription prescription) {
+        if (this.prescriptions.contains(prescription)) {
+            this.prescriptions.remove(prescription);
+        }
     }
 }

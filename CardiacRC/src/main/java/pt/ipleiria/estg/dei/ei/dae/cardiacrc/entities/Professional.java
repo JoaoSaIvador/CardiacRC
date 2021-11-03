@@ -6,50 +6,80 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 //@Table(name = "professionals")
 @Entity
-public class Professional extends User implements Serializable {
-    @Id
-    private int licenceNumber;
-    @OneToMany
-    private List<Pacient> pacients;
-    @OneToMany
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllProfessionals",
+                query = "SELECT p FROM Professional p ORDER BY p.name"
+        )
+})
+public class Professional extends Person implements Serializable {
+    @NotNull
+    private int licenseNumber;
+
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE)
+    private List<Patient> patients;
+
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE)
     private List<Prescription> prescriptions;
 
-    public Professional(int licenceNumber, String name, String password, String email) {
-        super(name, password, email);
-        this.licenceNumber = licenceNumber;
-        pacients = new ArrayList<Pacient>();
+    public Professional(String username, int licenceNumber, String name, String password, String email) {
+        super(username, name, password, email);
+        this.licenseNumber = licenceNumber;
+        patients = new ArrayList<Patient>();
         prescriptions = new ArrayList<Prescription>();
     }
 
     public Professional() {
-        pacients = new ArrayList<Pacient>();
+        patients = new ArrayList<Patient>();
         prescriptions = new ArrayList<Prescription>();
     }
 
-    public int getLicenceNumber() {
-        return licenceNumber;
+    public int getLicenseNumber() {
+        return licenseNumber;
     }
 
-    public void setLicenceNumber(int licenceNumber) {
-        this.licenceNumber = licenceNumber;
-    }
-
-    public List<Pacient> getPacients() {
-        return pacients;
-    }
-
-    public void setPacients(List<Pacient> pacients) {
-        this.pacients = pacients;
+    public List<Patient> getPatients() {
+        return patients;
     }
 
     public List<Prescription> getPrescriptions() {
         return prescriptions;
     }
 
-    public void setPrescriptions(List<Prescription> prescriptions) {
-        this.prescriptions = prescriptions;
+    public void setLicenseNumber(int licenceNumber) {
+        this.licenseNumber = licenceNumber;
     }
+
+    public void addPatient(Patient patient) {
+        this.patients.add(patient);
+    }
+
+    public void removePatient(Patient patient) {
+        if (this.patients.contains(patient)) {
+            this.patients.remove(patient);
+        }
+    }
+
+    public void addPrescription(Prescription prescription) {
+        this.prescriptions.add(prescription);
+    }
+
+    public void removePrescription(Prescription prescription) {
+        if (this.prescriptions.contains(prescription)) {
+            this.prescriptions.remove(prescription);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Professional professional = (Professional) o;
+        return getUsername() == professional.getUsername() && Objects.equals(getName(), professional.getName()) && Objects.equals(licenseNumber, professional.licenseNumber) && Objects.equals(patients, professional.patients) && Objects.equals(prescriptions, professional.prescriptions);
+    }
+
 }

@@ -8,24 +8,34 @@ import java.io.Serializable;
 
 @MappedSuperclass
 @Table(name = "users")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
-public class User implements Serializable {
+public class Person implements Serializable {
+    @Id
+    private String username;
+
     @NotNull
     private String password;
+
     @NotNull
     private String name;
+
     @NotNull
     @Email
     private String email;
 
-    public User(String name, String password, String email) {
+    public Person(String username, String name, String password, String email) {
+        this.username = username;
         this.name = name;
         this.password = password;
         this.email = email;
     }
 
-    public User() {
+    public Person() {
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -34,6 +44,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {
