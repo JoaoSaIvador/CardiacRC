@@ -1,0 +1,48 @@
+########## PROFESSIONALS ##########
+
+### CREATE PROFESSIONAL
+POST http://localhost:8080/cardiacrc/api/professionals
+Content-Type: application/json
+
+{ "username": "ryanbaker",
+  "licenseNumber": "438942035",
+  "name": "Ryan Baker",
+  "password": "12345",
+  "email": "ryan.baker@mail.com"
+}
+
+### GET ALL PROFESSIONALS
+GET http://localhost:8080/cardiacrc/api/professionals
+Accept: application/json
+
+### GET PROFESSIONAL DETAILS
+
+### UPDATE PROFESSIONAL
+
+### DELETE PROFESSIONAL
+
+
+
+
+
+########## PATIENTS ##########
+
+### CREATE PATIENT
+POST http://localhost:8080/cardiacrc/api/patients
+Content-Type: application/json
+
+{ "username": "jackviole",
+  "healthNumber": "498274982",
+  "name": "Jack Viole",
+  "password": "12345",
+  "email": "jack.viole@mail.com",
+  "professionalUsername": "ryanbaker"
+}
+
+### GET ALL PATIENTS
+
+### GET PATIENT DETAILS
+
+### UPDATE PATIENT
+
+### DELETE PATIENT
