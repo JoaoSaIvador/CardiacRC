@@ -44,28 +44,18 @@ public class ProfessionalBean {
         return professional;
     }
 
-    public void updateProfessional(String username, int licenseNumber, String name, String password, String email) throws MyEntityNotFoundException {
-        Professional professional = em.find(Professional.class, username);
-        if(professional == null) {
-            throw new MyEntityNotFoundException("Professional not found!");
-        }
-
+    public void updateProfessional(String username, int newLicenseNumber, String newName, String newPassword, String newEmail) throws MyEntityNotFoundException {
+        Professional professional = findProfessional(username);
         em.lock(professional, LockModeType.OPTIMISTIC);
-        professional.setLicenseNumber(licenseNumber);
-        professional.setName(name);
-        professional.setEmail(email);
-        professional.setPassword(password);
+        professional.setLicenseNumber(newLicenseNumber);
+        professional.setName(newName);
+        professional.setEmail(newEmail);
+        professional.setPassword(newPassword);
         em.merge(professional);
     }
 
     public void deleteProfessional(String username) throws MyEntityNotFoundException {
-        Professional professional = em.find(Professional.class, username);
-        if(professional == null) {
-            throw new MyEntityNotFoundException("Professional not found!");
-        }
-
+        Professional professional = findProfessional(username);
         em.remove(professional);
-
-        //TODO: WHEN DELETING PROFESSIONALS SHOULD THEIR PATIENTS HAVE NO PROFESSIONAL?
     }
 }

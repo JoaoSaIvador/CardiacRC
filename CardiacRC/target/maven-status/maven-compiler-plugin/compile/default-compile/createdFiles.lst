@@ -1,3 +1,4 @@
+dae\cardiacrc\entities\DataType.class
 dae\cardiacrc\exceptions\MyEntityExistsExceptionMapper.class
 dae\cardiacrc\ejbs\AdministratorBean.class
 dae\cardiacrc\exceptions\MyIllegalArgumentException.class
@@ -25,4 +26,5 @@ dae\cardiacrc\exceptions\MyEntityExistsException.class
 dae\cardiacrc\dtos\ProfessionalDTO.class
 dae\cardiacrc\entities\Administrator.class
 dae\cardiacrc\exceptions\MyEntityNotFoundExceptionMapper.class
+dae\cardiacrc\ejbs\DataTypeBean.class
 dae\cardiacrc\dtos\PrescriptionDTO.class

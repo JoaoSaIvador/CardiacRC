@@ -80,7 +80,7 @@ public class PatientService {
                 patientDTO.getPassword(),
                 patientDTO.getEmail(),
                 patientDTO.getProfessionalUsername());
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).entity("Patient " + patientDTO.getName() + " created!").build();
     }
 
     @GET
@@ -94,20 +94,20 @@ public class PatientService {
     @Path("{username}")
     public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException {
         patientBean.updatePatient(
-                patientDTO.getUsername(),
+                username,
                 patientDTO.getHealthNumber(),
                 patientDTO.getName(),
                 patientDTO.getPassword(),
                 patientDTO.getEmail(),
                 patientDTO.getProfessionalUsername());
-        return Response.ok().build();
+        return Response.ok("Patient updated!").build();
     }
 
     @DELETE
     @Path("{username}")
     public Response deletePatient (@PathParam("username") String username) throws MyEntityNotFoundException {
         patientBean.deletePatient(username);
-        return Response.ok().build();
+        return Response.ok("Patient deleted!").build();
     }
 
     private PrescriptionDTO prescriptionToDTO(Prescription prescription) {

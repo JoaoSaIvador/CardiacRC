@@ -7,6 +7,12 @@ import java.io.Serializable;
 
 @Table(name = "prescriptions")
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllPrescriptions",
+                query = "SELECT p FROM Prescription p ORDER BY p.name"
+        )
+})
 @SequenceGenerator(name = "prescription_id", sequenceName = "prescription_id",  initialValue = 1)
 public class Prescription implements Serializable {
     @Id
@@ -32,6 +38,9 @@ public class Prescription implements Serializable {
 
     @NotNull
     private boolean state;
+
+    @Version
+    private int version;
 
     public Prescription() {
     }

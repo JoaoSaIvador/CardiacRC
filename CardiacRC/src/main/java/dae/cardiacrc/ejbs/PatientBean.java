@@ -53,12 +53,9 @@ public class PatientBean {
     }
 
     public void updatePatient(String username, int healthNumber, String name, String password, String email, String professionalUsername) throws MyEntityNotFoundException {
-        Patient patient =  em.find(Patient.class, username);
-        if(patient == null) {
-            throw new MyEntityNotFoundException("Patient not found!");
-        }
+        Patient patient =  findPatient(username);
 
-        Professional professional = em.find(Professional.class, username);
+        Professional professional = em.find(Professional.class, professionalUsername);
         if(professional == null) {
             throw new MyEntityNotFoundException("Professional not found!");
         }
@@ -78,10 +75,7 @@ public class PatientBean {
     }
 
     public void deletePatient (String username) throws MyEntityNotFoundException {
-        Patient patient =  em.find(Patient.class, username);
-        if(patient == null) {
-            throw new MyEntityNotFoundException("Patient not found!");
-        }
+        Patient patient =  findPatient(username);
 
         for (Prescription prescription : patient.getPrescriptions()) {
             em.remove(prescription);

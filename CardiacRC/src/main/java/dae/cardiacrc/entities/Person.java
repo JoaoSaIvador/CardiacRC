@@ -24,6 +24,9 @@ public class Person implements Serializable {
     @Email
     private String email;
 
+    @Version
+    private int version;
+
     public Person(String username, String name, String password, String email) {
         this.username = username;
         this.name = name;

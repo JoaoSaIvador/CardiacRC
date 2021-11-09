@@ -16,12 +16,31 @@ GET http://localhost:8080/cardiacrc/api/professionals
 Accept: application/json
 
 ### GET PROFESSIONAL DETAILS
+GET http://localhost:8080/cardiacrc/api/professionals/tomasalves
+Accept: application/json
+
+### GET PROFESSIONAL PATIENTS
+GET http://localhost:8080/cardiacrc/api/professionals/ryanbaker/patients
+Accept: application/json
+
+### GET PROFESSIONAL PRESCTIPTIONS
+GET http://localhost:8080/cardiacrc/api/professionals/ryanbaker/prescriptions
+Accept: application/json
 
 ### UPDATE PROFESSIONAL
+PUT http://localhost:8080/cardiacrc/api/professionals/ryanbaker
+Content-Type: application/json
+
+{
+  "licenseNumber": "12345679",
+  "name": "Bryan",
+  "password": "54321",
+  "email": "bryan.sucks@no.com"
+}
 
 ### DELETE PROFESSIONAL
-
-
+DELETE http://localhost:8080/cardiacrc/api/professionals/ryanbaker
+Accept: application/json
 
 
 
@@ -40,9 +59,65 @@ Content-Type: application/json
 }
 
 ### GET ALL PATIENTS
+GET http://localhost:8080/cardiacrc/api/patients
+Accept: application/json
 
 ### GET PATIENT DETAILS
+GET http://localhost:8080/cardiacrc/api/patients/jackviole
+Accept: application/json
 
 ### UPDATE PATIENT
+PUT http://localhost:8080/cardiacrc/api/patients/jackviole
+Content-Type: application/json
+
+{
+  "healthNumber": "999999999",
+  "name": "Jack Sparow",
+  "password": "98765",
+  "email": "cash@money.com",
+  "professionalUsername": "tomasalves"
+}
 
 ### DELETE PATIENT
+DELETE http://localhost:8080/cardiacrc/api/patients/jackviole
+Accept: application/json
+
+### GET PATIENT PRESCRIPTIONS
+GET http://localhost:8080/cardiacrc/api/patients/joaosalvador/prescriptions
+Accept: application/json
+
+
+
+########## PATIENTS ##########
+
+### CREATE ADMINISTRATOR
+POST http://localhost:8080/cardiacrc/api/administrators
+Content-Type: application/json
+
+{ "username": "admin1",
+  "name": "ADMIN",
+  "password": "000",
+  "email": "admin@admin.un"
+}
+
+### GET ALL ADMINISTRATORS
+GET http://localhost:8080/cardiacrc/api/administrators
+Accept: application/json
+
+### GET ADMINISTRATOR DETAILS
+GET http://localhost:8080/cardiacrc/api/administrators/admin1
+Accept: application/json
+
+### UPDATE ADMINISTRATOR
+PUT http://localhost:8080/cardiacrc/api/administrators/admin1
+Content-Type: application/json
+
+{
+  "name": "updated ADMIN",
+  "password": "111",
+  "email": "adminUPDATED@admin.un"
+}
+
+### DELETE ADMINISTRATOR
+DELETE http://localhost:8080/cardiacrc/api/administrators/admin1
+Accept: application/json

@@ -75,7 +75,7 @@ public class ProfessionalService {
                 professionalDTO.getName(),
                 professionalDTO.getPassword(),
                 professionalDTO.getEmail());
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).entity("Professional " + professionalDTO.getName() + " created!").build();
     }
 
     @GET
@@ -89,19 +89,19 @@ public class ProfessionalService {
     @Path("{username}")
     public Response updateProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException {
         professionalBean.updateProfessional(
-                professionalDTO.getUsername(),
+                username,
                 professionalDTO.getLicenseNumber(),
                 professionalDTO.getName(),
                 professionalDTO.getPassword(),
                 professionalDTO.getEmail());
-        return Response.ok().build();
+        return Response.ok("Professional updated!").build();
     }
 
     @DELETE
     @Path("{username}")
     public Response deleteProfessional (@PathParam("username") String username) throws MyEntityNotFoundException {
         professionalBean.deleteProfessional(username);
-        return Response.ok().build();
+        return Response.ok("Professional deleted!").build();
     }
 
 

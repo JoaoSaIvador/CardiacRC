@@ -50,7 +50,7 @@ public class AdministratorService {
                 administratorDTO.getName(),
                 administratorDTO.getPassword(),
                 administratorDTO.getEmail());
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).entity("Administrator " + administratorDTO.getName() + " created!").build();
     }
 
     @GET
@@ -64,17 +64,17 @@ public class AdministratorService {
     @Path("{username}")
     public Response updateAdministrator (@PathParam("username") String username, AdministratorDTO administratorDTO) throws MyEntityNotFoundException {
         administratorBean.updateAdministrator(
-                administratorDTO.getUsername(),
+                username,
                 administratorDTO.getName(),
                 administratorDTO.getPassword(),
                 administratorDTO.getEmail());
-        return Response.ok().build();
+        return Response.ok("Administrator updated!").build();
     }
 
     @DELETE
     @Path("{username}")
     public Response deleteAdministrator (@PathParam("username") String username) throws MyEntityNotFoundException {
         administratorBean.deleteAdministrator(username);
-        return Response.ok().build();
+        return Response.ok("Administrator deleted!").build();
     }
 }
