@@ -10,21 +10,21 @@ public class PatientDTO {
     private String email;
     private int healthNumber;
     private String professionalUsername;
-    private String professionalName;
+    private String associatedProfessional;
     private List<PrescriptionDTO> prescriptionDTOs;
 
     public PatientDTO() {
         this.prescriptionDTOs = new ArrayList<PrescriptionDTO>();
     }
 
-    public PatientDTO(String username, String password, String name, String email, int healthNumber, String professionalUsername, String professionalName) {
+    public PatientDTO(String username, String password, String name, String email, int healthNumber, String professionalUsername, String associatedProfessional) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.healthNumber = healthNumber;
         this.professionalUsername = professionalUsername;
-        this.professionalName = professionalName;
+        this.associatedProfessional = associatedProfessional;
         this.prescriptionDTOs = new ArrayList<PrescriptionDTO>();
     }
 
@@ -52,8 +52,8 @@ public class PatientDTO {
         return professionalUsername;
     }
 
-    public String getProfessionalName() {
-        return professionalName;
+    public String getAssociatedProfessional() {
+        return associatedProfessional;
     }
 
     public List<PrescriptionDTO> getPrescriptionDTOs() {
@@ -84,8 +84,8 @@ public class PatientDTO {
         this.professionalUsername = professionalUsername;
     }
 
-    public void setProfessionalName(String professionalName) {
-        this.professionalName = professionalName;
+    public void setAssociatedProfessional(String associatedProfessional) {
+        this.associatedProfessional = associatedProfessional;
     }
 
     public void setPrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {

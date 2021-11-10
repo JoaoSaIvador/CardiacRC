@@ -117,7 +117,10 @@ public class PatientService {
                 prescription.getProfessional().getName(),
                 prescription.getPatient().getUsername(),
                 prescription.getPatient().getName(),
-                prescription.getDescription()
+                prescription.getDescription(),
+                prescription.getName(),
+                prescription.getDuration(),
+                prescription.isState()
         );
     }
 

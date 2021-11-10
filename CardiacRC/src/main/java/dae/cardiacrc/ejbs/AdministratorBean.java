@@ -17,7 +17,7 @@ public class AdministratorBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String username, String name, String password, String email) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String username, String password, String name, String email) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
         Administrator administrator =  em.find(Administrator.class, username);
 
         if(administrator != null) {
