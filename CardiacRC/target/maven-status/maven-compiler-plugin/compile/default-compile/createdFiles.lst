@@ -13,7 +13,6 @@ dae\cardiacrc\entities\Prescription.class
 dae\cardiacrc\ejbs\PatientBean.class
 dae\cardiacrc\CardiacRCApplication.class
 dae\cardiacrc\exceptions\CatchAllExceptionMapper.class
-dae\cardiacrc\ws\AdministratorService.class
 dae\cardiacrc\entities\Professional.class
 dae\cardiacrc\ejbs\ProfessionalBean.class
 dae\cardiacrc\exceptions\MyIllegalArgumentExceptionMapper.class
