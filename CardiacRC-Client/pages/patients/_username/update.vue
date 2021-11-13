@@ -24,7 +24,7 @@
         </div>
 
         <div class="col-sm-4 offset-sm-4">
-            <b-form-group id="email" label="Email:" label-for="email" :invalid-feedback="invalidEmailFeedback" :state="isEmailValid">
+            <b-form-group id="email" label="Email:" label-for="email" :state="isEmailValid">
               <b-input ref="email" v-model.trim="email" type="email" :state="isEmailValid"  placeholder="Enter your e-mail" trim></b-input>
             </b-form-group>
         </div>
