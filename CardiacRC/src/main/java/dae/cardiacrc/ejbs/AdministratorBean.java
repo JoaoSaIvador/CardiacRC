@@ -1,6 +1,7 @@
 package dae.cardiacrc.ejbs;
 
 import dae.cardiacrc.entities.Administrator;
+import dae.cardiacrc.entities.Person;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
@@ -16,6 +17,16 @@ import java.util.List;
 public class AdministratorBean {
     @PersistenceContext
     private EntityManager em;
+
+    public Person authenticate(final String username, final String password) throws
+            Exception {
+        Person person = em.find(Person.class, username);
+        if (person != null &&
+                person.getPassword().equals(Person.hashPassword(password))) {
+            return person;
+        }
+        throw new Exception("Failed logging in with username '" + username + "': unknown username or wrong password");
+    }
 
     public void create(String username, String password, String name, String email) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
         Administrator administrator =  em.find(Administrator.class, username);
