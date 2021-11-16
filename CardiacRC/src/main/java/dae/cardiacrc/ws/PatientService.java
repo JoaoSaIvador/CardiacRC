@@ -59,8 +59,8 @@ public class PatientService {
                 patient.getProfessional().getName()
         );
 
-        List<PrescriptionDTO> prescriptionDTOS = prescriptionsToDTOs(patient.getPrescriptions());
-        patientDTO.setPrescriptionDTOs(prescriptionDTOS);
+        patientDTO.setActivePrescriptionDTOs(prescriptionsToDTOs(patient.getActivePrescriptions()));
+        patientDTO.setInactivePrescriptionDTOs(prescriptionsToDTOs(patient.getInactivePrescriptions()));
 
         return patientDTO;
     }
@@ -133,6 +133,22 @@ public class PatientService {
     public Response getPatientPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getPrescriptions());
+        return Response.ok(dtos).build();
+    }
+
+    @GET
+    @Path("{username}/activePrescriptions")
+    public Response getPatientActivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getActivePrescriptions());
+        return Response.ok(dtos).build();
+    }
+
+    @GET
+    @Path("{username}/inactivePrescriptions")
+    public Response getPatientInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getInactivePrescriptions());
         return Response.ok(dtos).build();
     }
 }

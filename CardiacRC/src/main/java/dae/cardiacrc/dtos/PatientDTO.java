@@ -11,10 +11,12 @@ public class PatientDTO {
     private int healthNumber;
     private String professionalUsername;
     private String associatedProfessional;
-    private List<PrescriptionDTO> prescriptionDTOs;
+    private List<PrescriptionDTO> activePrescriptionDTOs;
+    private List<PrescriptionDTO> inactivePrescriptionDTOs;
 
     public PatientDTO() {
-        this.prescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
     }
 
     public PatientDTO(String username, String password, String name, String email, int healthNumber, String professionalUsername, String associatedProfessional) {
@@ -25,7 +27,8 @@ public class PatientDTO {
         this.healthNumber = healthNumber;
         this.professionalUsername = professionalUsername;
         this.associatedProfessional = associatedProfessional;
-        this.prescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
     }
 
     public String getUsername() {
@@ -56,8 +59,12 @@ public class PatientDTO {
         return associatedProfessional;
     }
 
-    public List<PrescriptionDTO> getPrescriptionDTOs() {
-        return prescriptionDTOs;
+    public List<PrescriptionDTO> getActivePrescriptionDTOs() {
+        return activePrescriptionDTOs;
+    }
+
+    public List<PrescriptionDTO> getInactivePrescriptionDTOs() {
+        return inactivePrescriptionDTOs;
     }
 
     public void setUsername(String username) {
@@ -88,7 +95,11 @@ public class PatientDTO {
         this.associatedProfessional = associatedProfessional;
     }
 
-    public void setPrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
-        this.prescriptionDTOs = prescriptionDTOs;
+    public void setActivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
+        this.activePrescriptionDTOs = prescriptionDTOs;
+    }
+
+    public void setInactivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
+        this.inactivePrescriptionDTOs = prescriptionDTOs;
     }
 }

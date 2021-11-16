@@ -1,9 +1,9 @@
 <template>
     <div>
         <Topbar/>
-        <b-container>
+        <b-container class="page-body">
             <div >
-                <h2 class="mb-3">Patient Details</h2>
+                <h2 class="mb-3">Dashboard</h2>
                 <form class="needs-validation">
                     <div class="col-sm-5">
                         <label for="name">Name:</label>
@@ -36,14 +36,26 @@
                         </div>
                     </div>
                 </form>
+
+                <b-container>
+                  <nuxt-link :to="`/patients/${patient.username}/update`" class="btn btn-primary" >Update</nuxt-link>
+                </b-container>
             </div>
 
             <div class="col-md-12 order-md-1">
-                <h2 class="mb-3">Prescriptions</h2>
-                <b-table v-if="prescriptions.length > 0" striped over outlined :items="prescriptions" :fields="prescriptionFields" class="mt-3">
+                <h2 class="mb-3"> Active Prescriptions</h2>
+                <b-table v-if="activePrescriptions.length > 0" striped over outlined :items="activePrescriptions" :fields="prescriptionFields" class="mt-3">
 
                 </b-table>
-                <p v-else>No prescriptions.</p>
+                <p v-else>No active prescriptions.</p>
+            </div>
+
+            <div class="col-md-12 order-md-1">
+                <h2 class="mb-3"> Inactive Prescriptions</h2>
+                <b-table v-if="inactivePrescriptions.length > 0" striped over outlined :items="inactivePrescriptions" :fields="prescriptionFields" class="mt-3">
+
+                </b-table>
+                <p v-else>No active prescriptions.</p>
             </div>
 
             <b-container>
@@ -59,15 +71,18 @@
             return {
                 patient: {},
                 professional: {},
-                prescriptionFields: ['id', 'name', 'duration', 'state', 'description', 'actions' ],
+                prescriptionFields: ['id', 'name', 'duration', 'actions' ],
             }
         },
         computed: {
             username() {
                 return this.$route.params.username
             } ,
-            prescriptions() {
-                return this.patient.prescriptionDTOs || []
+            activePrescriptions() {
+                return this.patient.activePrescriptionDTOs || []
+            },
+            inactivePrescriptions() {
+                return this.patient.inactivePrescriptionDTOs || []
             }
         },
         created() {
@@ -81,5 +96,7 @@
 </script>
 
 <style scoped>
-
+  .page-body {
+    padding-bottom: 50px;
+  }
 </style>

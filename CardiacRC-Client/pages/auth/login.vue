@@ -1,5 +1,5 @@
 <template>
-  <section class="vh-100" style="background-color: #2b2d2b;">
+  <section class="vh-100 bg-dark">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -10,14 +10,13 @@
 
             <b-form @submit.prevent="onSubmit" @reset="onReset">
               <b-form-group class="form-outline mb-4">
-                <b-input name="username" id="typeUsernameX-2" class="form-control form-control-lg" placeholder="Your username" v-model.trim="username" required/>
-                <label class="form-label" for="typeUsernameX-2">Username</label>
+                <b-input name="username" id="typeUsername" class="form-control form-control-lg" placeholder="Your username" v-model.trim="username" required/>
+                <label class="form-label" for="typeUsername">Username</label>
               </b-form-group>
 
-
               <b-form-group class="form-outline mb-4">
-                <b-input name="password" type="password" id="typePasswordX-2" class="form-control form-control-lg"  placeholder="Your password" v-model="password" required/>
-                <label class="form-label" for="typePasswordX-2">Password</label>
+                <b-input name="password" type="password" id="typePassword" class="form-control form-control-lg"  placeholder="Your password" v-model="password" required/>
+                <label class="form-label" for="typePassword">Password</label>
               </b-form-group>
 
               <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>

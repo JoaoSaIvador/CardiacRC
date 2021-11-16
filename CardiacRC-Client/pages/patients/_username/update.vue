@@ -2,7 +2,7 @@
 <div >
   <Topbar/>
   <b-container>
-    <h2 class="mb-3 text-center">Update Patient</h2>
+    <h2 class="mb-3 text-center">Update Information</h2>
     <form class="needs-validation" @submit.prevent="updatePatient" :disabled="!isFormValid">
 
       <div class="col-sm-4 offset-sm-4">
@@ -51,7 +51,7 @@
         </div>
 
         <div class="col-sm-4 offset-sm-4">
-          <nuxt-link to="/patients" class="btn btn-primary" >Back</nuxt-link>
+          <nuxt-link :to="`/patients/${patient.username}/details`" class="btn btn-primary" >Back</nuxt-link>
           <button type="reset" class="btn btn-danger">Reset</button>
           <button @click.prevent="updatePatient" class="btn btn-secondary" :disabled="!isFormValid">Update</button>
         </div>
@@ -199,7 +199,6 @@
             .then(patient => {
                 this.patient = patient || {}
                 this.name = patient.name
-                this.password = patient.password
                 this.email = patient.email
                 this.healthNumber = patient.healthNumber
                 this.professionalUsername = patient.professionalUsername
