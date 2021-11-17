@@ -9,11 +9,13 @@ public class ProfessionalDTO {
     private String name;
     private String email;
     private int licenseNumber;
-    private List<PrescriptionDTO> prescriptionDTOs;
+    private List<PrescriptionDTO> activePrescriptionDTOs;
+    private List<PrescriptionDTO> inactivePrescriptionDTOs;
     private List<PatientDTO> patientDTOS;
 
     public ProfessionalDTO() {
-        this.prescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
     }
 
@@ -23,7 +25,8 @@ public class ProfessionalDTO {
         this.name = name;
         this.email = email;
         this.licenseNumber = licenseNumber;
-        this.prescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
     }
 
@@ -47,8 +50,12 @@ public class ProfessionalDTO {
         return licenseNumber;
     }
 
-    public List<PrescriptionDTO> getPrescriptionDTOs() {
-        return prescriptionDTOs;
+    public List<PrescriptionDTO> getActivePrescriptionDTOs() {
+        return activePrescriptionDTOs;
+    }
+
+    public List<PrescriptionDTO> getInactivePrescriptionDTOs() {
+        return inactivePrescriptionDTOs;
     }
 
     public List<PatientDTO> getPatientDTOs() {
@@ -75,8 +82,12 @@ public class ProfessionalDTO {
         this.licenseNumber = licenseNumber;
     }
 
-    public void setPrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
-        this.prescriptionDTOs = prescriptionDTOs;
+    public void setActivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
+        this.activePrescriptionDTOs = prescriptionDTOs;
+    }
+
+    public void setInactivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
+        this.inactivePrescriptionDTOs = prescriptionDTOs;
     }
 
     public void setPatientDTOs(List<PatientDTO> patientDTOS) {

@@ -6,8 +6,8 @@
           <div class="d-md-flex h-md-100">
               <div class="col-md-6 h-md-100">
                   <div class="d-md-flex h-100">
-                      <div class="">
-                        <h2 class="">Details</h2>
+                      <div>
+                        <h2>Details</h2>
                         <form>
                           <div class="patient-info">
                               <label for="name">Name:</label>
@@ -138,8 +138,9 @@
 
   .my-custom-scrollbar {
     position: relative;
-    max-height: 390px;
+    max-height: 380px;
     overflow: auto;
+    margin-bottom: 10px;
   }
   .table-wrapper-scroll-y {
     display: block;

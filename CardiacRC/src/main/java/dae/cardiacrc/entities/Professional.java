@@ -49,6 +49,18 @@ public class Professional extends Person implements Serializable {
         return prescriptions;
     }
 
+    public List<Prescription> getActivePrescriptions() {
+        List<Prescription> activePrescriptions = this.prescriptions;
+        activePrescriptions.removeIf(prescription -> prescription.isState() == true);
+        return activePrescriptions;
+    }
+
+    public List<Prescription> getInactivePrescriptions() {
+        List<Prescription> activePrescriptions = this.prescriptions;
+        activePrescriptions.removeIf(prescription -> prescription.isState() == false);
+        return activePrescriptions;
+    }
+
     public void setLicenseNumber(int licenseNumber) {
         this.licenseNumber = licenseNumber;
     }

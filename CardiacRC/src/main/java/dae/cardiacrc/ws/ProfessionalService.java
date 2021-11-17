@@ -60,8 +60,8 @@ public class ProfessionalService {
         List<PatientDTO> patientDTOS = patientToDTOs(professional.getPatients());
         professionalDTO.setPatientDTOs(patientDTOS);
 
-        List<PrescriptionDTO> prescriptionDTOS = prescriptionsToDTOs(professional.getPrescriptions());
-        professionalDTO.setPrescriptionDTOs(prescriptionDTOS);
+        professionalDTO.setActivePrescriptionDTOs(prescriptionsToDTOs(professional.getActivePrescriptions()));
+        professionalDTO.setInactivePrescriptionDTOs(prescriptionsToDTOs(professional.getInactivePrescriptions()));
 
         return professionalDTO;
     }
@@ -128,6 +128,22 @@ public class ProfessionalService {
     public Response getProfessionalPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getPrescriptions());
+        return Response.ok(dtos).build();
+    }
+
+    @GET
+    @Path("{username}/activePrescriptions")
+    public Response getPatientActivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Professional professional = professionalBean.findProfessional(username);
+        List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getActivePrescriptions());
+        return Response.ok(dtos).build();
+    }
+
+    @GET
+    @Path("{username}/inactivePrescriptions")
+    public Response getPatientInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Professional professional = professionalBean.findProfessional(username);
+        List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getInactivePrescriptions());
         return Response.ok(dtos).build();
     }
 
