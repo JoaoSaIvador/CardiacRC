@@ -11,10 +11,14 @@ import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +28,13 @@ import java.util.stream.Collectors;
 public class PatientService {
     @EJB
     private PatientBean patientBean;
+    @Context
+    private SecurityContext securityContext;
+
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/patients/”
+    @RolesAllowed("Administrator")
     public List<PatientDTO> getAllPatientsWS() {
         return toDTOsSimple(patientBean.getAllPatients());
     }
@@ -75,6 +83,7 @@ public class PatientService {
 
     @POST
     @Path("/")
+    @RolesAllowed("Administrator")
     public Response createNewPatient (PatientDTO patientDTO) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
         patientBean.create(
                 patientDTO.getUsername(),
@@ -88,14 +97,31 @@ public class PatientService {
 
     @GET
     @Path("{username}")
+    @RolesAllowed("Administrator")
     public Response getPatientDetails(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && principal.getName().equals(patient.getProfessional().getUsername())||
+                securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(username))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         return Response.ok(toDTO(patient)).build();
     }
 
     @PUT
     @Path("{username}")
+    @RolesAllowed("Administrator")
     public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && principal.getName().equals(patient.getProfessional().getUsername())||
+                securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(username))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         patientBean.updatePatient(
                 username,
                 patientDTO.getHealthNumber(),
@@ -108,6 +134,7 @@ public class PatientService {
 
     @DELETE
     @Path("{username}")
+    @RolesAllowed("Administrator")
     public Response deletePatient (@PathParam("username") String username) throws MyEntityNotFoundException {
         patientBean.deletePatient(username);
         return Response.ok("Patient deleted!").build();
@@ -133,24 +160,47 @@ public class PatientService {
 
     @GET
     @Path("{username}/prescriptions")
+    @RolesAllowed("Administrator")
     public Response getPatientPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && principal.getName().equals(patient.getProfessional().getUsername())||
+                securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(username))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getPrescriptions());
         return Response.ok(dtos).build();
     }
 
     @GET
     @Path("{username}/activePrescriptions")
+    @RolesAllowed("Administrator")
     public Response getPatientActivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && principal.getName().equals(patient.getProfessional().getUsername())||
+                securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(username))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getActivePrescriptions());
         return Response.ok(dtos).build();
     }
 
     @GET
     @Path("{username}/inactivePrescriptions")
+    @RolesAllowed("Administrator")
     public Response getPatientInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && principal.getName().equals(patient.getProfessional().getUsername())||
+                securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(username))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getInactivePrescriptions());
         return Response.ok(dtos).build();
     }
@@ -173,8 +223,15 @@ public class PatientService {
 
     @GET
     @Path("{username}/patientData")
+    @RolesAllowed("Administrator")
     public Response getPatientData(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional")||
+                securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(username))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         List<PatientDataDTO> dtos = patientDataToDTOs(patient.getPatientData());
         return Response.ok(dtos).build();
     }

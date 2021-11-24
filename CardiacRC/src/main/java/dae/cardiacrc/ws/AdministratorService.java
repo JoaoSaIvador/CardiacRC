@@ -7,6 +7,7 @@ import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,6 +24,7 @@ public class AdministratorService {
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/administrators/”
+    @RolesAllowed("Administrator")
     public List<AdministratorDTO> getAllAdministratorsWS() {
         return toDTOs(administratorBean.getAllAdministrators());
     }
@@ -44,6 +46,7 @@ public class AdministratorService {
 
     @POST
     @Path("/")
+    @RolesAllowed("Administrator")
     public Response createNewAdministrator (AdministratorDTO administratorDTO) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
         administratorBean.create(
                 administratorDTO.getUsername(),
@@ -55,6 +58,7 @@ public class AdministratorService {
 
     @GET
     @Path("{username}")
+    @RolesAllowed("Administrator")
     public Response getAdministratorDetails(@PathParam("username") String username) throws MyEntityNotFoundException {
         Administrator administrator = administratorBean.findAdministrator(username);
         return Response.ok(toDTO(administrator)).build();
@@ -62,6 +66,7 @@ public class AdministratorService {
 
     @PUT
     @Path("{username}")
+    @RolesAllowed("Administrator")
     public Response updateAdministrator (@PathParam("username") String username, AdministratorDTO administratorDTO) throws MyEntityNotFoundException {
         administratorBean.updateAdministrator(
                 username,
@@ -73,6 +78,7 @@ public class AdministratorService {
 
     @DELETE
     @Path("{username}")
+    @RolesAllowed("Administrator")
     public Response deleteAdministrator (@PathParam("username") String username) throws MyEntityNotFoundException {
         administratorBean.deleteAdministrator(username);
         return Response.ok("Administrator deleted!").build();

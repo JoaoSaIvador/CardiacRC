@@ -9,6 +9,7 @@ dae\cardiacrc\ws\PatientService.class
 dae\cardiacrc\ejbs\PrescriptionBean.class
 dae\cardiacrc\ejbs\JwtBean.class
 dae\cardiacrc\dtos\AuthDTO.class
+dae\cardiacrc\ws\PrescriptionService.class
 dae\cardiacrc\entities\PatientData.class
 dae\cardiacrc\entities\Patient.class
 dae\cardiacrc\ws\LoginService.class
