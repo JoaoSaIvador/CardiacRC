@@ -63,13 +63,13 @@ public class Patient extends Person implements Serializable {
 
     public List<Prescription> getActivePrescriptions() {
         List<Prescription> activePrescriptions = this.prescriptions;
-        activePrescriptions.removeIf(prescription -> prescription.isState() == true);
+        activePrescriptions.removeIf(prescription -> prescription.isState() == false);
         return activePrescriptions;
     }
 
     public List<Prescription> getInactivePrescriptions() {
         List<Prescription> activePrescriptions = this.prescriptions;
-        activePrescriptions.removeIf(prescription -> prescription.isState() == false);
+        activePrescriptions.removeIf(prescription -> prescription.isState() == true);
         return activePrescriptions;
     }
 

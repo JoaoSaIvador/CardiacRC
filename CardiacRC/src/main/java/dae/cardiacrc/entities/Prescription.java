@@ -53,7 +53,7 @@ public class Prescription implements Serializable {
         this.description = description;
         this.name = name;
         this.duration = duration;
-        this.state = false;
+        this.state = true;
     }
 
     public int getId() {

@@ -9,6 +9,7 @@ dae\cardiacrc\ws\PatientService.class
 dae\cardiacrc\ejbs\PrescriptionBean.class
 dae\cardiacrc\ejbs\JwtBean.class
 dae\cardiacrc\dtos\AuthDTO.class
+dae\cardiacrc\entities\PatientData.class
 dae\cardiacrc\entities\Patient.class
 dae\cardiacrc\ws\LoginService.class
 dae\cardiacrc\ws\ProfessionalService.class
@@ -19,6 +20,7 @@ dae\cardiacrc\exceptions\CatchAllExceptionMapper.class
 dae\cardiacrc\ws\AdministratorService.class
 dae\cardiacrc\entities\Professional.class
 dae\cardiacrc\ejbs\ProfessionalBean.class
+dae\cardiacrc\ejbs\PatientDataBean.class
 dae\cardiacrc\exceptions\MyIllegalArgumentExceptionMapper.class
 dae\cardiacrc\exceptions\MyEntityNotFoundException.class
 dae\cardiacrc\ejbs\ConfigBean.class
@@ -30,5 +32,6 @@ dae\cardiacrc\exceptions\MyEntityExistsException.class
 dae\cardiacrc\dtos\ProfessionalDTO.class
 dae\cardiacrc\entities\Administrator.class
 dae\cardiacrc\exceptions\MyEntityNotFoundExceptionMapper.class
+dae\cardiacrc\dtos\PatientDataDTO.class
 dae\cardiacrc\ejbs\DataTypeBean.class
 dae\cardiacrc\dtos\PrescriptionDTO.class
