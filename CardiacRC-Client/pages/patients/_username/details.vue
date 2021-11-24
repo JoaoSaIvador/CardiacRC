@@ -53,7 +53,7 @@
                 </div>
                 <div class="d-md-flex h-md-100">
                   <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                    <b-table v-if="activePrescriptions.length > 0" striped over outlined :items="activePrescriptions" :fields="prescriptionFields" class="mt-3" style="width: 525px;"/>
+                    <b-table v-if="patientData.length > 0" striped over outlined :items="patientData" :fields="patientDataFields" class="mt-3" style="width: 525px;"/>
                     <p v-else>No patient data found.</p>
                   </div>
                 </div>
@@ -62,32 +62,32 @@
                 </div>
               </div>
           </div>
-            <div class="col-md-12 order-md-1">
-                <h2 class="mb-3"> Active Prescriptions</h2>
-                <b-table v-if="activePrescriptions.length > 0" striped over outlined :items="activePrescriptions" :fields="prescriptionFields" class="mt-3">
-                    <template v-slot:cell(actions)="row">
-                      <nuxt-link class="btn btn-primary btn-xs" :to="`/prescriptions/${row.item.id}/details`">
-                          <i class="fas fa-clipboard-list"></i>
-                      </nuxt-link>
-                    </template>
-                </b-table>
-                <p v-else>No active prescriptions.</p>
-            </div>
-
-            <div class="col-md-12 order-md-1">
-                <h2 class="mb-3"> Inactive Prescriptions</h2>
-                <b-table v-if="inactivePrescriptions.length > 0" striped over outlined :items="inactivePrescriptions" :fields="prescriptionFields" class="mt-3">
+          <div class="col-md-12 order-md-1">
+              <h2 class="mb-3"> Active Prescriptions</h2>
+              <b-table v-if="activePrescriptions.length > 0" striped over outlined :items="activePrescriptions" :fields="prescriptionFields" class="mt-3">
                   <template v-slot:cell(actions)="row">
-                      <nuxt-link class="btn btn-primary btn-xs" :to="`/prescriptions/${row.item.id}/details`">
-                          <i class="fas fa-clipboard-list"></i>
-                      </nuxt-link>
-                    </template>
-                </b-table>
-                <p v-else>No inactive prescriptions.</p>
-            </div>
-            <b-container>
-                <nuxt-link to="/patients" class="btn btn-primary" >Back</nuxt-link>
-            </b-container>
+                    <nuxt-link class="btn btn-primary btn-xs" :to="`/prescriptions/${row.item.id}/details`">
+                        <i class="fas fa-clipboard-list"></i>
+                    </nuxt-link>
+                  </template>
+              </b-table>
+              <p v-else>No active prescriptions.</p>
+          </div>
+
+          <div class="col-md-12 order-md-1">
+              <h2 class="mb-3"> Inactive Prescriptions</h2>
+              <b-table v-if="inactivePrescriptions.length > 0" striped over outlined :items="inactivePrescriptions" :fields="prescriptionFields" class="mt-3">
+                <template v-slot:cell(actions)="row">
+                    <nuxt-link class="btn btn-primary btn-xs" :to="`/prescriptions/${row.item.id}/details`">
+                        <i class="fas fa-clipboard-list"></i>
+                    </nuxt-link>
+                  </template>
+              </b-table>
+              <p v-else>No inactive prescriptions.</p>
+          </div>
+          <b-container>
+              <nuxt-link to="/patients" class="btn btn-primary" >Back</nuxt-link>
+          </b-container>
         </b-container>
     </div>
 </template>
@@ -113,7 +113,7 @@
                 return this.patient.inactivePrescriptionDTOs || []
             },
             patientData() {
-              return []
+              return this.patient.patientData || []
             }
         },
         created() {
