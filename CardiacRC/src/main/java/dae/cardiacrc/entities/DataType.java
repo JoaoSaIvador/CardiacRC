@@ -44,6 +44,10 @@ public class DataType implements Serializable {
     public DataType() {
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

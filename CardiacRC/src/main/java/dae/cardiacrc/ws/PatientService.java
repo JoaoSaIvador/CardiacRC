@@ -1,9 +1,11 @@
 package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.PatientDTO;
+import dae.cardiacrc.dtos.PatientDataDTO;
 import dae.cardiacrc.dtos.PrescriptionDTO;
 import dae.cardiacrc.ejbs.PatientBean;
 import dae.cardiacrc.entities.Patient;
+import dae.cardiacrc.entities.PatientData;
 import dae.cardiacrc.entities.Prescription;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
@@ -61,6 +63,7 @@ public class PatientService {
 
         patientDTO.setActivePrescriptionDTOs(prescriptionsToDTOs(patient.getActivePrescriptions()));
         patientDTO.setInactivePrescriptionDTOs(prescriptionsToDTOs(patient.getInactivePrescriptions()));
+        patientDTO.setPatientDataDTOS(patientDataToDTOs(patient.getPatientData()));
 
         return patientDTO;
     }
@@ -149,6 +152,30 @@ public class PatientService {
     public Response getPatientInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getInactivePrescriptions());
+        return Response.ok(dtos).build();
+    }
+
+    private PatientDataDTO patientDataToDTO(PatientData patientData) {
+        return  new PatientDataDTO(
+                patientData.getId(),
+                patientData.getPatient().getUsername(),
+                patientData.getPatient().getName(),
+                patientData.getValue(),
+                patientData.getDataType().getId(),
+                patientData.getDataType().getName(),
+                patientData.getDate()
+        );
+    }
+
+    private List<PatientDataDTO> patientDataToDTOs(List<PatientData> patientData) {
+        return  patientData.stream().map(this::patientDataToDTO).collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("{username}/patientData")
+    public Response getPatientData(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        List<PatientDataDTO> dtos = patientDataToDTOs(patient.getPatientData());
         return Response.ok(dtos).build();
     }
 }
