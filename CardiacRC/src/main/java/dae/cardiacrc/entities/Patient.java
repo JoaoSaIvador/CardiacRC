@@ -26,11 +26,15 @@ public class Patient extends Person implements Serializable {
     @OneToMany
     private List<Prescription> prescriptions;
 
+    @OneToMany
+    private  List<PatientData> data;
+
     public Patient(String username, int healthNumber, String name, String password, String email, Professional professional) {
         super(username, name, password, email);
         this.healthNumber = healthNumber;
         this.professional = professional;
         prescriptions = new ArrayList<Prescription>();
+        data = new ArrayList<PatientData>();
     }
 
     public Patient() {
@@ -76,6 +80,20 @@ public class Patient extends Person implements Serializable {
     public void removePrescription(Prescription prescription) {
         if (this.prescriptions.contains(prescription)) {
             this.prescriptions.remove(prescription);
+        }
+    }
+
+    public List<PatientData> getPatientData() {
+        return data;
+    }
+
+    public void addPatientData(PatientData patientData) {
+        this.data.add(patientData);
+    }
+
+    public void removePatientData(PatientData patientData) {
+        if (this.data.contains(patientData)) {
+            this.data.remove(patientData);
         }
     }
 }

@@ -21,10 +21,12 @@ public class Prescription implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "professional_username")
+    @NotNull
     private Professional professional;
 
     @ManyToOne
     @JoinColumn(name = "patient_username")
+    @NotNull
     private Patient patient;
 
     @NotNull

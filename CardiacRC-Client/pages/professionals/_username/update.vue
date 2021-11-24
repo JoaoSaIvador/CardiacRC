@@ -177,7 +177,6 @@
             .then(patient => {
                 this.patient = patient || {}
                 this.name = patient.name
-                this.password = patient.password
                 this.email = patient.email
                 this.licenseNumber = patient.licenseNumber
             })
