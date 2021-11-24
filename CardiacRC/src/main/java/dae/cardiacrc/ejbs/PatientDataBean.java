@@ -9,10 +9,7 @@ import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class PatientDataBean {
     @PersistenceContext
@@ -31,11 +28,8 @@ public class PatientDataBean {
             throw new MyEntityExistsException("Data type does not exist!");
         }
 
-        Date date = new Date();
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-        //String dateString = formatter.format(date);
-
         try {
+            Date date = new Date();
             PatientData patientData = new PatientData(patient, value, dataType, date);
             em.persist(patientData);
             patient.addPatientData(patientData);

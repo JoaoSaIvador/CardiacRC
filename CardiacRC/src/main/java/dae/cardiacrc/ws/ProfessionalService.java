@@ -133,7 +133,7 @@ public class ProfessionalService {
 
     @GET
     @Path("{username}/activePrescriptions")
-    public Response getPatientActivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+    public Response getProfessionalActivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getActivePrescriptions());
         return Response.ok(dtos).build();
@@ -141,11 +141,16 @@ public class ProfessionalService {
 
     @GET
     @Path("{username}/inactivePrescriptions")
-    public Response getPatientInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+    public Response getProfessionalInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getInactivePrescriptions());
         return Response.ok(dtos).build();
     }
+
+    //TODO: CREATE PRESCRIPTION
+    //TODO: UPDATE PRESCRIPTION
+    //TODO: DELETE PRESCRIPTION
+    //TODO: TOGGLE PRESCRIPTION STATE
 
     private PatientDTO patientToDTO(Patient patient) {
         return new PatientDTO(
