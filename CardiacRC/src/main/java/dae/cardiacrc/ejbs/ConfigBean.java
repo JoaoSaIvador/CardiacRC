@@ -31,7 +31,7 @@ public class ConfigBean {
             patientBean.create("joaosalvador", 123456789, "João Salvador", "123456", "joao.salvador@mail.com", "tomasalves");
             prescriptionBean.create("tomasalves","joaosalvador","teste", "prescricao1",4);
             prescriptionBean.create("tomasalves","joaosalvador","teste2","prescricao2",9);
-            administratorBean.create("jacksparrow", "Jack Sparrow", "123456", "jack.sparrow@mail.com");
+            administratorBean.create("jacksparrow", "123456", "Jack Sparrow", "jack.sparrow@mail.com");
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
