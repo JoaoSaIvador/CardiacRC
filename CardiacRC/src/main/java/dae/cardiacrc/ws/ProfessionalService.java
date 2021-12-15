@@ -158,9 +158,7 @@ public class ProfessionalService {
                 patient.getPassword(),
                 patient.getName(),
                 patient.getEmail(),
-                patient.getHealthNumber(),
-                patient.getProfessional().getUsername(),
-                patient.getProfessional().getName()
+                patient.getHealthNumber()
         );
     }
 

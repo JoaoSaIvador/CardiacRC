@@ -9,29 +9,27 @@ public class PatientDTO {
     private String name;
     private String email;
     private int healthNumber;
-    private String professionalUsername;
-    private String associatedProfessional;
+    private List<ProfessionalDTO> professionalDTOs;
     private List<PrescriptionDTO> activePrescriptionDTOs;
     private List<PrescriptionDTO> inactivePrescriptionDTOs;
-    private List<PatientDataDTO> patientDataDTOS;
+    private List<ObservationDTO> observationDTOS;
 
     public PatientDTO() {
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
-        this.patientDataDTOS = new ArrayList<PatientDataDTO>();
+        this.observationDTOS = new ArrayList<ObservationDTO>();
     }
 
-    public PatientDTO(String username, String password, String name, String email, int healthNumber, String professionalUsername, String associatedProfessional) {
+    public PatientDTO(String username, String password, String name, String email, int healthNumber) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.healthNumber = healthNumber;
-        this.professionalUsername = professionalUsername;
-        this.associatedProfessional = associatedProfessional;
+        this.professionalDTOs = new ArrayList<ProfessionalDTO>();
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
-        this.patientDataDTOS = new ArrayList<PatientDataDTO>();
+        this.observationDTOS = new ArrayList<ObservationDTO>();
     }
 
     public String getUsername() {
@@ -54,12 +52,8 @@ public class PatientDTO {
         return healthNumber;
     }
 
-    public String getProfessionalUsername() {
-        return professionalUsername;
-    }
-
-    public String getAssociatedProfessional() {
-        return associatedProfessional;
+    public List<ProfessionalDTO> getProfessionalDTOs() {
+        return professionalDTOs;
     }
 
     public List<PrescriptionDTO> getActivePrescriptionDTOs() {
@@ -70,8 +64,8 @@ public class PatientDTO {
         return inactivePrescriptionDTOs;
     }
 
-    public List<PatientDataDTO> getPatientDataDTOS() {
-        return patientDataDTOS;
+    public List<ObservationDTO> getPatientDataDTOS() {
+        return observationDTOS;
     }
 
     public void setUsername(String username) {
@@ -94,12 +88,8 @@ public class PatientDTO {
         this.healthNumber = healthNumber;
     }
 
-    public void setProfessionalUsername(String professionalUsername) {
-        this.professionalUsername = professionalUsername;
-    }
-
-    public void setAssociatedProfessional(String associatedProfessional) {
-        this.associatedProfessional = associatedProfessional;
+    public void setProfessionalDTOs(List<ProfessionalDTO> professionalDTOs) {
+        this.professionalDTOs = professionalDTOs;
     }
 
     public void setActivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
@@ -110,7 +100,7 @@ public class PatientDTO {
         this.inactivePrescriptionDTOs = prescriptionDTOs;
     }
 
-    public void setPatientDataDTOS(List<PatientDataDTO> patientDataDTOS) {
-        this.patientDataDTOS = patientDataDTOS;
+    public void setPatientDataDTOS(List<ObservationDTO> observationDTOS) {
+        this.observationDTOS = observationDTOS;
     }
 }

@@ -2,6 +2,8 @@ dae\cardiacrc\entities\DataType.class
 dae\cardiacrc\exceptions\MyEntityExistsExceptionMapper.class
 dae\cardiacrc\ejbs\AdministratorBean.class
 dae\cardiacrc\exceptions\MyIllegalArgumentException.class
+dae\cardiacrc\dtos\ObservationDTO.class
+dae\cardiacrc\entities\Observation.class
 dae\cardiacrc\dtos\AdministratorDTO.class
 dae\cardiacrc\dtos\PatientDTO.class
 dae\cardiacrc\entities\Person.class
@@ -10,7 +12,6 @@ dae\cardiacrc\ejbs\PrescriptionBean.class
 dae\cardiacrc\ejbs\JwtBean.class
 dae\cardiacrc\dtos\AuthDTO.class
 dae\cardiacrc\ws\PrescriptionService.class
-dae\cardiacrc\entities\PatientData.class
 dae\cardiacrc\entities\Patient.class
 dae\cardiacrc\ws\LoginService.class
 dae\cardiacrc\ws\ProfessionalService.class
@@ -33,6 +34,5 @@ dae\cardiacrc\exceptions\MyEntityExistsException.class
 dae\cardiacrc\dtos\ProfessionalDTO.class
 dae\cardiacrc\entities\Administrator.class
 dae\cardiacrc\exceptions\MyEntityNotFoundExceptionMapper.class
-dae\cardiacrc\dtos\PatientDataDTO.class
 dae\cardiacrc\ejbs\DataTypeBean.class
 dae\cardiacrc\dtos\PrescriptionDTO.class

@@ -18,23 +18,24 @@ public class Patient extends Person implements Serializable {
     @NotNull
     private int healthNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "professional_username")
-    @NotNull
-    private Professional professional;
+    @ManyToMany
+    @JoinTable(name = "PATIENTS_PROFESSIONALS",
+            joinColumns = @JoinColumn(name = "patient_username", referencedColumnName = "USERNAME"),
+            inverseJoinColumns = @JoinColumn(name = "professional_username", referencedColumnName = "USERNAME"))
+    private List<Professional> professionals;
 
     @OneToMany
     private List<Prescription> prescriptions;
 
     @OneToMany
-    private  List<PatientData> data;
+    private  List<Observation> data;
 
-    public Patient(String username, int healthNumber, String name, String password, String email, Professional professional) {
+    public Patient(String username, int healthNumber, String name, String password, String email) {
         super(username, name, password, email);
         this.healthNumber = healthNumber;
-        this.professional = professional;
+        professionals = new ArrayList<Professional>();
         prescriptions = new ArrayList<Prescription>();
-        data = new ArrayList<PatientData>();
+        data = new ArrayList<Observation>();
     }
 
     public Patient() {
@@ -49,12 +50,20 @@ public class Patient extends Person implements Serializable {
         this.healthNumber = healthNumber;
     }
 
-    public Professional getProfessional() {
-        return professional;
+    public List<Professional> getProfessionals() {
+        return professionals;
     }
 
-    public void setProfessional(Professional professional) {
-        this.professional = professional;
+    public void addProfessional(Professional professional) {
+        if (professional != null) {
+            this.professionals.add(professional);
+        }
+    }
+
+    public void removeProfessional(Professional professional) {
+        if (professionals.contains(professional)) {
+            this.professionals.remove(professional);
+        }
     }
 
     public List<Prescription> getPrescriptions() {
@@ -83,17 +92,17 @@ public class Patient extends Person implements Serializable {
         }
     }
 
-    public List<PatientData> getPatientData() {
+    public List<Observation> getPatientData() {
         return data;
     }
 
-    public void addPatientData(PatientData patientData) {
-        this.data.add(patientData);
+    public void addPatientData(Observation observation) {
+        this.data.add(observation);
     }
 
-    public void removePatientData(PatientData patientData) {
-        if (this.data.contains(patientData)) {
-            this.data.remove(patientData);
+    public void removePatientData(Observation observation) {
+        if (this.data.contains(observation)) {
+            this.data.remove(observation);
         }
     }
 }

@@ -19,7 +19,7 @@ public class Professional extends Person implements Serializable {
     @NotNull
     private int licenseNumber;
 
-    @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "professionals")
     private List<Patient> patients;
 
     @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE)

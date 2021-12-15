@@ -1,15 +1,18 @@
 package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.PatientDTO;
-import dae.cardiacrc.dtos.PatientDataDTO;
+import dae.cardiacrc.dtos.ObservationDTO;
 import dae.cardiacrc.dtos.PrescriptionDTO;
+import dae.cardiacrc.dtos.ProfessionalDTO;
 import dae.cardiacrc.ejbs.PatientBean;
 import dae.cardiacrc.entities.Patient;
-import dae.cardiacrc.entities.PatientData;
+import dae.cardiacrc.entities.Observation;
 import dae.cardiacrc.entities.Prescription;
+import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -38,9 +41,7 @@ public class PatientService {
                 patient.getPassword(),
                 patient.getName(),
                 patient.getEmail(),
-                patient.getHealthNumber(),
-                patient.getProfessional().getUsername(),
-                patient.getProfessional().getName()
+                patient.getHealthNumber()
         );
     }
 
@@ -56,11 +57,10 @@ public class PatientService {
                 patient.getPassword(),
                 patient.getName(),
                 patient.getEmail(),
-                patient.getHealthNumber(),
-                patient.getProfessional().getUsername(),
-                patient.getProfessional().getName()
+                patient.getHealthNumber()
         );
 
+        patientDTO.setProfessionalDTOs(professionalToDTOs(patient.getProfessionals()));
         patientDTO.setActivePrescriptionDTOs(prescriptionsToDTOs(patient.getActivePrescriptions()));
         patientDTO.setInactivePrescriptionDTOs(prescriptionsToDTOs(patient.getInactivePrescriptions()));
         patientDTO.setPatientDataDTOS(patientDataToDTOs(patient.getPatientData()));
@@ -81,8 +81,7 @@ public class PatientService {
                 patientDTO.getHealthNumber(),
                 patientDTO.getName(),
                 patientDTO.getPassword(),
-                patientDTO.getEmail(),
-                patientDTO.getProfessionalUsername());
+                patientDTO.getEmail());
         return Response.status(Response.Status.CREATED).entity("Patient " + patientDTO.getName() + " created!").build();
     }
 
@@ -101,9 +100,22 @@ public class PatientService {
                 patientDTO.getHealthNumber(),
                 patientDTO.getName(),
                 patientDTO.getPassword(),
-                patientDTO.getEmail(),
-                patientDTO.getProfessionalUsername());
+                patientDTO.getEmail());
         return Response.ok("Patient updated!").build();
+    }
+
+    @PATCH
+    @Path("{username}/addProfessional")
+    public Response addProfessional (@PathParam("username") String username, String professionalUsername) throws MyEntityNotFoundException {
+        patientBean.addProfessional(username, professionalUsername);
+        return Response.ok("Professional added!").build();
+    }
+
+    @PATCH
+    @Path("{username}/removeProfessional")
+    public Response removeProfessional (@PathParam("username") String username, String professionalUsername) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        patientBean.removeProfessional(username, professionalUsername);
+        return Response.ok("Professional added!").build();
     }
 
     @DELETE
@@ -111,6 +123,20 @@ public class PatientService {
     public Response deletePatient (@PathParam("username") String username) throws MyEntityNotFoundException {
         patientBean.deletePatient(username);
         return Response.ok("Patient deleted!").build();
+    }
+
+    private ProfessionalDTO professionalToDTO(Professional professional) {
+        return  new ProfessionalDTO(
+                professional.getUsername(),
+                professional.getPassword(),
+                professional.getName(),
+                professional.getEmail(),
+                professional.getLicenseNumber()
+        );
+    }
+
+    private List<ProfessionalDTO> professionalToDTOs(List<Professional> professionals) {
+        return  professionals.stream().map(this::professionalToDTO).collect(Collectors.toList());
     }
 
     private PrescriptionDTO prescriptionToDTO(Prescription prescription) {
@@ -155,19 +181,19 @@ public class PatientService {
         return Response.ok(dtos).build();
     }
 
-    private PatientDataDTO patientDataToDTO(PatientData patientData) {
-        return  new PatientDataDTO(
-                patientData.getId(),
-                patientData.getPatient().getUsername(),
-                patientData.getPatient().getName(),
-                patientData.getValue(),
-                patientData.getDataType().getId(),
-                patientData.getDataType().getName(),
-                patientData.getDate()
+    private ObservationDTO patientDataToDTO(Observation observation) {
+        return  new ObservationDTO(
+                observation.getId(),
+                observation.getPatient().getUsername(),
+                observation.getPatient().getName(),
+                observation.getValue(),
+                observation.getDataType().getId(),
+                observation.getDataType().getName(),
+                observation.getDate()
         );
     }
 
-    private List<PatientDataDTO> patientDataToDTOs(List<PatientData> patientData) {
+    private List<ObservationDTO> patientDataToDTOs(List<Observation> patientData) {
         return  patientData.stream().map(this::patientDataToDTO).collect(Collectors.toList());
     }
 
@@ -175,7 +201,7 @@ public class PatientService {
     @Path("{username}/patientData")
     public Response getPatientData(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
-        List<PatientDataDTO> dtos = patientDataToDTOs(patient.getPatientData());
+        List<ObservationDTO> dtos = patientDataToDTOs(patient.getPatientData());
         return Response.ok(dtos).build();
     }
 }
