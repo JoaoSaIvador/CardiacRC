@@ -14,6 +14,7 @@ dae\cardiacrc\dtos\AuthDTO.class
 dae\cardiacrc\ws\PrescriptionService.class
 dae\cardiacrc\entities\Patient.class
 dae\cardiacrc\ws\LoginService.class
+dae\cardiacrc\ejbs\ObservationBean.class
 dae\cardiacrc\ws\ProfessionalService.class
 dae\cardiacrc\entities\Prescription.class
 dae\cardiacrc\ejbs\PatientBean.class
@@ -22,12 +23,14 @@ dae\cardiacrc\exceptions\CatchAllExceptionMapper.class
 dae\cardiacrc\ws\AdministratorService.class
 dae\cardiacrc\entities\Professional.class
 dae\cardiacrc\ejbs\ProfessionalBean.class
-dae\cardiacrc\ejbs\PatientDataBean.class
 dae\cardiacrc\exceptions\MyIllegalArgumentExceptionMapper.class
 dae\cardiacrc\exceptions\MyEntityNotFoundException.class
 dae\cardiacrc\ejbs\ConfigBean.class
 dae\cardiacrc\exceptions\MyConstraintViolationException.class
+dae\cardiacrc\entities\Type.class
 dae\cardiacrc\jwt\Jwt.class
+dae\cardiacrc\dtos\TypeDTO.class
+dae\cardiacrc\ejbs\TypeBean.class
 dae\cardiacrc\exceptions\MyConstraintViolationExceptionMapper.class
 dae\cardiacrc\providers\CorsFilter.class
 dae\cardiacrc\exceptions\MyEntityExistsException.class

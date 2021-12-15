@@ -41,18 +41,23 @@ public class Prescription implements Serializable {
     @NotNull
     private boolean state;
 
+    @NotNull
+    @OneToOne
+    private Type type;
+
     @Version
     private int version;
 
     public Prescription() {
     }
 
-    public Prescription(Professional professional, Patient patient, String description, String name, int duration) {
+    public Prescription(Professional professional, Patient patient, String description, String name, int duration, Type type) {
         this.professional = professional;
         this.patient = patient;
         this.description = description;
         this.name = name;
         this.duration = duration;
+        this.type = type;
         this.state = true;
     }
 
@@ -111,5 +116,13 @@ public class Prescription implements Serializable {
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

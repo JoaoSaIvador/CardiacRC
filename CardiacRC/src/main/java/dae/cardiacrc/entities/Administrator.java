@@ -3,6 +3,7 @@ package dae.cardiacrc.entities;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
@@ -11,6 +12,7 @@ import javax.persistence.NamedQuery;
                 query = "SELECT a FROM Administrator a ORDER BY a.name"
         )
 })
+@Table(name = "administrators")
 public class Administrator extends Person {
     public Administrator() {
     }

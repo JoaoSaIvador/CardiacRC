@@ -131,7 +131,9 @@ public class PatientService {
                 professional.getPassword(),
                 professional.getName(),
                 professional.getEmail(),
-                professional.getLicenseNumber()
+                professional.getLicenseNumber(),
+                professional.getType().getId(),
+                professional.getType().getName()
         );
     }
 

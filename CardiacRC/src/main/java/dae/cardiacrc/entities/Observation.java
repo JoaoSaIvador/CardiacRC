@@ -5,7 +5,7 @@ import io.smallrye.common.constraint.NotNull;
 import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "patientdata")
+@Table(name = "observations")
 @SequenceGenerator(name = "userdata_id", sequenceName = "userdata_id",  initialValue = 1)
 @Entity
 public class Observation {

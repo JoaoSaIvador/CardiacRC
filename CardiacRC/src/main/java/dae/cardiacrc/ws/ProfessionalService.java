@@ -38,7 +38,9 @@ public class ProfessionalService {
                 professional.getPassword(),
                 professional.getName(),
                 professional.getEmail(),
-                professional.getLicenseNumber()
+                professional.getLicenseNumber(),
+                professional.getType().getId(),
+                professional.getType().getName()
         );
     }
 
@@ -54,7 +56,9 @@ public class ProfessionalService {
                 professional.getPassword(),
                 professional.getName(),
                 professional.getEmail(),
-                professional.getLicenseNumber()
+                professional.getLicenseNumber(),
+                professional.getType().getId(),
+                professional.getType().getName()
         );
 
         List<PatientDTO> patientDTOS = patientToDTOs(professional.getPatients());
@@ -74,7 +78,8 @@ public class ProfessionalService {
                 professionalDTO.getLicenseNumber(),
                 professionalDTO.getName(),
                 professionalDTO.getPassword(),
-                professionalDTO.getEmail());
+                professionalDTO.getEmail(),
+                professionalDTO.getType());
         return Response.status(Response.Status.CREATED).entity("Professional " + professionalDTO.getName() + " created!").build();
     }
 

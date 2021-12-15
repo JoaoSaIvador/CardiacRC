@@ -12,6 +12,8 @@ public class ProfessionalDTO {
     private List<PrescriptionDTO> activePrescriptionDTOs;
     private List<PrescriptionDTO> inactivePrescriptionDTOs;
     private List<PatientDTO> patientDTOS;
+    private int type;
+    private String typeName;
 
     public ProfessionalDTO() {
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
@@ -19,12 +21,14 @@ public class ProfessionalDTO {
         this.patientDTOS = new ArrayList<PatientDTO>();
     }
 
-    public ProfessionalDTO(String username, String password, String name, String email, int licenseNumber) {
+    public ProfessionalDTO(String username, String password, String name, String email, int licenseNumber, int type, String typeName) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.licenseNumber = licenseNumber;
+        this.type = type;
+        this.typeName = typeName;
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
@@ -92,5 +96,21 @@ public class ProfessionalDTO {
 
     public void setPatientDTOs(List<PatientDTO> patientDTOS) {
         this.patientDTOS = patientDTOS;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

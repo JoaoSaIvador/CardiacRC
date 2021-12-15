@@ -31,7 +31,7 @@ public class PrescriptionBean {
         }
 
         try {
-            Prescription prescription = new Prescription(professional, patient, description, name, duration);
+            Prescription prescription = new Prescription(professional, patient, description, name, duration, professional.getType());
             em.persist(prescription);
             patient.addPrescription(prescription);
             professional.addPrescription(prescription);

@@ -15,6 +15,7 @@ import java.util.Objects;
                 query = "SELECT p FROM Professional p ORDER BY p.name"
         )
 })
+@Table(name = "professionals")
 public class Professional extends Person implements Serializable {
     @NotNull
     private int licenseNumber;
@@ -25,9 +26,14 @@ public class Professional extends Person implements Serializable {
     @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE)
     private List<Prescription> prescriptions;
 
-    public Professional(String username, int licenseNumber, String name, String password, String email) {
+    @NotNull
+    @OneToOne
+    private Type type;
+
+    public Professional(String username, int licenseNumber, String name, String password, String email, Type type) {
         super(username, name, password, email);
         this.licenseNumber = licenseNumber;
+        this.type = type;
         patients = new ArrayList<Patient>();
         prescriptions = new ArrayList<Prescription>();
     }
@@ -83,6 +89,14 @@ public class Professional extends Person implements Serializable {
         if (this.prescriptions.contains(prescription)) {
             this.prescriptions.remove(prescription);
         }
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
