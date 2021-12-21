@@ -2,19 +2,15 @@
   <div class="main-div">
     <Topbar />
     <b-container class="admin-dashboard">
-      <div class="admin-deck card-deck">
-        <AdminCard
-          v-for="card in cardsFirstLine"
-          :key="card.title"
-          :card="card"
+      <div class="row admin-deck">
+        <AdminCounter
+          v-for="counter in counters"
+          :key="counter.title"
+          :counter="counter"
         />
       </div>
       <div class="admin-deck card-deck">
-        <AdminCard
-          v-for="card in cardsSecondLine"
-          :key="card.title"
-          :card="card"
-        />
+        <AdminCard v-for="card in cards" :key="card.title" :card="card" />
       </div>
     </b-container>
   </div>
@@ -22,25 +18,35 @@
 
 <script>
 import AdminCard from "../../components/AdminCard.vue";
+import AdminCounter from "../../components/AdminCounter.vue";
 
 export default {
   components: {
     AdminCard,
+    AdminCounter,
   },
   data() {
     return {
-      cardsFirstLine: [
+      cards: [
         {
           title: "Account Details",
           path: `/administrators/${this.$auth.user.sub}/details`,
         },
         { title: "Manage Administrators", path: `/administrators` },
         { title: "Manage Professionals", path: `/professionals` },
-      ],
-      cardsSecondLine: [
         { title: "Manage Patients", path: `/patients` },
         { title: "Manage Quantitative Data Types", path: "#" },
         { title: "Manage Qualitative Data Types", path: "#" },
+      ],
+      counters: [
+        { title: "Administrators", total: "10", color: "bg-primary" },
+        { title: "Professionals", total: "11", color: "bg-primary" },
+        { title: "Patients", total: "12", color: "bg-primary" },
+        {
+          title: "Data Types",
+          total: "13",
+          color: "bg-primary",
+        },
       ],
     };
   },

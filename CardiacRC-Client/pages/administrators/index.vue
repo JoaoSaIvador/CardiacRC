@@ -12,12 +12,6 @@
         class="mt-3"
       >
         <template v-slot:cell(actions)="row">
-          <nuxt-link
-            class="btn btn-primary btn-xs"
-            :to="`/administrators/${row.item.username}/update`"
-          >
-            <fa :icon="['fas', 'pen']" />
-          </nuxt-link>
           <button
             class="btn btn-danger btn-xs"
             @click.prevent="deleteAdministrator(row.item.username)"
