@@ -3,50 +3,52 @@
     <Topbar />
     <b-container>
       <div>
-        <h2 class="mb-3">Administrator Details</h2>
-        <form class="needs-validation">
-          <div class="col-sm-5">
-            <label for="name">Name:</label>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                :value="administrator.name"
-                readonly
-              />
-            </div>
+        <h2 class="mb-3 text-center">Account Details</h2>
+        <form
+          class="needs-validation"
+          @submit.prevent="updatePatient"
+          :disabled="!isFormValid"
+        >
+          <div class="col-sm-4 offset-sm-4">
+            <b-form-group id="name" label="Name:" label-for="name">
+              <b-input id="name" :value="administrator.name" readonly></b-input>
+            </b-form-group>
           </div>
-          <div class="col-sm-5">
-            <label for="username">Username:</label>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
+
+          <div class="col-sm-4 offset-sm-4">
+            <b-form-group id="username" label="Username:" label-for="username">
+              <b-input
                 id="username"
                 :value="administrator.username"
                 readonly
-              />
-            </div>
+              ></b-input>
+            </b-form-group>
           </div>
-          <div class="col-sm-5">
-            <label for="email">Email:</label>
-            <div class="input-group">
-              <input
-                type="email"
-                class="form-control"
+
+          <div class="col-sm-4 offset-sm-4">
+            <b-form-group id="email" label="Email:" label-for="email">
+              <b-input
                 id="email"
-                :value="administrator.email"
+                :value="administrator.username"
                 readonly
-              />
-            </div>
+              ></b-input>
+            </b-form-group>
+          </div>
+
+          <div class="col-sm-4 offset-sm-4">
+            <nuxt-link
+              :to="`/administrators/dashboard`"
+              class="btn btn-secondary"
+              >Back</nuxt-link
+            >
+            <nuxt-link
+              :to="`/administrators/${administrator.username}/update`"
+              class="btn btn-primary"
+              >Update</nuxt-link
+            >
           </div>
         </form>
       </div>
-
-      <b-container>
-        <nuxt-link to="/administrators" class="btn btn-primary">Back</nuxt-link>
-      </b-container>
     </b-container>
   </div>
 </template>

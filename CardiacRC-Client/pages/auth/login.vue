@@ -67,7 +67,7 @@ export default {
         console.log(this.$auth.person);
         // TODO redirect based on the user role
         if (this.$auth.user.groups.includes("Administrator")) {
-          this.$router.push("/administrators");
+          this.$router.push("/administrators/dashboard");
         } else if (this.$auth.user.groups.includes("Patient")) {
           this.$router.push("/patients/" + this.username + "/details");
         } else if (this.$auth.user.groups.includes("Professional")) {

@@ -1,11 +1,5 @@
 <template>
   <div class="main-div">
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-      integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-      crossorigin="anonymous"
-    />
     <Topbar />
     <b-container>
       <h1>Patient List:</h1>
@@ -22,19 +16,19 @@
             class="btn btn-primary btn-xs"
             :to="`/patients/${row.item.username}/details`"
           >
-            <i class="fas fa-clipboard-list"></i>
+            <fa :icon="['fas', 'clipboard-list']" />
           </nuxt-link>
           <nuxt-link
             class="btn btn-secondary btn-xs"
             :to="`/patients/${row.item.username}/update`"
           >
-            <i class="fas fa-pen"></i>
+            <fa :icon="['fas', 'pen']" />
           </nuxt-link>
           <button
             class="btn btn-danger btn-xs"
             @click.prevent="deletePatient(row.item.username)"
           >
-            <i class="fas fa-trash"></i>
+            <fa :icon="['fas', 'trash']" />
           </button>
         </template>
       </b-table>

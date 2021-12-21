@@ -1,9 +1,6 @@
 <template>
-  <nuxt-link
-    :to="`${card.path}`"
-    class="admin-card-link admin-card card bg-dark text-white text-center p-3"
-  >
-    <div class="">
+  <nuxt-link :to="`${card.path}`" class="admin-card-link">
+    <div class="admin-card card bg-dark text-white text-center p-3">
       <h5>{{ card.title }}</h5>
     </div>
   </nuxt-link>
@@ -21,18 +18,21 @@ export default {
 <style scoped>
 .admin-card {
   height: 150px;
-  max-width: 13rem;
+  width: 15rem;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease-in-out;
+  margin: 0px;
 }
 
 .admin-card:hover {
-  box-shadow: 0 10px 20px 10px rgba(black, 0.2);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  background-color: #252727 !important;
 }
 
 .admin-card-link {
-  padding: 0px;
+  margin: 10px 15px 10px 15px;
   text-decoration: none;
 }
 </style>
