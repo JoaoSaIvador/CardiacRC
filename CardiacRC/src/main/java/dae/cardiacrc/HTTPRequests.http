@@ -104,6 +104,11 @@ Content-Type: application/json
 GET http://localhost:8080/cardiacrc/api/administrators
 Accept: application/json
 
+### GET NUMBER OF ADMINISTRATORS
+GET http://localhost:8080/cardiacrc/api/administrators/count
+Accept: application/json
+
+
 ### GET ADMINISTRATOR DETAILS
 GET http://localhost:8080/cardiacrc/api/administrators/admin1
 Accept: application/json
@@ -113,6 +118,8 @@ PUT http://localhost:8080/cardiacrc/api/administrators/admin1
 Content-Type: application/json
 
 {
+  "oldPassword": "000",
+  "username": "jack",
   "name": "updated ADMIN",
   "password": "111",
   "email": "adminUPDATED@admin.un"

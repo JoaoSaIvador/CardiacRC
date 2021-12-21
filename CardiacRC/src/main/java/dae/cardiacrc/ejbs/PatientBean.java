@@ -47,8 +47,16 @@ public class PatientBean {
         return patient;
     }
 
-    public void updatePatient(String username, int healthNumber, String name, String password, String email) throws MyEntityNotFoundException {
+    public void updatePatient(String username, String newUsername, int healthNumber, String name, String password, String email) throws MyEntityNotFoundException, MyEntityExistsException {
         Patient patient =  findPatient(username);
+        //        if (!professional.getPassword().equals(Professional.hashPassword(password))){
+        //            throw new Exception("Incorrect password");
+        //        }
+
+        if (newUsername.equals((findPatient(newUsername)).getUsername())){
+            throw new MyEntityExistsException("There\'s already a patient with that username");
+        }
+
 
         em.lock(patient, LockModeType.OPTIMISTIC);
         patient.setName(name);

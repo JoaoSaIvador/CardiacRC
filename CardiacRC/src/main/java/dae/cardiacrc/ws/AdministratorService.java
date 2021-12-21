@@ -1,6 +1,7 @@
 package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.AdministratorDTO;
+import dae.cardiacrc.dtos.AuthDTO;
 import dae.cardiacrc.ejbs.AdministratorBean;
 import dae.cardiacrc.entities.Administrator;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
@@ -31,8 +32,8 @@ public class AdministratorService {
     private AdministratorDTO toDTO(Administrator administrator) {
         return new AdministratorDTO(
                 administrator.getUsername(),
-                administrator.getPassword(),
                 administrator.getName(),
+                administrator.getPassword(),
                 administrator.getEmail()
         );
     }
@@ -60,11 +61,19 @@ public class AdministratorService {
         return Response.ok(toDTO(administrator)).build();
     }
 
+    @GET
+    @Path("/count")
+    public Response countAdministrators(){
+        List total = administratorBean.countAdministrators();
+        return Response.ok(total).build();
+    }
+
     @PUT
     @Path("{username}")
-    public Response updateAdministrator (@PathParam("username") String username, AdministratorDTO administratorDTO) throws MyEntityNotFoundException {
+    public Response updateAdministrator (@PathParam("username") String username, AdministratorDTO administratorDTO) throws Exception {
         administratorBean.updateAdministrator(
                 username,
+                administratorDTO.getUsername(),
                 administratorDTO.getName(),
                 administratorDTO.getPassword(),
                 administratorDTO.getEmail());

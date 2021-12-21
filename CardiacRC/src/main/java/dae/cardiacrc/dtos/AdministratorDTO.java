@@ -9,10 +9,10 @@ public class AdministratorDTO {
     public AdministratorDTO() {
     }
 
-    public AdministratorDTO(String username, String password, String name, String email) {
+    public AdministratorDTO(String username, String name, String password, String email) {
         this.username = username;
-        this.password = password;
         this.name = name;
+        this.password = password;
         this.email = email;
     }
 

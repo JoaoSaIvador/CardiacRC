@@ -49,9 +49,18 @@ public class ProfessionalBean {
         return professional;
     }
 
-    public void updateProfessional(String username, int newLicenseNumber, String newName, String newPassword, String newEmail) throws MyEntityNotFoundException {
+    public void updateProfessional(String username, String newUsername, int newLicenseNumber, String newName, String newPassword, String newEmail) throws Exception {
         Professional professional = findProfessional(username);
+//        if (!professional.getPassword().equals(Professional.hashPassword(password))){
+//            throw new Exception("Incorrect password");
+//        }
+
+        if (newUsername.equals((findProfessional(newUsername)).getUsername())){
+            throw new MyEntityExistsException("There\'s already a professional with that username");
+        }
+
         em.lock(professional, LockModeType.OPTIMISTIC);
+        professional.setUsername(newUsername);
         professional.setLicenseNumber(newLicenseNumber);
         professional.setName(newName);
         professional.setEmail(newEmail);

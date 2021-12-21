@@ -1,5 +1,6 @@
 package dae.cardiacrc.ws;
 
+import dae.cardiacrc.dtos.AuthDTO;
 import dae.cardiacrc.dtos.PatientDTO;
 import dae.cardiacrc.dtos.PrescriptionDTO;
 import dae.cardiacrc.dtos.ProfessionalDTO;
@@ -92,9 +93,10 @@ public class ProfessionalService {
 
     @PUT
     @Path("{username}")
-    public Response updateProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException {
+    public Response updateProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws Exception {
         professionalBean.updateProfessional(
                 username,
+                professionalDTO.getUsername(),
                 professionalDTO.getLicenseNumber(),
                 professionalDTO.getName(),
                 professionalDTO.getPassword(),

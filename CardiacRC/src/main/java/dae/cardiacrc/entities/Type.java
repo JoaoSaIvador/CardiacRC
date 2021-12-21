@@ -5,6 +5,7 @@ import io.smallrye.common.constraint.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Table(name = "types")
 @Entity
 @SequenceGenerator(name = "type_id", sequenceName = "type_id",  initialValue = 1)
 public class Type implements Serializable {

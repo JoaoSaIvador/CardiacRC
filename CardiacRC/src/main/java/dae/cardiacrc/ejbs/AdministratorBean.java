@@ -2,6 +2,7 @@ package dae.cardiacrc.ejbs;
 
 import dae.cardiacrc.entities.Administrator;
 import dae.cardiacrc.entities.Person;
+import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
@@ -35,7 +36,7 @@ public class AdministratorBean {
         }
 
         try {
-            administrator = new Administrator(username, password, name, email);
+            administrator = new Administrator(username, name, password, email);
             em.persist(administrator);
         } catch (ConstraintViolationException e) {
             throw new MyConstraintViolationException(e);
@@ -46,6 +47,10 @@ public class AdministratorBean {
         return (List<Administrator>) em.createNamedQuery("getAllAdministrators").getResultList();
     }
 
+    public List countAdministrators(){
+        return em.createNamedQuery("countAdministrators").getResultList();
+    }
+
     public Administrator findAdministrator(String username) throws MyEntityNotFoundException {
         Administrator administrator =  em.find(Administrator.class, username);
         if(administrator == null) {
@@ -54,12 +59,20 @@ public class AdministratorBean {
         return administrator;
     }
 
-    public void updateAdministrator(String username, String password, String name, String email) throws MyEntityNotFoundException {
+    public void updateAdministrator(String username, String newUsername, String name, String newPassword, String email) throws Exception {
         Administrator administrator = findAdministrator(username);
+//        if (!administrator.getPassword().equals(Professional.hashPassword(password))){
+//            throw new Exception("Incorrect password");
+//        }
+
+        if (newUsername.equals((findAdministrator(newUsername)).getUsername())){
+            throw new MyEntityExistsException("There\'s already an administrator with that username");
+        }
 
         em.lock(administrator, LockModeType.OPTIMISTIC);
-        administrator.setPassword(password);
+        administrator.setUsername(newUsername);
         administrator.setName(name);
+        administrator.setPassword(newPassword);
         administrator.setEmail(email);
         em.merge(administrator);
     }

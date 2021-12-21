@@ -94,9 +94,10 @@ public class PatientService {
 
     @PUT
     @Path("{username}")
-    public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException {
+    public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException, MyEntityExistsException {
         patientBean.updatePatient(
                 username,
+                patientDTO.getUsername(),
                 patientDTO.getHealthNumber(),
                 patientDTO.getName(),
                 patientDTO.getPassword(),
