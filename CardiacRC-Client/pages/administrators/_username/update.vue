@@ -88,6 +88,11 @@
         </div>
 
         <div class="col-sm-4 offset-sm-4">
+          <nuxt-link
+            :to="`/administrators/${username}/details`"
+            class="btn btn-secondary"
+            >Back</nuxt-link
+          >
           <button type="reset" class="btn btn-danger">Reset</button>
           <button
             @click.prevent="updateAdministrator"
