@@ -43,11 +43,10 @@ export default {
         { title: "Professionals", total: "11", color: "bg-primary" },
         { title: "Patients", total: "12", color: "bg-primary" },
         {
-          title: "Quantitative Data Types",
+          title: "Data Types",
           total: "13",
           color: "bg-primary",
         },
-        { title: "Qualitative Data Types", total: "14", color: "bg-primary" },
       ],
     };
   },

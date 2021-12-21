@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="main-div">
     <Topbar />
-    <b-container>
+    <b-container class="page-content">
       <h2 class="mb-3 text-center">Account Details</h2>
       <form
         class="needs-validation"
@@ -95,7 +95,7 @@
           >
           <button type="reset" class="btn btn-danger">Reset</button>
           <button
-            @click.prevent="updateAdministrator"
+            @click.prevent="showConfirmation = true"
             class="btn btn-primary"
             :disabled="!isFormValid"
           >
@@ -103,12 +103,21 @@
           </button>
         </div>
       </form>
+      <PasswordConfirmation
+        v-show="showConfirmation"
+        @close-modal="showConfirmation = false"
+      />
     </b-container>
   </div>
 </template>
 
 <script>
+import PasswordConfirmation from "../../../components/PasswordConfirmation.vue";
+
 export default {
+  components: {
+    PasswordConfirmation,
+  },
   data() {
     return {
       administrator: {},
@@ -116,6 +125,7 @@ export default {
       name: null,
       email: null,
       errorMsg: false,
+      showConfirmation: false,
     };
   },
   computed: {
@@ -237,4 +247,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.main-div {
+  height: 100%;
+}
+
+.page-content {
+  height: 100%;
+}
+</style>
