@@ -80,8 +80,7 @@ public class Person implements Serializable {
     public static String hashPassword(String password) {
         char[] encoded = null;
         try {
-            ByteBuffer passwdBuffer =
-                    Charset.defaultCharset().encode(CharBuffer.wrap(password));
+            ByteBuffer passwdBuffer = Charset.defaultCharset().encode(CharBuffer.wrap(password));
             byte[] passwdBytes = passwdBuffer.array();
             MessageDigest mdEnc = MessageDigest.getInstance("SHA-256");
             mdEnc.update(passwdBytes, 0, password.toCharArray().length);

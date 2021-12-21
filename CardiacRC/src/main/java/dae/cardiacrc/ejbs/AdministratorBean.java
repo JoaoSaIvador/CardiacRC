@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import java.io.Console;
 import java.util.List;
 
 @Stateless
@@ -18,17 +19,15 @@ public class AdministratorBean {
     @PersistenceContext
     private EntityManager em;
 
-    public Person authenticate(final String username, final String password) throws
-            Exception {
+    public Person authenticate(final String username, final String password) throws Exception {
         Person person = em.find(Person.class, username);
-        if (person != null &&
-                person.getPassword().equals(Person.hashPassword(password))) {
+        if (person != null && person.getPassword().equals(Person.hashPassword(password))) {
             return person;
         }
         throw new Exception("Failed logging in with username '" + username + "': unknown username or wrong password");
     }
 
-    public void create(String username, String password, String name, String email) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String username, String name, String password, String email) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
         Administrator administrator =  em.find(Administrator.class, username);
 
         if(administrator != null) {

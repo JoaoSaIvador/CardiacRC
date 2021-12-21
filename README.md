@@ -10,7 +10,7 @@
 1. List Admins
 2. Create Admin
 3. Update Admin (self)
-4. Delete Admin
+4. Delete Admin (others)
 
 5. List Professionals
 6. Create Professional
@@ -63,7 +63,6 @@
 
 1. View Account Details
 2. Update Professional
-3. Delete Professional
 
 4. View Patient List
 5. Add Patient
