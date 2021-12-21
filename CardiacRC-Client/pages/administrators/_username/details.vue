@@ -37,11 +37,6 @@
 
           <div class="col-sm-4 offset-sm-4">
             <nuxt-link
-              :to="`/administrators/dashboard`"
-              class="btn btn-secondary"
-              >Back</nuxt-link
-            >
-            <nuxt-link
               :to="`/administrators/${administrator.username}/update`"
               class="btn btn-primary"
               >Update</nuxt-link

@@ -17,7 +17,7 @@
             >
           </li>
           <li class="nav-item">
-            <nuxt-link to="/administrators" class="nav-link active"
+            <nuxt-link to="/administrators/dashboard" class="nav-link active"
               >Administrators</nuxt-link
             >
           </li>

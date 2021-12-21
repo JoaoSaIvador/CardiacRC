@@ -29,14 +29,12 @@ export default {
   },
   data() {
     return {
-      fields: ["username", "name", "email", "actions"],
-      administrators: [],
       cardsFirstLine: [
         {
           title: "Account Details",
           path: `/administrators/${this.$auth.user.sub}/details`,
         },
-        { title: "Manage Administrators", path: "#" },
+        { title: "Manage Administrators", path: `/administrators` },
         { title: "Manage Professionals", path: "#" },
       ],
       cardsSecondLine: [
@@ -46,7 +44,6 @@ export default {
       ],
     };
   },
-  methods: {},
 };
 </script>
 
