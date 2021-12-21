@@ -2,7 +2,7 @@
   <div class="main-div">
     <Topbar />
     <b-container>
-      <h1>Professional List:</h1>
+      <h1>Manage Professionals:</h1>
       <b-table
         striped
         over
@@ -14,12 +14,6 @@
         <template v-slot:cell(actions)="row">
           <nuxt-link
             class="btn btn-primary btn-xs"
-            :to="`/professionals/${row.item.username}/details`"
-          >
-            <fa :icon="['fas', 'clipboard-list']" />
-          </nuxt-link>
-          <nuxt-link
-            class="btn btn-secondary btn-xs"
             :to="`/professionals/${row.item.username}/update`"
           >
             <fa :icon="['fas', 'pen']" />
@@ -34,9 +28,11 @@
       </b-table>
     </b-container>
     <b-container>
-      <nuxt-link to="/" class="btn btn-primary">Back</nuxt-link>
-      <nuxt-link to="/professionals/create" class="btn btn-secondary"
-        >Create a New Professional</nuxt-link
+      <nuxt-link to="/administrators/dashboard" class="btn btn-secondary"
+        >Back</nuxt-link
+      >
+      <nuxt-link to="/professionals/create" class="btn btn-primary"
+        >Create</nuxt-link
       >
     </b-container>
   </div>

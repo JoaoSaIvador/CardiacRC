@@ -35,10 +35,10 @@ export default {
           path: `/administrators/${this.$auth.user.sub}/details`,
         },
         { title: "Manage Administrators", path: `/administrators` },
-        { title: "Manage Professionals", path: "#" },
+        { title: "Manage Professionals", path: `/professionals` },
       ],
       cardsSecondLine: [
-        { title: "Manage Patients", path: "#" },
+        { title: "Manage Patients", path: `/patients` },
         { title: "Manage Quantitative Data Types", path: "#" },
         { title: "Manage Qualitative Data Types", path: "#" },
       ],

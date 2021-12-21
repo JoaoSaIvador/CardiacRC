@@ -14,12 +14,6 @@
         <template v-slot:cell(actions)="row">
           <nuxt-link
             class="btn btn-primary btn-xs"
-            :to="`/administrators/${row.item.username}/details`"
-          >
-            <fa :icon="['fas', 'clipboard-list']" />
-          </nuxt-link>
-          <nuxt-link
-            class="btn btn-secondary btn-xs"
             :to="`/administrators/${row.item.username}/update`"
           >
             <fa :icon="['fas', 'pen']" />
@@ -34,6 +28,9 @@
       </b-table>
     </b-container>
     <b-container>
+      <nuxt-link to="/administrators/dashboard" class="btn btn-secondary"
+        >Back</nuxt-link
+      >
       <nuxt-link to="/administrators/create" class="btn btn-primary"
         >Create</nuxt-link
       >

@@ -14,12 +14,6 @@
         <template v-slot:cell(actions)="row">
           <nuxt-link
             class="btn btn-primary btn-xs"
-            :to="`/patients/${row.item.username}/details`"
-          >
-            <fa :icon="['fas', 'clipboard-list']" />
-          </nuxt-link>
-          <nuxt-link
-            class="btn btn-secondary btn-xs"
             :to="`/patients/${row.item.username}/update`"
           >
             <fa :icon="['fas', 'pen']" />
@@ -34,9 +28,11 @@
       </b-table>
     </b-container>
     <b-container>
-      <nuxt-link to="/" class="btn btn-primary">Back</nuxt-link>
-      <nuxt-link to="/patients/create" class="btn btn-secondary"
-        >Create a New Patient</nuxt-link
+      <nuxt-link to="/administrators/dashboard" class="btn btn-secondary"
+        >Back</nuxt-link
+      >
+      <nuxt-link to="/patients/create" class="btn btn-primary"
+        >Create</nuxt-link
       >
     </b-container>
   </div>
@@ -46,14 +42,7 @@
 export default {
   data() {
     return {
-      fields: [
-        "username",
-        "name",
-        "email",
-        "healthNumber",
-        "associatedProfessional",
-        "actions",
-      ],
+      fields: ["username", "name", "email", "healthNumber", "actions"],
       patients: [],
     };
   },
