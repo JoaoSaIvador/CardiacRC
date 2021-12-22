@@ -1,6 +1,6 @@
 package dae.cardiacrc.ejbs;
 
-import dae.cardiacrc.entities.DataType;
+import dae.cardiacrc.entities.QuantitativeDataType;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
@@ -18,38 +18,38 @@ public class DataTypeBean {
 
     public void create(String name, String unit, int min, int max) throws MyConstraintViolationException {
         try {
-            DataType dataType = new DataType(name, unit, min, max);
-            em.persist(dataType);
+            QuantitativeDataType quantitativeDataType = new QuantitativeDataType(name, unit, min, max);
+            em.persist(quantitativeDataType);
         }catch (ConstraintViolationException e){
             throw new MyConstraintViolationException(e);
         }
     }
 
-    public DataType findDataType(int id) throws MyEntityNotFoundException {
-        DataType dataType = em.find(DataType.class, id);
-        if (dataType == null){
+    public QuantitativeDataType findDataType(int id) throws MyEntityNotFoundException {
+        QuantitativeDataType quantitativeDataType = em.find(QuantitativeDataType.class, id);
+        if (quantitativeDataType == null){
             throw new MyEntityNotFoundException("DataType not found!");
         }
-        return dataType;
+        return quantitativeDataType;
     }
 
-    public List<DataType> getAllDataTypes(){
-        return (List<DataType>) em.createNamedQuery("getAllDataTypes").getResultList();
+    public List<QuantitativeDataType> getAllDataTypes(){
+        return (List<QuantitativeDataType>) em.createNamedQuery("getAllQuantitativeDataTypes").getResultList();
     }
 
     public void updateDataType(int id, String name, String unit, int min, int max) throws MyEntityNotFoundException {
-        DataType dataType = findDataType(id);
-        em.lock(dataType, LockModeType.OPTIMISTIC);
-        dataType.setName(name);
-        dataType.setUnit(unit);
-        dataType.setMin(min);
-        dataType.setMax(max);
-        em.merge(dataType);
+        QuantitativeDataType quantitativeDataType = findDataType(id);
+        em.lock(quantitativeDataType, LockModeType.OPTIMISTIC);
+        quantitativeDataType.setName(name);
+        quantitativeDataType.setUnit(unit);
+        quantitativeDataType.setMin(min);
+        quantitativeDataType.setMax(max);
+        em.merge(quantitativeDataType);
     }
 
     public void deleteDataType(int id) throws MyEntityNotFoundException {
-        DataType dataType = findDataType(id);
-        em.remove(dataType);
+        QuantitativeDataType quantitativeDataType = findDataType(id);
+        em.remove(quantitativeDataType);
     }
 
 }

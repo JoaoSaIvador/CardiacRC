@@ -22,15 +22,15 @@ public class ObservationBean {
             throw new MyEntityExistsException("Patient does not exist!");
         }
 
-        DataType dataType = em.find(DataType.class, dataTypeId);
+        QuantitativeDataType quantitativeDataType = em.find(QuantitativeDataType.class, dataTypeId);
 
-        if(dataType == null) {
+        if(quantitativeDataType == null) {
             throw new MyEntityExistsException("Data type does not exist!");
         }
 
         try {
             Date date = new Date();
-            Observation observation = new Observation(patient, value, dataType, date);
+            Observation observation = new Observation(patient, value, quantitativeDataType, date);
             em.persist(observation);
             patient.addPatientData(observation);
         } catch (ConstraintViolationException e) {
