@@ -1,26 +1,27 @@
 <template>
-  <div class="modal-overlay" @click="$emit('close-modal')">
+  <div class="modal-overlay" @click="$emit('closeModal')">
     <div class="window" @click.stop>
-      <div class="close" @click="$emit('close-modal')">
+      <div class="close" @click="$emit('closeModal')">
         <fa :icon="['fas', 'times']" />
       </div>
       <h6>Are you sure?</h6>
       <p>Please confirm with your password:</p>
-      <div
-        class="input-group input-password"
-        :invalid-feedback="invalidPasswordFeedback"
-        :state="isPasswordValid"
-      >
+      <div class="input-group input-password">
         <b-input
           id="password"
           type="password"
-          v-model.trim="password"
+          v-model.trim="passwordConfirmation"
           placeholder="Enter your password"
-          :state="isPasswordValid"
           trim
         ></b-input>
         <div class="input-group-append">
-          <button class="btn btn-primary" type="button">Confirm</button>
+          <button
+            class="btn btn-primary"
+            type="button"
+            @click.prevent="$emit('confirmPassword', this.passwordConfirmation)"
+          >
+            Confirm
+          </button>
         </div>
       </div>
     </div>
@@ -28,7 +29,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      passwordConfirmation: null,
+    };
+  },
+};
 </script>
 
 <style scoped>

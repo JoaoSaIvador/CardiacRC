@@ -5,7 +5,7 @@
       <h2 class="mb-3 text-center">Account Details</h2>
       <form
         class="needs-validation"
-        @submit.prevent="updateAdministrator"
+        @submit.prevent="showConfirmation = true"
         :disabled="!isFormValid"
       >
         <div class="col-sm-4 offset-sm-4">
@@ -105,7 +105,8 @@
       </form>
       <PasswordConfirmation
         v-show="showConfirmation"
-        @close-modal="showConfirmation = false"
+        @closeModal="showConfirmation = false"
+        @confirmPassword="confirmPassword"
       />
     </b-container>
   </div>
@@ -126,6 +127,7 @@ export default {
       email: null,
       errorMsg: false,
       showConfirmation: false,
+      passwordConfirmation: null,
     };
   },
   computed: {
@@ -232,9 +234,10 @@ export default {
           password: this.password,
           name: this.name,
           email: this.email,
+          passwordConfirmation: this.passwordConfirmation,
         })
         .then(() => {
-          this.$router.push("/administrators");
+          this.$router.push("/administrators/dashboard");
         })
         .catch((error) => {
           this.errorMsg = error.response.data;
@@ -242,6 +245,10 @@ export default {
     },
     reset() {
       this.errorMsg = false;
+    },
+    confirmPassword(passwordConfirmation) {
+      this.passwordConfirmation = passwordConfirmation;
+      this.updatePatient();
     },
   },
 };

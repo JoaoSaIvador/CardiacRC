@@ -8,7 +8,7 @@
         @submit.prevent="updatePatient"
         :disabled="!isFormValid"
       >
-        <div class="col-sm-4 offset-sm-4">
+        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
           <b-form-group
             id="name"
             label="Name:"
@@ -26,7 +26,7 @@
           </b-form-group>
         </div>
 
-        <div class="col-sm-4 offset-sm-4">
+        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
           <b-form-group
             id="username"
             label="Username:"
@@ -44,7 +44,7 @@
           </b-form-group>
         </div>
 
-        <div class="col-sm-4 offset-sm-4">
+        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
           <b-form-group
             id="email"
             label="Email:"
@@ -62,7 +62,7 @@
           </b-form-group>
         </div>
 
-        <div class="col-sm-4 offset-sm-4">
+        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
           <b-form-group
             id="healthNumber"
             label="Health Number:"
@@ -101,7 +101,7 @@
         </div>
 
         <div>
-          <p v-show="errorMsg" class="text-danger">
+          <p v-show="errorMsg" class="update-errors text-danger">
             {{ errorMsg }}
           </p>
         </div>
@@ -136,6 +136,10 @@ export default {
   computed: {
     username() {
       return this.$route.params.username;
+    },
+
+    isAdmin() {
+      return this.$auth.user.groups.includes("Administrator");
     },
 
     invalidUsernameFeedback() {
@@ -219,23 +223,25 @@ export default {
     },
 
     isFormValid() {
-      if (!this.isUsernameValid) {
-        return false;
+      if (!this.isAdmin) {
+        if (!this.isUsernameValid) {
+          return false;
+        }
+
+        if (!this.isNameValid) {
+          return false;
+        }
+
+        if (!this.isEmailValid) {
+          return false;
+        }
+
+        if (!this.isHealthNumberValid) {
+          return false;
+        }
       }
 
       if (!this.isPasswordValid) {
-        return false;
-      }
-
-      if (!this.isNameValid) {
-        return false;
-      }
-
-      if (!this.isEmailValid) {
-        return false;
-      }
-
-      if (!this.isHealthNumberValid) {
         return false;
       }
 
@@ -274,4 +280,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.update-errors {
+  text-align: center;
+}
+</style>
