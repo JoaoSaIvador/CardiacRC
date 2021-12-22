@@ -2,7 +2,7 @@
   <div class="main-div">
     <Topbar />
     <b-container class="admin-dashboard">
-      <div class="row admin-deck">
+      <div class="row admin-counters bg-light">
         <AdminCounter
           v-for="counter in counters"
           :key="counter.title"
@@ -39,13 +39,29 @@ export default {
         { title: "Manage Qualitative Data Types", path: "#" },
       ],
       counters: [
-        { title: "Administrators", total: "10", color: "bg-primary" },
-        { title: "Professionals", total: "11", color: "bg-primary" },
-        { title: "Patients", total: "12", color: "bg-primary" },
+        {
+          title: "Administrators",
+          total: "10",
+          color: "#796aee",
+          icon: "shield-alt",
+        },
+        {
+          title: "Professionals",
+          total: "11",
+          color: "#ff7676",
+          icon: "user-md",
+        },
+        {
+          title: "Patients",
+          total: "12",
+          color: "#54e69d",
+          icon: "user",
+        },
         {
           title: "Data Types",
           total: "13",
-          color: "bg-primary",
+          color: "#ffc36d",
+          icon: "database",
         },
       ],
     };
@@ -78,10 +94,19 @@ export default {
   flex-wrap: wrap;
 }
 
-.admin-deck {
+.admin-deck,
+.admin-counters {
   justify-content: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.admin-counters {
+  margin-bottom: 50px;
+  padding-top: 30px;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 14px 28px,
+    rgba(0, 0, 0, 0.05) 0px 10px 10px;
 }
 </style>

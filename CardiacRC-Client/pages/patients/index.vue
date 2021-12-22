@@ -31,9 +31,6 @@
       <nuxt-link to="/administrators/dashboard" class="btn btn-secondary"
         >Back</nuxt-link
       >
-      <nuxt-link to="/patients/create" class="btn btn-primary"
-        >Create</nuxt-link
-      >
     </b-container>
   </div>
 </template>
