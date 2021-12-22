@@ -1,47 +1,45 @@
 <template>
-  <section class="vh-100 bg-dark">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem">
-            <div class="card-body p-5 text-center">
-              <h3 class="mb-5">Sign in</h3>
+  <section class="vh-100 primary-div">
+    <b-container class="secondary-div">
+      <b-container class="page-content bg-light text-center">
+        <h2 class="login-title">Sign in</h2>
+        <b-form @submit.prevent="onSubmit" @reset="onReset">
+          <b-form-group class="form-outline">
+            <b-input
+              name="username"
+              id="typeUsername"
+              class="form-control form-control-lg"
+              placeholder="Your username"
+              v-model.trim="username"
+              required
+            />
+            <label
+              class="form-label"
+              for="typeUsername"
+              style="text-align: center"
+              >Username</label
+            >
+          </b-form-group>
 
-              <b-form @submit.prevent="onSubmit" @reset="onReset">
-                <b-form-group class="form-outline mb-4">
-                  <b-input
-                    name="username"
-                    id="typeUsername"
-                    class="form-control form-control-lg"
-                    placeholder="Your username"
-                    v-model.trim="username"
-                    required
-                  />
-                  <label class="form-label" for="typeUsername">Username</label>
-                </b-form-group>
+          <b-form-group class="form-outline">
+            <b-input
+              name="password"
+              type="password"
+              id="typePassword"
+              class="form-control form-control-lg"
+              placeholder="Your password"
+              v-model="password"
+              required
+            />
+            <label class="form-label" for="typePassword">Password</label>
+          </b-form-group>
 
-                <b-form-group class="form-outline mb-4">
-                  <b-input
-                    name="password"
-                    type="password"
-                    id="typePassword"
-                    class="form-control form-control-lg"
-                    placeholder="Your password"
-                    v-model="password"
-                    required
-                  />
-                  <label class="form-label" for="typePassword">Password</label>
-                </b-form-group>
-
-                <button class="btn btn-primary btn-lg btn-block" type="submit">
-                  Login
-                </button>
-              </b-form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          <button class="btn btn-dark btn-lg btn-block" type="submit">
+            Login
+          </button>
+        </b-form>
+      </b-container>
+    </b-container>
   </section>
 </template>
 <script>
@@ -87,3 +85,48 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@media screen and (max-width: 650px) {
+  .page-content {
+    background-color: rgb(238, 238, 238) !important;
+    box-shadow: none;
+  }
+
+  .login-title {
+    margin: 30px 0 30px 0;
+  }
+}
+
+@media screen and (min-width: 651px) {
+  .page-content {
+    width: 500px;
+    height: 600px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 14px 28px,
+      rgba(0, 0, 0, 0.05) 0px 10px 10px;
+  }
+
+  .login-title {
+    margin: 0px 0 50px 0;
+  }
+}
+
+.primary-div {
+  height: 100%;
+  background-color: rgb(238, 238, 238);
+}
+
+.secondary-div {
+  height: calc(100% - 56px);
+  display: flex;
+  align-items: center;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>
