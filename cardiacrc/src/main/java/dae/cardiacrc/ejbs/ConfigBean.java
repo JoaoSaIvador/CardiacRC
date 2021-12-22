@@ -41,6 +41,16 @@ public class ConfigBean {
             prescriptionBean.create("marcopolo","joaosalvador","testeNutricao","prescricao2",9);
             prescriptionBean.create("carlossantos","joaosalvador","testeFisico","prescricao3",9);
             administratorBean.create("jacksparrow", "Jack Sparrow", "123456", "jack.sparrow@mail.com");
+            administratorBean.create("admin1", "Admin 1", "123456", "admin1@mail.com");
+            administratorBean.create("admin2", "Admin 2", "123456", "admin2@mail.com");
+            administratorBean.create("admin3", "Admin 3", "123456", "admin3@mail.com");
+            administratorBean.create("admin4", "Admin 4", "123456", "admin4@mail.com");
+            administratorBean.create("admin5", "Admin 5", "123456", "admin5@mail.com");
+            administratorBean.create("admin6", "Admin 6", "123456", "admin6@mail.com");
+            administratorBean.create("admin7", "Admin 7", "123456", "admin7@mail.com");
+            administratorBean.create("admin8", "Admin 8", "123456", "admin8@mail.com");
+            administratorBean.create("admin9", "Admin 9", "123456", "admin9@mail.com");
+            administratorBean.create("admin10", "Admin 10", "123456", "admin10@mail.com");
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }

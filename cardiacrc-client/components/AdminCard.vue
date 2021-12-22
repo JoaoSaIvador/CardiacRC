@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="`${card.path}`" class="admin-card-link p-4">
+  <nuxt-link :to="`${card.path}`" class="admin-card-link">
     <div class="admin-card card bg-light text-dark text-center p-3">
       <h5>{{ card.title }}</h5>
     </div>
@@ -37,5 +37,7 @@ export default {
 
 .admin-card-link {
   text-decoration: none;
+  padding: 0;
+  margin: 24px;
 }
 </style>

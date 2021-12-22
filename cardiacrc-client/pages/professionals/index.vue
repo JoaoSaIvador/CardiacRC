@@ -1,7 +1,7 @@
 <template>
   <div class="primary-div">
     <Topbar />
-    <ManageUserTable
+    <UserTable
       :items="professionals"
       :fields="fields"
       group="professionals"
@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import ManageUserTable from "../../components/ManageUserTable.vue";
+import UserTable from "../../components/UserTable.vue";
 
 export default {
   components: {
-    ManageUserTable,
+    UserTable,
   },
   data() {
     return {
