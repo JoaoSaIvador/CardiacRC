@@ -5,7 +5,7 @@
       <h2 class="mb-3 text-center">Account Details</h2>
       <form
         class="needs-validation"
-        @submit.prevent="updateAdministrator"
+        @submit.prevent="showConfirmation = true"
         :disabled="!isFormValid"
       >
         <div class="col-sm-4 offset-sm-4">
