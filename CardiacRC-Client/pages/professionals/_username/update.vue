@@ -1,38 +1,103 @@
 <template>
-<div >
-  <Topbar/>
-  <b-container>
-    <h2 class="mb-3 text-center">Update Professional</h2>
-    <form class="needs-validation" @submit.prevent="updateProfessional" :disabled="!isFormValid">
-
-      <div class="col-sm-4 offset-sm-4">
-        <b-form-group id="name" label="Name:" label-for="name" :invalid-feedback="invalidNameFeedback" :state="isNameValid">
-          <b-input id="name" v-model.trim="name" placeholder="Enter your name" :state="isNameValid" trim></b-input>
-        </b-form-group>
-      </div>
-
+  <div>
+    <Topbar />
+    <b-container>
+      <h2 class="mb-3 text-center">Update Professional</h2>
+      <form
+        class="needs-validation"
+        @submit.prevent="updateProfessional"
+        :disabled="!isFormValid"
+      >
         <div class="col-sm-4 offset-sm-4">
-          <b-form-group id="username" label="Username:" label-for="username" :invalid-feedback="invalidUsernameFeedback" :state="isUsernameValid">
-            <b-input id="username" v-model.trim="username" placeholder="Enter your username" :state="isUsernameValid" trim></b-input>
+          <b-form-group
+            id="name"
+            label="Name:"
+            label-for="name"
+            :invalid-feedback="invalidNameFeedback"
+            :state="isNameValid"
+          >
+            <b-input
+              id="name"
+              v-model.trim="name"
+              placeholder="Enter your name"
+              :state="isNameValid"
+              trim
+            ></b-input>
           </b-form-group>
         </div>
 
         <div class="col-sm-4 offset-sm-4">
-          <b-form-group id="password" label="Password:" label-for="password" :invalid-feedback="invalidPasswordFeedback" :state="isPasswordValid">
-            <b-input id="password" type="password" v-model.trim="password" placeholder="Enter your password" :state="isPasswordValid" trim></b-input>
+          <b-form-group
+            id="username"
+            label="Username:"
+            label-for="username"
+            :invalid-feedback="invalidUsernameFeedback"
+            :state="isUsernameValid"
+          >
+            <b-input
+              id="username"
+              v-model.trim="username"
+              placeholder="Enter your username"
+              :state="isUsernameValid"
+              trim
+            ></b-input>
           </b-form-group>
         </div>
 
         <div class="col-sm-4 offset-sm-4">
-            <b-form-group id="email" label="Email:" label-for="email" :state="isEmailValid">
-              <b-input ref="email" v-model.trim="email" type="email" :state="isEmailValid"  placeholder="Enter your e-mail" trim></b-input>
-            </b-form-group>
+          <b-form-group
+            id="email"
+            label="Email:"
+            label-for="email"
+            :state="isEmailValid"
+          >
+            <b-input
+              ref="email"
+              v-model.trim="email"
+              type="email"
+              :state="isEmailValid"
+              placeholder="Enter your e-mail"
+              trim
+            ></b-input>
+          </b-form-group>
         </div>
 
         <div class="col-sm-4 offset-sm-4">
-            <b-form-group id="licenseNumber" label="License Number:" label-for="licenseNumber" :invalid-feedback="invalidLicenseNumberFeedback" :state="isLicenseNumberValid">
-              <b-input id="licenseNumber" type="number" v-model.trim="licenseNumber" placeholder="Enter your license number" :state="isLicenseNumberValid" trim></b-input>
-            </b-form-group>
+          <b-form-group
+            id="licenseNumber"
+            label="License Number:"
+            label-for="licenseNumber"
+            :invalid-feedback="invalidLicenseNumberFeedback"
+            :state="isLicenseNumberValid"
+          >
+            <b-input
+              id="licenseNumber"
+              type="number"
+              v-model.trim="licenseNumber"
+              placeholder="Enter your license number"
+              :state="isLicenseNumberValid"
+              trim
+            ></b-input>
+          </b-form-group>
+        </div>
+
+        <div class="col-sm-4 offset-sm-4">
+          <b-form-group
+            id="password"
+            label="Password:"
+            label-for="password"
+            :invalid-feedback="invalidPasswordFeedback"
+            :state="isPasswordValid"
+          >
+            <b-input
+              id="password"
+              type="password"
+              v-model.trim="password"
+              placeholder="Enter your password"
+              :state="isPasswordValid"
+              trim
+            ></b-input>
+          </b-form-group>
         </div>
 
         <div>
@@ -42,168 +107,171 @@
         </div>
 
         <div class="col-sm-4 offset-sm-4">
-          <nuxt-link to="/professionals" class="btn btn-primary" >Back</nuxt-link>
           <button type="reset" class="btn btn-danger">Reset</button>
-          <button @click.prevent="updateProfessional" class="btn btn-secondary" :disabled="!isFormValid">Update</button>
+          <button
+            @click.prevent="updateProfessional"
+            class="btn btn-primary"
+            :disabled="!isFormValid"
+          >
+            Update
+          </button>
         </div>
-    </form>
-  </b-container>
-</div>
+      </form>
+    </b-container>
+  </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        professional: {},
-        password: null,
-        name: null,
-        email: null,
-        licenseNumber: null,
-        errorMsg: false
-      }
+export default {
+  data() {
+    return {
+      professional: {},
+      password: null,
+      name: null,
+      email: null,
+      licenseNumber: null,
+      errorMsg: false,
+    };
+  },
+  computed: {
+    username() {
+      return this.$route.params.username;
     },
-    computed: {
-        username() {
-            return this.$route.params.username
-        },
 
-        invalidUsernameFeedback () {
+    invalidUsernameFeedback() {
       if (!this.username) {
-          return null
+        return null;
       }
-      let usernameLen = this.username.length
+      let usernameLen = this.username.length;
       if (usernameLen < 3 || usernameLen > 15) {
-          return 'The username must be between [3, 15] characters.'
+        return "The username must be between [3, 15] characters.";
       }
 
-      return ''
+      return "";
     },
 
-    isUsernameValid () {
+    isUsernameValid() {
       if (this.invalidUsernameFeedback === null) {
-          return null
+        return null;
       }
-      return this.invalidUsernameFeedback === ''
+      return this.invalidUsernameFeedback === "";
     },
 
-    invalidPasswordFeedback () {
-        if (!this.password) {
-            return null
-        }
-        let passwordLen = this.password.length
-        if (passwordLen < 6 || passwordLen > 20) {
-            return 'The password must be between [6, 20] characters.'
-        }
-        return ''
+    invalidPasswordFeedback() {
+      if (!this.password) {
+        return null;
+      }
+      let passwordLen = this.password.length;
+      if (passwordLen < 6 || passwordLen > 20) {
+        return "The password must be between [6, 20] characters.";
+      }
+      return "";
     },
 
-    isPasswordValid () {
+    isPasswordValid() {
       if (this.invalidPasswordFeedback === null) {
-        return null
+        return null;
       }
-      return this.invalidPasswordFeedback === ''
+      return this.invalidPasswordFeedback === "";
     },
 
-    invalidNameFeedback () {
-        if (!this.name) {
-            return null
-        }
-        let nameLen = this.name.length
-        if (nameLen < 3 || nameLen > 25) {
-            return 'The name must be between [3, 25] characters.'
-        }
-        return ''
+    invalidNameFeedback() {
+      if (!this.name) {
+        return null;
+      }
+      let nameLen = this.name.length;
+      if (nameLen < 3 || nameLen > 25) {
+        return "The name must be between [3, 25] characters.";
+      }
+      return "";
     },
 
-    isNameValid () {
+    isNameValid() {
       if (this.invalidNameFeedback === null) {
-          return null
+        return null;
       }
-      return this.invalidNameFeedback === ''
+      return this.invalidNameFeedback === "";
     },
 
-    isEmailValid () {
-        if (!this.email) {
-            return null
-        }
-        return this.$refs.email.checkValidity()
+    isEmailValid() {
+      if (!this.email) {
+        return null;
+      }
+      return this.$refs.email.checkValidity();
     },
 
-    invalidLicenseNumberFeedback () {
-        if (!this.licenseNumber) {
-            return null
-        }
-        let licenseNumberLen = this.licenseNumber.length
-        if (licenseNumberLen != 9) {
-            return 'THe health number must have 9 digits.'
-        }
-        return ''
+    invalidLicenseNumberFeedback() {
+      if (!this.licenseNumber) {
+        return null;
+      }
+      let licenseNumberLen = this.licenseNumber.length;
+      if (licenseNumberLen != 9) {
+        return "THe health number must have 9 digits.";
+      }
+      return "";
     },
 
-    isLicenseNumberValid () {
+    isLicenseNumberValid() {
       if (this.invalidLicenseNumberFeedback === null) {
-          return null
+        return null;
       }
-      return this.invalidLicenseNumberFeedback === ''
+      return this.invalidLicenseNumberFeedback === "";
     },
 
-    isFormValid () {
-        if (! this.isUsernameValid) {
-              return false
-        }
+    isFormValid() {
+      if (!this.isUsernameValid) {
+        return false;
+      }
 
-        if (! this.isPasswordValid) {
-            return false
-        }
+      if (!this.isPasswordValid) {
+        return false;
+      }
 
-        if (! this.isNameValid) {
-            return false
-        }
+      if (!this.isNameValid) {
+        return false;
+      }
 
-        if (! this.isEmailValid) {
-            return false
-        }
+      if (!this.isEmailValid) {
+        return false;
+      }
 
-        if (! this.isLicenseNumberValid) {
-            return false
-        }
+      if (!this.isLicenseNumberValid) {
+        return false;
+      }
 
-        return true
-    }
+      return true;
     },
-    created() {
-        this.$axios.$get(`/api/professionals/${this.username}`)
-            .then(patient => {
-                this.patient = patient || {}
-                this.name = patient.name
-                this.email = patient.email
-                this.licenseNumber = patient.licenseNumber
-            })
+  },
+  created() {
+    this.$axios.$get(`/api/professionals/${this.username}`).then((patient) => {
+      this.patient = patient || {};
+      this.name = patient.name;
+      this.email = patient.email;
+      this.licenseNumber = patient.licenseNumber;
+    });
+  },
+  methods: {
+    updateProfessional() {
+      this.$axios
+        .$put(`/api/professionals/${this.username}`, {
+          username: this.username,
+          password: this.password,
+          name: this.name,
+          email: this.email,
+          licenseNumber: this.licenseNumber,
+        })
+        .then(() => {
+          this.$router.push("/professionals");
+        })
+        .catch((error) => {
+          this.errorMsg = error.response.data;
+        });
     },
-    methods: {
-        updateProfessional() {
-            this.$axios.$put(`/api/professionals/${this.username}`, {
-                username: this.username,
-                password: this.password,
-                name: this.name,
-                email: this.email,
-                licenseNumber: this.licenseNumber
-            })
-            .then(() => {
-            this.$router.push('/professionals')
-            })
-            .catch(error => {
-                this.errorMsg = error.response.data
-            })
-        },
-        reset () {
-          this.errorMsg = false
-        }
-    }
-}
+    reset() {
+      this.errorMsg = false;
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
