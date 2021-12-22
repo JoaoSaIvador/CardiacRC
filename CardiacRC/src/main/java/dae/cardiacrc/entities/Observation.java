@@ -24,7 +24,7 @@ public class Observation {
     @ManyToOne
     @JoinColumn(name = "data_type")
     @NotNull
-    private DataType dataType;
+    private QuantitativeDataType quantitativeDataType;
 
     @NotNull
     private Date date;
@@ -35,10 +35,10 @@ public class Observation {
     public Observation() {
     }
 
-    public Observation(Patient patient, int value, DataType dataType, Date date) {
+    public Observation(Patient patient, int value, QuantitativeDataType quantitativeDataType, Date date) {
         this.patient = patient;
         this.value = value;
-        this.dataType = dataType;
+        this.quantitativeDataType = quantitativeDataType;
         this.date = date;
     }
 
@@ -62,12 +62,12 @@ public class Observation {
         this.value = value;
     }
 
-    public DataType getDataType() {
-        return dataType;
+    public QuantitativeDataType getDataType() {
+        return quantitativeDataType;
     }
 
-    public void setDataType(DataType dataType) {
-        this.dataType = dataType;
+    public void setDataType(QuantitativeDataType quantitativeDataType) {
+        this.quantitativeDataType = quantitativeDataType;
     }
 
     public Date getDate() {
