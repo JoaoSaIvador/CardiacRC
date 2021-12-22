@@ -1,21 +1,17 @@
 <template>
-  <div>
+  <div class="primary-div">
     <Topbar />
-    <b-container>
-      <div>
-        <h2 class="mb-3 text-center">Account Details</h2>
-        <form
-          class="needs-validation"
-          @submit.prevent="updatePatient"
-          :disabled="!isFormValid"
-        >
-          <div class="col-sm-4 offset-sm-4">
+    <b-container class="secondary-div">
+      <b-container class="page-content bg-light">
+        <h2 class="details-title text-center">Account Details</h2>
+        <form>
+          <div class="details-input">
             <b-form-group id="name" label="Name:" label-for="name">
               <b-input id="name" :value="administrator.name" readonly></b-input>
             </b-form-group>
           </div>
 
-          <div class="col-sm-4 offset-sm-4">
+          <div class="details-input">
             <b-form-group id="username" label="Username:" label-for="username">
               <b-input
                 id="username"
@@ -25,7 +21,7 @@
             </b-form-group>
           </div>
 
-          <div class="col-sm-4 offset-sm-4">
+          <div class="details-input">
             <b-form-group id="email" label="Email:" label-for="email">
               <b-input
                 id="email"
@@ -35,18 +31,24 @@
             </b-form-group>
           </div>
 
-          <div class="col-sm-4 offset-sm-4">
-            <nuxt-link to="/administrators/dashboard" class="btn btn-secondary"
-              >Back</nuxt-link
+          <div class="button-group">
+            <b-button
+              class="details-button"
+              variant="outline-dark"
+              @click="() => this.$router.back()"
             >
-            <nuxt-link
+              Back
+            </b-button>
+            <b-button
+              class="details-button"
+              variant="dark"
               :to="`/administrators/${administrator.username}/update`"
-              class="btn btn-primary"
-              >Update</nuxt-link
             >
+              Update
+            </b-button>
           </div>
         </form>
-      </div>
+      </b-container>
     </b-container>
   </div>
 </template>

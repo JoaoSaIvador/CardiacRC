@@ -1,113 +1,118 @@
 <template>
-  <div class="main-div">
+  <div class="primary-div">
     <Topbar />
-    <b-container class="page-content">
-      <h2 class="mb-3 text-center">Account Details</h2>
-      <form
-        class="needs-validation"
-        @submit.prevent="showConfirmation = true"
-        :disabled="!isFormValid"
-      >
-        <div class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="name"
-            label="Name:"
-            label-for="name"
-            :invalid-feedback="invalidNameFeedback"
-            :state="isNameValid"
-          >
-            <b-input
+
+    <b-container class="secondary-div">
+      <b-container class="page-content bg-light">
+        <h2 class="details-title text-center">Account Details</h2>
+        <form
+          class="needs-validation"
+          @submit.prevent="showConfirmation = true"
+          :disabled="!isFormValid"
+        >
+          <div class="details-input">
+            <b-form-group
               id="name"
-              v-model.trim="name"
-              placeholder="Enter your name"
+              label="Name:"
+              label-for="name"
+              :invalid-feedback="invalidNameFeedback"
               :state="isNameValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                id="name"
+                v-model.trim="name"
+                placeholder="Enter your name"
+                :state="isNameValid"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="username"
-            label="Username:"
-            label-for="username"
-            :invalid-feedback="invalidUsernameFeedback"
-            :state="isUsernameValid"
-          >
-            <b-input
+          <div class="details-input">
+            <b-form-group
               id="username"
-              v-model.trim="username"
-              placeholder="Enter your username"
+              label="Username:"
+              label-for="username"
+              :invalid-feedback="invalidUsernameFeedback"
               :state="isUsernameValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                id="username"
+                v-model.trim="username"
+                placeholder="Enter your username"
+                :state="isUsernameValid"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="email"
-            label="Email:"
-            label-for="email"
-            :state="isEmailValid"
-          >
-            <b-input
-              ref="email"
-              v-model.trim="email"
-              type="email"
+          <div class="details-input">
+            <b-form-group
+              id="email"
+              label="Email:"
+              label-for="email"
               :state="isEmailValid"
-              placeholder="Enter your e-mail"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                ref="email"
+                v-model.trim="email"
+                type="email"
+                :state="isEmailValid"
+                placeholder="Enter your e-mail"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="password"
-            label="Password:"
-            label-for="password"
-            :invalid-feedback="invalidPasswordFeedback"
-            :state="isPasswordValid"
-          >
-            <b-input
+          <div class="details-input">
+            <b-form-group
               id="password"
-              type="password"
-              v-model.trim="password"
-              placeholder="Enter your password"
+              label="Password:"
+              label-for="password"
+              :invalid-feedback="invalidPasswordFeedback"
               :state="isPasswordValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                id="password"
+                type="password"
+                v-model.trim="password"
+                placeholder="Enter your password"
+                :state="isPasswordValid"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div>
-          <p v-show="errorMsg" class="text-danger">
-            {{ errorMsg }}
-          </p>
-        </div>
+          <div>
+            <p v-show="errorMsg" class="text-danger">
+              {{ errorMsg }}
+            </p>
+          </div>
 
-        <div class="col-sm-4 offset-sm-4">
-          <nuxt-link
-            :to="`/administrators/${username}/details`"
-            class="btn btn-secondary"
-            >Back</nuxt-link
-          >
-          <button type="reset" class="btn btn-danger">Reset</button>
-          <button
-            @click.prevent="showConfirmation = true"
-            class="btn btn-primary"
-            :disabled="!isFormValid"
-          >
-            Save
-          </button>
-        </div>
-      </form>
-      <PasswordConfirmation
-        v-show="showConfirmation"
-        @closeModal="showConfirmation = false"
-        @confirmPassword="confirmPassword"
-      />
+          <div class="button-group">
+            <b-button
+              class="details-button"
+              variant="outline-dark"
+              @click="() => this.$router.back()"
+            >
+              Back
+            </b-button>
+            <b-button
+              class="details-button"
+              variant="dark"
+              :disabled="!isFormValid"
+              @click.prevent="showConfirmation = true"
+            >
+              Save
+            </b-button>
+          </div>
+        </form>
+        <PasswordConfirmation
+          v-show="showConfirmation"
+          @closeModal="showConfirmation = false"
+          @confirmPassword="confirmPassword"
+        />
+      </b-container>
     </b-container>
   </div>
 </template>
@@ -254,12 +259,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.main-div {
-  height: 100%;
-}
-
-.page-content {
-  height: 100%;
-}
-</style>
+<style scoped></style>

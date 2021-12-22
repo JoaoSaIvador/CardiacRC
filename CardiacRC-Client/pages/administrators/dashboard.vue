@@ -1,5 +1,5 @@
 <template>
-  <div class="main-div">
+  <div class="primary-div">
     <Topbar />
     <b-container class="admin-dashboard">
       <div class="row admin-counters bg-light">
@@ -82,10 +82,6 @@ export default {
   }
 }
 
-.main-div {
-  height: 100%;
-}
-
 .admin-dashboard {
   height: calc(100% - 56px);
   display: flex;
@@ -104,8 +100,8 @@ export default {
 
 .admin-counters {
   margin-bottom: 50px;
-  padding-top: 30px;
   border-radius: 20px;
+  align-items: center;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 14px 28px,
     rgba(0, 0, 0, 0.05) 0px 10px 10px;
 }

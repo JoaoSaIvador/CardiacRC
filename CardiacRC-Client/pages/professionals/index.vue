@@ -1,48 +1,31 @@
 <template>
-  <div class="main-div">
+  <div class="primary-div">
     <Topbar />
-    <b-container>
-      <h1>Manage Professionals:</h1>
-      <b-table
-        striped
-        over
-        outlined
-        :items="professionals"
-        :fields="fields"
-        class="mt-3"
-      >
-        <template v-slot:cell(actions)="row">
-          <nuxt-link
-            class="btn btn-primary btn-xs"
-            :to="`/professionals/${row.item.username}/update`"
-          >
-            <fa :icon="['fas', 'pen']" />
-          </nuxt-link>
-          <button
-            class="btn btn-danger btn-xs"
-            @click.prevent="deleteProfessional(row.item.username)"
-          >
-            <fa :icon="['fas', 'trash']" />
-          </button>
-        </template>
-      </b-table>
-    </b-container>
-    <b-container>
-      <nuxt-link to="/administrators/dashboard" class="btn btn-secondary"
-        >Back</nuxt-link
-      >
-      <nuxt-link to="/professionals/create" class="btn btn-primary"
-        >Create</nuxt-link
-      >
-    </b-container>
+    <ManageUserTable
+      :items="professionals"
+      :fields="fields"
+      group="professionals"
+      @delete="deleteProfessional"
+    />
   </div>
 </template>
 
 <script>
+import ManageUserTable from "../../components/ManageUserTable.vue";
+
 export default {
+  components: {
+    ManageUserTable,
+  },
   data() {
     return {
-      fields: ["username", "name", "email", "licenseNumber", "actions"],
+      fields: [
+        { key: "username", sortable: true },
+        { key: "name", sortable: true },
+        { key: "email", sortable: true },
+        { key: "licenseNumber", sortable: true },
+        { key: "actions", sortable: false },
+      ],
       professionals: [],
     };
   },

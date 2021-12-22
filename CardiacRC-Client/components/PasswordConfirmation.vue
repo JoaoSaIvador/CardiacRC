@@ -15,13 +15,12 @@
           trim
         ></b-input>
         <div class="input-group-append">
-          <button
-            class="btn btn-primary"
-            type="button"
+          <b-button
+            variant="dark"
             @click.prevent="$emit('confirmPassword', this.passwordConfirmation)"
           >
             Confirm
-          </button>
+          </b-button>
         </div>
       </div>
     </div>
