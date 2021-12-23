@@ -1,6 +1,5 @@
 <template>
   <div class="primary-div">
-    <Topbar />
     <UserTable
       :items="administrators"
       :fields="fields"

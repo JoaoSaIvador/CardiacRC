@@ -1,19 +1,16 @@
 <template>
-  <div class="primary-div">
-    <Topbar />
-    <b-container class="admin-dashboard">
-      <div class="row admin-counters bg-light">
-        <AdminCounter
-          v-for="counter in counters"
-          :key="counter.title"
-          :counter="counter"
-        />
-      </div>
-      <div class="admin-deck card-deck">
-        <AdminCard v-for="card in cards" :key="card.title" :card="card" />
-      </div>
-    </b-container>
-  </div>
+  <b-container class="admin-dashboard">
+    <div class="row admin-counters bg-light">
+      <AdminCounter
+        v-for="counter in counters"
+        :key="counter.title"
+        :counter="counter"
+      />
+    </div>
+    <div class="admin-deck card-deck">
+      <AdminCard v-for="card in cards" :key="card.title" :card="card" />
+    </div>
+  </b-container>
 </template>
 
 <script>
@@ -76,14 +73,8 @@ export default {
   }
 }
 
-@media screen and (min-width: 992px) {
-  .navbar {
-    margin-bottom: 0;
-  }
-}
-
 .admin-dashboard {
-  height: calc(100% - 56px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

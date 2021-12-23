@@ -30,9 +30,3 @@
 <script>
 export default {};
 </script>
-
-<style>
-.navbar {
-  margin-bottom: 50px;
-}
-</style>

@@ -1,6 +1,5 @@
 <template>
   <div class="primary-div">
-    <Topbar />
     <b-container class="secondary-div">
       <b-container class="page-content bg-light">
         <h2 class="details-title text-center">Account Details</h2>

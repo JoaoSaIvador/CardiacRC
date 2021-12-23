@@ -1,6 +1,4 @@
-<template>
-  <Topbar />
-</template>
+<template></template>
 
 <script>
 export default {};
@@ -21,10 +19,6 @@ body,
   #__layout {
     height: 100%;
     width: 100%;
-  }
-
-  .navbar {
-    margin-bottom: 0;
   }
 }
 
@@ -61,6 +55,10 @@ body,
   .details-title {
     margin: 0px 0 50px 0;
   }
+}
+
+.navbar {
+  margin-bottom: 50px;
 }
 
 .primary-div {

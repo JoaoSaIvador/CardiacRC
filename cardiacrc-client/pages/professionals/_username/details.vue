@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Topbar />
     <b-container class="page-body">
       <div class="d-md-flex h-md-100">
         <div class="col-md-6 h-md-100">

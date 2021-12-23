@@ -1,6 +1,5 @@
 <template>
   <div class="primary-div">
-    <Topbar />
     <UserDetails :user="administrator" group="administrators" />
   </div>
 </template>

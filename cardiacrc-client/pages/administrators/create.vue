@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Topbar />
     <b-container>
       <h2 class="mb-3 text-center">Create Administrator</h2>
       <form

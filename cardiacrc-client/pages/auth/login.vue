@@ -44,6 +44,7 @@
 </template>
 <script>
 export default {
+  layout: "login",
   auth: false,
   data() {
     return {
@@ -118,7 +119,7 @@ export default {
 }
 
 .secondary-div {
-  height: calc(100% - 56px);
+  height: 100%;
   display: flex;
   align-items: center;
 }
