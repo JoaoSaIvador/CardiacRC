@@ -5,7 +5,7 @@ import io.smallrye.common.constraint.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "quanlitativedatatypes")
+@Table(name = "qualitativedatatypes")
 @NamedQueries({
         @NamedQuery(
                 name = "getAllQualitativeDataTypes",
@@ -74,7 +74,7 @@ public class QualitativeDataType implements Serializable {
         this.max = max;
     }
 
-    public QuantitativeDataType getQuantitativeDataTypes() {
+    public QuantitativeDataType getQuantitativeDataType() {
         return quantitativeDataType;
     }
 

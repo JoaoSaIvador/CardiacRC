@@ -1,5 +1,6 @@
 package dae.cardiacrc.ejbs;
 
+import dae.cardiacrc.entities.QualitativeDataType;
 import dae.cardiacrc.entities.QuantitativeDataType;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
@@ -40,16 +41,27 @@ public class QuantityDataTypeBean {
     public void update(int id, String name, String unit, int min, int max) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = findDataType(id);
         em.lock(quantitativeDataType, LockModeType.OPTIMISTIC);
-        quantitativeDataType.setName(name);
-        quantitativeDataType.setUnit(unit);
-        quantitativeDataType.setMin(min);
-        quantitativeDataType.setMax(max);
+        if (name != null){
+            quantitativeDataType.setName(name);
+        }
+        if (unit != null){
+            quantitativeDataType.setUnit(unit);
+        }
+        if (min != -1){
+            quantitativeDataType.setMin(min);
+        }
+        if (max != -1){
+            quantitativeDataType.setMax(max);
+        }
         em.merge(quantitativeDataType);
     }
 
     public void delete(int id) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = findDataType(id);
+        for (QualitativeDataType qualitativeDataType : quantitativeDataType.getDataTypes()) {
+            em.remove(qualitativeDataType);
+        }
+
         em.remove(quantitativeDataType);
     }
-
 }

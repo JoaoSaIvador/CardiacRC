@@ -4,6 +4,7 @@ import dae.cardiacrc.entities.QualitativeDataType;
 import dae.cardiacrc.entities.QuantitativeDataType;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,11 +23,17 @@ public class QualityDataTypeBean {
             throw new MyEntityNotFoundException("Datatype not found!");
         }
         try {
+            if (dataType.getMin() > min){
+                throw new MyIllegalArgumentException("Invalid minimum for qualitative dataType!");
+            }
+            if (dataType.getMax() < max){
+                throw new MyIllegalArgumentException("Invalid maximum for qualitative dataType!");
+            }
             QualitativeDataType qualitativeDataType = new QualitativeDataType(name,min,max,dataType);
             dataType.addQualityDataType(qualitativeDataType);
             em.persist(qualitativeDataType);
-        }catch (ConstraintViolationException e){
-            throw new MyConstraintViolationException(e);
+        }catch (ConstraintViolationException | MyIllegalArgumentException e){
+            throw new MyConstraintViolationException((ConstraintViolationException) e);
         }
     }
 
@@ -38,18 +45,36 @@ public class QualityDataTypeBean {
         return qualitativeDataType;
     }
 
-    public void update(int id, String name, int min, int max) throws MyEntityNotFoundException {
-        QualitativeDataType qualitativeDataType = findQualityDataType(id);
+    public void update(int dataTypeId, int qualityid, String name, int min, int max) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        QualitativeDataType qualitativeDataType = findQualityDataType(qualityid);
+        QuantitativeDataType dataType = em.find(QuantitativeDataType.class,dataTypeId);
+
+        if (!dataType.getDataTypes().contains(qualitativeDataType)){
+            throw new MyIllegalArgumentException("Qualitative dataType not found in this dataType!");
+        }
+
         em.lock(qualitativeDataType, LockModeType.OPTIMISTIC);
-        qualitativeDataType.setName(name);
-        qualitativeDataType.setMin(min);
-        qualitativeDataType.setMax(max);
+        if (name != null){
+            qualitativeDataType.setName(name);
+        }
+        if (min != -1 && min > dataType.getMin()){
+            qualitativeDataType.setMin(min);
+        }
+        if (max != -1 && max < dataType.getMax()){
+            qualitativeDataType.setMax(max);
+        }
         em.merge(qualitativeDataType);
     }
 
-    public void delete(int id) throws MyEntityNotFoundException {
-        QualitativeDataType qualitativeDataType = findQualityDataType(id);
-        qualitativeDataType.getQuantitativeDataTypes().removeQualityDataType(qualitativeDataType);
+    public void delete(int dataTypeId, int qualitativeID) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        QualitativeDataType qualitativeDataType = findQualityDataType(qualitativeID);
+
+        QuantitativeDataType dataType = em.find(QuantitativeDataType.class,dataTypeId);
+        if (!dataType.getDataTypes().contains(qualitativeDataType)){
+            throw new MyIllegalArgumentException("Qualitative dataType not found in this dataType!");
+        }
+
+        qualitativeDataType.getQuantitativeDataType().removeQualityDataType(qualitativeDataType);
         em.remove(qualitativeDataType);
     }
 }

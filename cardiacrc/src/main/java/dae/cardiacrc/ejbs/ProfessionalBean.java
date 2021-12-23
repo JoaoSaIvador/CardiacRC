@@ -1,5 +1,6 @@
 package dae.cardiacrc.ejbs;
 
+import dae.cardiacrc.entities.Person;
 import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.entities.Type;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
@@ -50,14 +51,15 @@ public class ProfessionalBean {
         return professional;
     }
 
-    public void update(String username, String password, int licenseNumber, String name, String newPassword, String email) throws MyIllegalArgumentException, MyEntityNotFoundException {
-        Professional professional = findProfessional(username);
-        if (!professional.getPassword().equals(Professional.hashPassword(password))){
+    public void update(String authUsername, String professionalUsername, String password, int licenseNumber, String name, String newPassword, String email) throws MyIllegalArgumentException, MyEntityNotFoundException {
+        Person person = em.find(Person.class, authUsername);
+        if (!person.getPassword().equals(Person.hashPassword(password))){
             throw new MyIllegalArgumentException("Incorrect password");
         }
+        Professional professional = em.find(Professional.class, professionalUsername);
 
         em.lock(professional, LockModeType.OPTIMISTIC);
-        if (licenseNumber == 0){
+        if (licenseNumber > 0){
             professional.setLicenseNumber(licenseNumber);
         }
         if (name != null){

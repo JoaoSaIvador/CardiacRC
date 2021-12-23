@@ -16,8 +16,11 @@ import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,8 @@ import java.util.stream.Collectors;
 public class PatientService {
     @EJB
     private PatientBean patientBean;
+    @Context
+    private SecurityContext securityContext;
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/patients/”
@@ -95,7 +100,9 @@ public class PatientService {
     @PUT
     @Path("{username}")
     public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Principal principal = securityContext.getUserPrincipal();
         patientBean.update(
+                principal.getName(),
                 username,
                 patientDTO.getPasswordConfirmation(),
                 patientDTO.getHealthNumber(),
