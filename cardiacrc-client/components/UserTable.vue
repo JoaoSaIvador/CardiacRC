@@ -10,7 +10,7 @@
           <b-button
             v-if="group != 'patients'"
             variant="dark"
-            :to="`/${group}/create`"
+            :to="`${group}/create`"
           >
             Create
           </b-button>
@@ -40,7 +40,7 @@
           v-model="currentPage"
           :total-rows="items.length"
           :per-page="perPage"
-          style="margin: 0"
+          class="m-0"
         />
       </div>
       <b-table
@@ -62,7 +62,7 @@
             <b-button
               variant="primary"
               class="table-button"
-              :to="`/${group}/${row.item.username}/update`"
+              :to="`patients/${row.item.username}/update`"
             >
               <fa :icon="['fas', 'pen']" />
             </b-button>
@@ -99,5 +99,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

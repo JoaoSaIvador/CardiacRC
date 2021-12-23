@@ -1,9 +1,9 @@
 <template>
   <UpdateUserDetails
-    :username="username"
     :name="name"
     :email="email"
-    @update="updatePatient"
+    @update="updateAdministrator"
+    to="administrator"
   />
 </template>
 
@@ -29,24 +29,20 @@ export default {
       });
   },
   methods: {
-    updatePatient() {
-      if (this.administrator.username == this.username) {
-        this.username = null;
+    updateAdministrator(user) {
+      if (this.administrator.name == user.name) {
+        user.name = null;
       }
-      if (this.administrator.name == this.name) {
-        this.name = null;
-      }
-      if (this.administrator.email == this.email) {
-        this.email = null;
+      if (this.administrator.email == user.email) {
+        user.email = null;
       }
 
       this.$axios
         .$put(`/api/administrators/${this.username}`, {
-          ...(this.username ? { username: this.username } : {}),
-          ...(this.password ? { password: this.password } : {}),
-          ...(this.name ? { name: this.name } : {}),
-          ...(this.email ? { email: this.email } : {}),
-          passwordConfirmation: this.passwordConfirmation,
+          ...(user.password ? { password: user.password } : {}),
+          ...(user.name ? { name: user.name } : {}),
+          ...(user.email ? { email: user.email } : {}),
+          passwordConfirmation: user.passwordConfirmation,
         })
         .then(() => {
           this.$router.push("/administrators/dashboard");
