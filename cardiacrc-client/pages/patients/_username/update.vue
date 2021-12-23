@@ -1,122 +1,131 @@
 <template>
-  <div>
+  <div class="primary-div">
     <Topbar />
-    <b-container>
-      <h2 class="mb-3 text-center">Update Information</h2>
-      <form
-        class="needs-validation"
-        @submit.prevent="updatePatient"
-        :disabled="!isFormValid"
-      >
-        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="name"
-            label="Name:"
-            label-for="name"
-            :invalid-feedback="invalidNameFeedback"
-            :state="isNameValid"
-          >
-            <b-input
+    <b-container class="secondary-div">
+      <b-container class="page-content bg-light">
+        <h2 class="details-title text-center">Account Details</h2>
+        <form
+          class="needs-validation"
+          @submit.prevent="updatePatient"
+          :disabled="!isFormValid"
+        >
+          <div v-if="!isAdmin" class="details-input">
+            <b-form-group
               id="name"
-              v-model.trim="name"
-              placeholder="Enter your name"
+              label="Change Name:"
+              label-for="name"
+              :invalid-feedback="invalidNameFeedback"
               :state="isNameValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                id="name"
+                v-model.trim="name"
+                placeholder="Enter your name"
+                :state="isNameValid"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="username"
-            label="Username:"
-            label-for="username"
-            :invalid-feedback="invalidUsernameFeedback"
-            :state="isUsernameValid"
-          >
-            <b-input
+          <div v-if="!isAdmin" class="details-input">
+            <b-form-group
               id="username"
-              v-model.trim="username"
-              placeholder="Enter your username"
+              label="Change Username:"
+              label-for="username"
+              :invalid-feedback="invalidUsernameFeedback"
               :state="isUsernameValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                id="username"
+                v-model.trim="username"
+                placeholder="Enter your username"
+                :state="isUsernameValid"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="email"
-            label="Email:"
-            label-for="email"
-            :state="isEmailValid"
-          >
-            <b-input
-              ref="email"
-              v-model.trim="email"
-              type="email"
+          <div v-if="!isAdmin" class="details-input">
+            <b-form-group
+              id="email"
+              label="Change Email:"
+              label-for="email"
               :state="isEmailValid"
-              placeholder="Enter your e-mail"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                ref="email"
+                v-model.trim="email"
+                type="email"
+                :state="isEmailValid"
+                placeholder="Enter your e-mail"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div v-if="!isAdmin" class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="healthNumber"
-            label="Health Number:"
-            label-for="healthNumber"
-            :invalid-feedback="invalidHealthNumberFeedback"
-            :state="isHealthNumberValid"
-          >
-            <b-input
+          <div v-if="!isAdmin" class="details-input">
+            <b-form-group
               id="healthNumber"
-              type="number"
-              v-model.trim="healthNumber"
-              placeholder="Enter your health number"
+              label="Health Number:"
+              label-for="healthNumber"
+              :invalid-feedback="invalidHealthNumberFeedback"
               :state="isHealthNumberValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                id="healthNumber"
+                type="number"
+                v-model.trim="healthNumber"
+                placeholder="Enter your health number"
+                :state="isHealthNumberValid"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div class="col-sm-4 offset-sm-4">
-          <b-form-group
-            id="password"
-            label="Password:"
-            label-for="password"
-            :invalid-feedback="invalidPasswordFeedback"
-            :state="isPasswordValid"
-          >
-            <b-input
+          <div class="details-input">
+            <b-form-group
               id="password"
-              type="password"
-              v-model.trim="password"
-              placeholder="Enter your password"
+              label="Change Password:"
+              label-for="password"
+              :invalid-feedback="invalidPasswordFeedback"
               :state="isPasswordValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
+            >
+              <b-input
+                id="password"
+                type="password"
+                v-model.trim="password"
+                placeholder="Enter your password"
+                :state="isPasswordValid"
+                trim
+              ></b-input>
+            </b-form-group>
+          </div>
 
-        <div>
-          <p v-show="errorMsg" class="update-errors text-danger">
-            {{ errorMsg }}
-          </p>
-        </div>
+          <div>
+            <p v-show="errorMsg" class="text-danger">
+              {{ errorMsg }}
+            </p>
+          </div>
 
-        <div class="col-sm-4 offset-sm-4">
-          <button type="reset" class="btn btn-danger">Reset</button>
-          <button
-            @click.prevent="updatePatient"
-            class="btn btn-primary"
-            :disabled="!isFormValid"
-          >
-            Update
-          </button>
-        </div>
-      </form>
+          <div class="button-group">
+            <b-button
+              class="details-button"
+              variant="outline-dark"
+              @click="() => this.$router.back()"
+            >
+              Back
+            </b-button>
+            <b-button
+              class="details-button"
+              variant="dark"
+              :disabled="!isFormValid"
+              @click.prevent="updatePatient"
+            >
+              Save
+            </b-button>
+          </div>
+        </form>
+      </b-container>
     </b-container>
   </div>
 </template>
@@ -130,6 +139,7 @@ export default {
       name: null,
       email: null,
       healthNumber: null,
+      healthNumberLen: 9,
       errorMsg: false,
     };
   },
@@ -208,8 +218,12 @@ export default {
       if (!this.healthNumber) {
         return null;
       }
-      let healthNumberLen = this.healthNumber.length;
-      if (healthNumberLen != 9) {
+
+      if (this.healthNumber.length > 0) {
+        this.healthNumberLen = this.healthNumber.length;
+      }
+
+      if (this.healthNumberLen != 9) {
         return "The health number must have 9 digits.";
       }
       return "";
@@ -241,8 +255,12 @@ export default {
         }
       }
 
-      if (!this.isPasswordValid) {
-        return false;
+      if (this.password != null && this.password != "") {
+        if (!this.isPasswordValid) {
+          return false;
+        }
+      } else {
+        this.password = null;
       }
 
       return true;
@@ -283,5 +301,26 @@ export default {
 <style scoped>
 .update-errors {
   text-align: center;
+}
+
+@media screen and (min-width: 651px) {
+  .page-content {
+    width: 500px;
+    height: 700px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 14px 28px,
+      rgba(0, 0, 0, 0.05) 0px 10px 10px;
+  }
+
+  .details-title {
+    margin: 50px 0 50px 0;
+  }
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 </style>

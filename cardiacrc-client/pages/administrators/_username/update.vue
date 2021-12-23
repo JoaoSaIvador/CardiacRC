@@ -1,7 +1,6 @@
 <template>
   <div class="primary-div">
     <Topbar />
-
     <b-container class="secondary-div">
       <b-container class="page-content bg-light">
         <h2 class="details-title text-center">Account Details</h2>
@@ -13,7 +12,7 @@
           <div class="details-input">
             <b-form-group
               id="name"
-              label="Name:"
+              label="Change Name:"
               label-for="name"
               :invalid-feedback="invalidNameFeedback"
               :state="isNameValid"
@@ -31,7 +30,7 @@
           <div class="details-input">
             <b-form-group
               id="username"
-              label="Username:"
+              label="Change Username:"
               label-for="username"
               :invalid-feedback="invalidUsernameFeedback"
               :state="isUsernameValid"
@@ -49,7 +48,7 @@
           <div class="details-input">
             <b-form-group
               id="email"
-              label="Email:"
+              label="Change Email:"
               label-for="email"
               :state="isEmailValid"
             >
@@ -67,7 +66,7 @@
           <div class="details-input">
             <b-form-group
               id="password"
-              label="Password:"
+              label="Change Password:"
               label-for="password"
               :invalid-feedback="invalidPasswordFeedback"
               :state="isPasswordValid"
@@ -207,8 +206,12 @@ export default {
         return false;
       }
 
-      if (!this.isPasswordValid) {
-        return false;
+      if (this.password != null && this.password != "") {
+        if (!this.isPasswordValid) {
+          return false;
+        }
+      } else {
+        this.password = null;
       }
 
       if (!this.isNameValid) {
