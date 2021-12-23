@@ -32,7 +32,9 @@ export default {
   },
   created() {
     this.$axios.$get("/api/administrators").then((administrators) => {
-      this.administrators = administrators;
+      this.administrators = administrators.filter(
+        (a) => a.username !== this.$auth.user.sub
+      );
     });
   },
   methods: {
