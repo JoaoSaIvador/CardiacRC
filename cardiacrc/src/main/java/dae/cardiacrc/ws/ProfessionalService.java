@@ -15,8 +15,11 @@ import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +29,8 @@ import java.util.stream.Collectors;
 public class ProfessionalService {
     @EJB
     private ProfessionalBean professionalBean;
+    @Context
+    private SecurityContext securityContext;
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/professionals/”
@@ -95,13 +100,15 @@ public class ProfessionalService {
     @PUT
     @Path("{username}")
     public Response updateProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Principal principal = securityContext.getUserPrincipal();
         professionalBean.update(
-                username,
-                professionalDTO.getPasswordConfirmation(),
-                professionalDTO.getLicenseNumber(),
-                professionalDTO.getName(),
-                professionalDTO.getPassword(),
-                professionalDTO.getEmail());
+                    principal.getName(),
+                    username,
+                    professionalDTO.getPasswordConfirmation(),
+                    professionalDTO.getLicenseNumber(),
+                    professionalDTO.getName(),
+                    professionalDTO.getPassword(),
+                    professionalDTO.getEmail());
         return Response.ok("Professional updated!").build();
     }
 

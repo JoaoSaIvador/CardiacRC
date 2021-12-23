@@ -1,6 +1,7 @@
 package dae.cardiacrc.ejbs;
 
 import dae.cardiacrc.entities.Patient;
+import dae.cardiacrc.entities.Person;
 import dae.cardiacrc.entities.Prescription;
 import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
@@ -47,14 +48,15 @@ public class PatientBean {
         return patient;
     }
 
-    public void update(String username, String password, int healthNumber, String name, String newPassword, String email) throws MyEntityNotFoundException, MyIllegalArgumentException {
-        Patient patient =  findPatient(username);
-        if (!patient.getPassword().equals(Patient.hashPassword(password))){
+    public void update(String authUsername, String patientUsername, String password, int healthNumber, String name, String newPassword, String email) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Person person = em.find(Person.class, authUsername);
+        if (!person.getPassword().equals(Person.hashPassword(password))){
             throw new MyIllegalArgumentException("Incorrect password");
         }
+        Patient patient =  findPatient(patientUsername);
 
         em.lock(patient, LockModeType.OPTIMISTIC);
-        if (healthNumber == 0){
+        if (healthNumber > 0){
             patient.setHealthNumber(healthNumber);
         }
         if (name != null){

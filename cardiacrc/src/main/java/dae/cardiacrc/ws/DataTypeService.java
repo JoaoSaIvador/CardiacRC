@@ -8,6 +8,7 @@ import dae.cardiacrc.entities.QualitativeDataType;
 import dae.cardiacrc.entities.QuantitativeDataType;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -28,12 +29,22 @@ public class DataTypeService {
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/dataTypes/”
-    public List<QuantitativeDataTypeDTO> getAllProfessionalsWS() {
+    public List<QuantitativeDataTypeDTO> getAllDataTypesWS() {
         return toDTOs(quantityDataTypeBean.getAllDataTypes());
     }
 
     private List<QuantitativeDataTypeDTO> toDTOs(List<QuantitativeDataType> dataTypes) {
-        return dataTypes.stream().map(this::toDTO).collect(Collectors.toList());
+        return dataTypes.stream().map(this::toDTOsimple).collect(Collectors.toList());
+    }
+
+    private QuantitativeDataTypeDTO toDTOsimple(QuantitativeDataType quantitativeDataType){
+        return new QuantitativeDataTypeDTO(
+                quantitativeDataType.getId(),
+                quantitativeDataType.getName(),
+                quantitativeDataType.getUnit(),
+                quantitativeDataType.getMin(),
+                quantitativeDataType.getMax()
+        );
     }
 
     private QuantitativeDataTypeDTO toDTO(QuantitativeDataType quantitativeDataType) {
@@ -75,13 +86,65 @@ public class DataTypeService {
     }
 
     @POST
-    @Path("{dataType}/qualitative")
+    @Path("{dataType}/qualitatives")
     public Response createNewQualitativeDataType(@PathParam("dataType") int id, QualitativeDataTypeDTO qualitativeDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
         qualitativeDataTypeBean.create(
                 qualitativeDTO.getName(),
                 qualitativeDTO.getMin(),
                 qualitativeDTO.getMax(),
                 id);
-        return Response.status(Response.Status.CREATED).entity("Quality dataType " + qualitativeDTO.getName() + " created!").build();
+        return Response.status(Response.Status.CREATED).entity("Quality DataType " + qualitativeDTO.getName() + " created!").build();
+    }
+
+    @GET
+    @Path("{dataType}")
+    public Response getDataTypeDetails(@PathParam("dataType") int dataTypeId) throws MyEntityNotFoundException {
+        QuantitativeDataType dataType = quantityDataTypeBean.findDataType(dataTypeId);
+        return Response.ok(toDTO(dataType)).build();
+    }
+
+    @PUT
+    @Path("{dataType}")
+    public Response updateDataType(@PathParam("dataType") int dataTypeId, QuantitativeDataTypeDTO dataTypeDTO) throws MyEntityNotFoundException {
+        System.out.println(dataTypeDTO);
+        quantityDataTypeBean.update(
+                dataTypeId,
+                dataTypeDTO.getName(),
+                dataTypeDTO.getUnit(),
+                dataTypeDTO.getMin(),
+                dataTypeDTO.getMax()
+        );
+
+        return Response.ok("DataType updated!").build();
+    }
+
+    @PUT
+    @Path("{dataType}/qualitatives/{qualitative}")
+    public Response updateQualitativeDataType(@PathParam("dataType") int dataTypeId, @PathParam("qualitative") int qualitativeId, QualitativeDataTypeDTO qualitativeDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        qualitativeDataTypeBean.update(
+                dataTypeId,
+                qualitativeId,
+                qualitativeDTO.getName(),
+                qualitativeDTO.getMin(),
+                qualitativeDTO.getMax()
+        );
+        return Response.ok("Qualitative DataType updated!").build();
+    }
+
+    @DELETE
+    @Path("{dataType}")
+    public Response deleteDataType(@PathParam("dataType") int dataTypeId, QuantitativeDataTypeDTO dataTypeDTO) throws MyEntityNotFoundException {
+        System.out.println(dataTypeDTO);
+        System.out.println("HELLO IAM HERE");
+        quantityDataTypeBean.delete(dataTypeId);
+
+        return Response.ok("DataType deleted!").build();
+    }
+
+    @DELETE
+    @Path("{dataType}/qualitatives/{qualitative}")
+    public Response deleteQualitativeDataType(@PathParam("dataType") int dataTypeId, @PathParam("qualitative") int qualitativeId, QualitativeDataTypeDTO qualitativeDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        qualitativeDataTypeBean.delete(dataTypeId, qualitativeId);
+        return Response.ok("Qualitative DataType deleted!").build();
     }
 }
