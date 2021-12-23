@@ -1,9 +1,10 @@
 <template>
   <UpdateUserDetails
-    :name="name"
-    :email="email"
-    @update="updateAdministrator"
+    v-if="administrator"
+    :user="administrator"
+    @submit="updateAdministrator"
     to="administrator"
+    mode="update"
   />
 </template>
 
@@ -11,11 +12,8 @@
 export default {
   data() {
     return {
-      administrator: {},
+      administrator: null,
       username: this.$route.params.username,
-      password: null,
-      name: null,
-      email: null,
       errorMsg: false,
     };
   },
@@ -24,8 +22,7 @@ export default {
       .$get(`/api/administrators/${this.username}`)
       .then((administrator) => {
         this.administrator = administrator || {};
-        this.name = administrator.name;
-        this.email = administrator.email;
+        this.administrator.password = null;
       });
   },
   methods: {
@@ -38,12 +35,7 @@ export default {
       }
 
       this.$axios
-        .$put(`/api/administrators/${this.username}`, {
-          ...(user.password ? { password: user.password } : {}),
-          ...(user.name ? { name: user.name } : {}),
-          ...(user.email ? { email: user.email } : {}),
-          passwordConfirmation: user.passwordConfirmation,
-        })
+        .$put(`/api/administrators/${this.username}`, user)
         .then(() => {
           this.$router.push("/administrators/dashboard");
         })

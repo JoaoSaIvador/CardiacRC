@@ -7,9 +7,27 @@
         @submit.prevent="showConfirmation = true"
         :disabled="!isFormValid"
       >
+        <div v-if="isCreate" class="main-input">
+          <b-form-group
+            id="username-label"
+            label="Username:"
+            label-for="username"
+            :invalid-feedback="invalidUsernameFeedback"
+            :state="isUsernameValid"
+          >
+            <b-input
+              id="username"
+              v-model.trim="localUser.username"
+              placeholder="Enter your username"
+              :state="isUsernameValid"
+              trim
+            ></b-input>
+          </b-form-group>
+        </div>
+
         <div v-if="!isAdminToPatient" class="main-input">
           <b-form-group
-            id="name"
+            id="name-label"
             label="Change Name:"
             label-for="name"
             :invalid-feedback="invalidNameFeedback"
@@ -17,8 +35,8 @@
           >
             <b-input
               id="name"
-              v-model.trim="name"
               placeholder="Enter your name"
+              v-model.trim="localUser.name"
               :state="isNameValid"
               trim
             ></b-input>
@@ -34,7 +52,7 @@
           >
             <b-input
               ref="email"
-              v-model.trim="email"
+              v-model.trim="localUser.email"
               type="email"
               :state="isEmailValid"
               placeholder="Enter your e-mail"
@@ -54,7 +72,7 @@
             <b-input
               id="healthNumber"
               type="number"
-              v-model.trim="healthNumber"
+              v-model.trim="localUser.healthNumber"
               placeholder="Enter your health number"
               :state="isHealthNumberValid"
               trim
@@ -73,7 +91,7 @@
             <b-input
               id="licenseNumber"
               type="number"
-              v-model.trim="licenseNumber"
+              v-model.trim="localUser.licenseNumber"
               placeholder="Enter your license number"
               :state="isLicenseNumberValid"
               trim
@@ -92,7 +110,7 @@
             <b-input
               id="password"
               type="password"
-              v-model.trim="password"
+              v-model.trim="localUser.password"
               placeholder="Enter your password"
               :state="isPasswordValid"
               trim
@@ -115,6 +133,16 @@
             Back
           </b-button>
           <b-button
+            v-if="isCreate"
+            class="main-button"
+            variant="dark"
+            :disabled="!isFormValid"
+            @click.prevent="this.$emit('submit', this.user)"
+          >
+            Create
+          </b-button>
+          <b-button
+            v-else
             class="main-button"
             variant="dark"
             :disabled="!isFormValid"
@@ -137,27 +165,17 @@
 export default {
   name: "UpdateUserDetails",
   props: {
-    name: String,
-    email: String,
-    healthNumber: String,
-    licenseNumber: String,
+    user: Object,
     errorMsg: String,
     to: String,
+    mode: String,
   },
   data() {
     return {
-      password: null,
-      user: {
-        name: this.name,
-        email: this.email,
-        password: null,
-        passwordConfirmation: null,
-        healthNumber: this.healthNumber,
-        healthNumberLen: 9,
-        licenseNumber: this.licenseNumber,
-        licenseNumberLen: 9,
-      },
+      localUser: this.user,
       showConfirmation: false,
+      healthNumberLen: 9,
+      licenseNumberLen: 9,
     };
   },
   computed: {
@@ -168,18 +186,45 @@ export default {
     },
 
     isPatient() {
-      return this.$auth.user.groups.includes("Patient");
+      return (
+        this.$auth.user.groups.includes("Patient") ||
+        (this.$auth.user.groups.includes("Patient") &&
+          this.to == "professional")
+      );
     },
 
     isProfessional() {
       return this.to == "professional";
     },
 
-    invalidPasswordFeedback() {
-      if (!this.password) {
+    isCreate() {
+      return this.mode == "create";
+    },
+
+    invalidUsernameFeedback() {
+      if (!this.localUser.username) {
         return null;
       }
-      let passwordLen = this.password.length;
+      let usernameLen = this.localUser.username.length;
+      if (usernameLen < 3 || usernameLen > 15) {
+        return "The username must be between [3, 15] characters.";
+      }
+
+      return "";
+    },
+
+    isUsernameValid() {
+      if (this.invalidUsernameFeedback === null) {
+        return null;
+      }
+      return this.invalidUsernameFeedback === "";
+    },
+
+    invalidPasswordFeedback() {
+      if (!this.localUser.password) {
+        return null;
+      }
+      let passwordLen = this.localUser.password.length;
       if (passwordLen < 6 || passwordLen > 20) {
         return "The password must be between [6, 20] characters.";
       }
@@ -194,10 +239,10 @@ export default {
     },
 
     invalidNameFeedback() {
-      if (!this.name) {
+      if (!this.localUser.name) {
         return null;
       }
-      let nameLen = this.name.length;
+      let nameLen = this.localUser.name.length;
       if (nameLen < 3 || nameLen > 25) {
         return "The name must be between [3, 25] characters.";
       }
@@ -212,19 +257,24 @@ export default {
     },
 
     isEmailValid() {
-      if (!this.email) {
+      if (!this.localUser.email) {
         return null;
       }
-      return this.$refs.email.checkValidity();
+
+      if (this.$refs.email) {
+        return this.$refs.email.checkValidity();
+      }
+
+      return true;
     },
 
     invalidHealthNumberFeedback() {
-      if (!this.healthNumber) {
+      if (!this.localUser.healthNumber) {
         return null;
       }
 
-      if (this.healthNumber.length > 0) {
-        this.healthNumberLen = this.healthNumber.length;
+      if (this.localUser.healthNumber.length > 0) {
+        this.healthNumberLen = this.localUser.healthNumber.length;
       }
 
       if (this.healthNumberLen != 9) {
@@ -241,12 +291,12 @@ export default {
     },
 
     invalidLicenseNumberFeedback() {
-      if (!this.licenseNumber) {
+      if (!this.localUser.licenseNumber) {
         return null;
       }
 
-      if (this.licenseNumber.length > 0) {
-        this.licenseNumberLen = this.licenseNumber.length;
+      if (this.localUser.licenseNumber.length > 0) {
+        this.licenseNumberLen = this.localUser.licenseNumber.length;
       }
 
       if (this.licenseNumberLen != 9) {
@@ -263,6 +313,12 @@ export default {
     },
 
     isFormValid() {
+      if (this.isCreate) {
+        if (!this.isUsernameValid) {
+          return false;
+        }
+      }
+
       if (!this.isAdminToPatient) {
         if (!this.isNameValid) {
           return false;
@@ -285,12 +341,12 @@ export default {
         }
       }
 
-      if (this.password != null && this.password != "") {
+      if (this.localUser.password != null && this.localUser.password != "") {
         if (!this.isPasswordValid) {
           return false;
         }
       } else {
-        this.password = null;
+        this.localUser.password = null;
       }
 
       return true;
@@ -298,15 +354,8 @@ export default {
   },
   methods: {
     confirmPassword(passwordConfirmation) {
-      this.user = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        passwordConfirmation: passwordConfirmation,
-        healthNumber: this.healthNumber,
-        licenseNumber: this.licenseNumber,
-      };
-      this.$emit("update", this.user);
+      this.localUser.passwordConfirmation = passwordConfirmation;
+      this.$emit("submit", this.localUser);
     },
   },
 };

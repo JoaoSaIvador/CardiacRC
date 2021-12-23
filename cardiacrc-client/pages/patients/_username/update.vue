@@ -3,8 +3,9 @@
     :name="name"
     :email="email"
     :healthNumber="String(healthNumber)"
-    @update="updatePatient"
+    @submit="updatePatient"
     to="patient"
+    mode="update"
   />
 </template>
 

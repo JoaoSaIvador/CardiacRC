@@ -3,8 +3,9 @@
     :name="name"
     :email="email"
     :licenseNumber="licenseNumber"
-    @update="updateProfessional"
+    @submit="updateProfessional"
     to="professional"
+    mode="update"
   />
 </template>
 
