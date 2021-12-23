@@ -5,6 +5,7 @@ public class AdministratorDTO {
     private String password;
     private String name;
     private String email;
+    private String passwordConfirmation;
 
     public AdministratorDTO() {
     }
@@ -46,5 +47,13 @@ public class AdministratorDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 }

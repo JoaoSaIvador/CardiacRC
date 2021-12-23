@@ -7,6 +7,7 @@ import dae.cardiacrc.entities.Administrator;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -28,7 +29,7 @@ public class AdministratorService {
         return toDTOs(administratorBean.getAllAdministrators());
     }
 
-    // Converts an entity Student to a DTO Administrator class
+    // Converts an entity Administrator to a DTO Administrator class
     private AdministratorDTO toDTO(Administrator administrator) {
         return new AdministratorDTO(
                 administrator.getUsername(),
@@ -70,10 +71,10 @@ public class AdministratorService {
 
     @PUT
     @Path("{username}")
-    public Response updateAdministrator (@PathParam("username") String username, AdministratorDTO administratorDTO) throws Exception {
-        administratorBean.updateAdministrator(
+    public Response updateAdministrator (@PathParam("username") String username, AdministratorDTO administratorDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        administratorBean.update(
                 username,
-                administratorDTO.getUsername(),
+                administratorDTO.getPasswordConfirmation(),
                 administratorDTO.getName(),
                 administratorDTO.getPassword(),
                 administratorDTO.getEmail());
@@ -83,7 +84,7 @@ public class AdministratorService {
     @DELETE
     @Path("{username}")
     public Response deleteAdministrator (@PathParam("username") String username) throws MyEntityNotFoundException {
-        administratorBean.deleteAdministrator(username);
+        administratorBean.delete(username);
         return Response.ok("Administrator deleted!").build();
     }
 }

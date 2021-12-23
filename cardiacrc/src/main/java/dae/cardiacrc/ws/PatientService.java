@@ -94,10 +94,10 @@ public class PatientService {
 
     @PUT
     @Path("{username}")
-    public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException, MyEntityExistsException {
-        patientBean.updatePatient(
+    public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        patientBean.update(
                 username,
-                patientDTO.getUsername(),
+                patientDTO.getPasswordConfirmation(),
                 patientDTO.getHealthNumber(),
                 patientDTO.getName(),
                 patientDTO.getPassword(),
@@ -122,7 +122,7 @@ public class PatientService {
     @DELETE
     @Path("{username}")
     public Response deletePatient (@PathParam("username") String username) throws MyEntityNotFoundException {
-        patientBean.deletePatient(username);
+        patientBean.delete(username);
         return Response.ok("Patient deleted!").build();
     }
 

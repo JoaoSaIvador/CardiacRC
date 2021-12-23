@@ -2,16 +2,15 @@ package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.QualitativeDataTypeDTO;
 import dae.cardiacrc.dtos.QuantitativeDataTypeDTO;
-import dae.cardiacrc.ejbs.DataTypeBean;
+import dae.cardiacrc.ejbs.QuantityDataTypeBean;
 import dae.cardiacrc.entities.QualitativeDataType;
 import dae.cardiacrc.entities.QuantitativeDataType;
+import dae.cardiacrc.exceptions.MyConstraintViolationException;
 
 import javax.ejb.EJB;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,12 +19,12 @@ import java.util.stream.Collectors;
 @Consumes({MediaType.APPLICATION_JSON}) // injects header “Accept: application/json”
 public class DataTypeService {
     @EJB
-    private DataTypeBean dataTypeBean;
+    private QuantityDataTypeBean quantityDataTypeBean;
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/dataTypes/”
     public List<QuantitativeDataTypeDTO> getAllProfessionalsWS() {
-        return toDTOs(dataTypeBean.getAllDataTypes());
+        return toDTOs(quantityDataTypeBean.getAllDataTypes());
     }
 
     private List<QuantitativeDataTypeDTO> toDTOs(List<QuantitativeDataType> dataTypes) {
@@ -59,5 +58,10 @@ public class DataTypeService {
         );
     }
 
-
+    @POST
+    @Path("/")
+    public Response createNewDataType(QuantitativeDataTypeDTO quantitativeDataTypeDTO) throws MyConstraintViolationException {
+        quantityDataTypeBean.create(quantitativeDataTypeDTO.getName(), quantitativeDataTypeDTO.getUnit(), quantitativeDataTypeDTO.getMin(), quantitativeDataTypeDTO.getMax());
+        return Response.status(Response.Status.CREATED).entity("DataType " + quantitativeDataTypeDTO.getName() + " created!").build();
+    }
 }

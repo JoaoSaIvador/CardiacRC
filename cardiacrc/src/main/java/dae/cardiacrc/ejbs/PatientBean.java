@@ -47,22 +47,25 @@ public class PatientBean {
         return patient;
     }
 
-    public void updatePatient(String username, String newUsername, int healthNumber, String name, String password, String email) throws MyEntityNotFoundException, MyEntityExistsException {
+    public void update(String username, String password, int healthNumber, String name, String newPassword, String email) throws MyEntityNotFoundException, MyIllegalArgumentException {
         Patient patient =  findPatient(username);
-        //        if (!professional.getPassword().equals(Professional.hashPassword(password))){
-        //            throw new Exception("Incorrect password");
-        //        }
-
-        if (newUsername.equals((findPatient(newUsername)).getUsername())){
-            throw new MyEntityExistsException("There\'s already a patient with that username");
+        if (!patient.getPassword().equals(Patient.hashPassword(password))){
+            throw new MyIllegalArgumentException("Incorrect password");
         }
 
-
         em.lock(patient, LockModeType.OPTIMISTIC);
-        patient.setName(name);
-        patient.setEmail(email);
-        patient.setPassword(password);
-        patient.setHealthNumber(healthNumber);
+        if (healthNumber == 0){
+            patient.setHealthNumber(healthNumber);
+        }
+        if (name != null){
+            patient.setName(name);
+        }
+        if (email != null){
+            patient.setEmail(email);
+        }
+        if (newPassword != null){
+            patient.setPassword(newPassword);
+        }
         em.merge(patient);
     }
 
@@ -94,7 +97,7 @@ public class PatientBean {
         professional.removePatient(patient);
     }
 
-    public void deletePatient (String username) throws MyEntityNotFoundException {
+    public void delete(String username) throws MyEntityNotFoundException {
         Patient patient =  findPatient(username);
 
         for (Prescription prescription : patient.getPrescriptions()) {

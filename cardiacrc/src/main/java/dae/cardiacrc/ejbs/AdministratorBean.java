@@ -6,6 +6,7 @@ import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -59,25 +60,28 @@ public class AdministratorBean {
         return administrator;
     }
 
-    public void updateAdministrator(String username, String newUsername, String name, String newPassword, String email) throws Exception {
+    public void update(String username, String password, String name, String newPassword, String email) throws MyEntityNotFoundException, MyIllegalArgumentException {
         Administrator administrator = findAdministrator(username);
-//        if (!administrator.getPassword().equals(Professional.hashPassword(password))){
-//            throw new Exception("Incorrect password");
-//        }
 
-        if (newUsername.equals((findAdministrator(newUsername)).getUsername())){
-            throw new MyEntityExistsException("There\'s already an administrator with that username");
+        if (!administrator.getPassword().equals(Administrator.hashPassword(password))){
+            throw new MyIllegalArgumentException("Incorrect password");
         }
 
         em.lock(administrator, LockModeType.OPTIMISTIC);
-        administrator.setUsername(newUsername);
-        administrator.setName(name);
-        administrator.setPassword(newPassword);
-        administrator.setEmail(email);
+        if (name != null){
+            administrator.setName(name);
+        }
+        if (email != null){
+            administrator.setEmail(email);
+        }
+        if (newPassword != null){
+            administrator.setPassword(newPassword);
+        }
+
         em.merge(administrator);
     }
 
-    public void deleteAdministrator(String username) throws MyEntityNotFoundException {
+    public void delete(String username) throws MyEntityNotFoundException {
         Administrator administrator = findAdministrator(username);
         em.remove(administrator);
     }

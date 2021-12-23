@@ -118,11 +118,8 @@ PUT http://localhost:8080/cardiacrc/api/administrators/admin1
 Content-Type: application/json
 
 {
-  "oldPassword": "000",
-  "username": "jack",
-  "name": "updated ADMIN",
-  "password": "111",
-  "email": "adminUPDATED@admin.un"
+  "name": "upADd ADMIN",
+  "passwordConfirmation": "123456"
 }
 
 ### DELETE ADMINISTRATOR

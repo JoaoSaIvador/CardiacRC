@@ -5,6 +5,7 @@ import dae.cardiacrc.entities.Type;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -49,26 +50,29 @@ public class ProfessionalBean {
         return professional;
     }
 
-    public void updateProfessional(String username, String newUsername, int newLicenseNumber, String newName, String newPassword, String newEmail) throws Exception {
+    public void update(String username, String password, int licenseNumber, String name, String newPassword, String email) throws MyIllegalArgumentException, MyEntityNotFoundException {
         Professional professional = findProfessional(username);
-//        if (!professional.getPassword().equals(Professional.hashPassword(password))){
-//            throw new Exception("Incorrect password");
-//        }
-
-        if (newUsername.equals((findProfessional(newUsername)).getUsername())){
-            throw new MyEntityExistsException("There\'s already a professional with that username");
+        if (!professional.getPassword().equals(Professional.hashPassword(password))){
+            throw new MyIllegalArgumentException("Incorrect password");
         }
 
         em.lock(professional, LockModeType.OPTIMISTIC);
-        professional.setUsername(newUsername);
-        professional.setLicenseNumber(newLicenseNumber);
-        professional.setName(newName);
-        professional.setEmail(newEmail);
-        professional.setPassword(newPassword);
+        if (licenseNumber == 0){
+            professional.setLicenseNumber(licenseNumber);
+        }
+        if (name != null){
+            professional.setName(name);
+        }
+        if (email != null){
+            professional.setEmail(email);
+        }
+        if (newPassword != null){
+            professional.setPassword(newPassword);
+        }
         em.merge(professional);
     }
 
-    public void deleteProfessional(String username) throws MyEntityNotFoundException {
+    public void delete(String username) throws MyEntityNotFoundException {
         Professional professional = findProfessional(username);
         em.remove(professional);
     }

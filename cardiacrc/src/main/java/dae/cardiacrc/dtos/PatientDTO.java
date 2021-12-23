@@ -13,6 +13,7 @@ public class PatientDTO {
     private List<PrescriptionDTO> activePrescriptionDTOs;
     private List<PrescriptionDTO> inactivePrescriptionDTOs;
     private List<ObservationDTO> observationDTOS;
+    private String passwordConfirmation;
 
     public PatientDTO() {
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
@@ -102,5 +103,13 @@ public class PatientDTO {
 
     public void setPatientDataDTOS(List<ObservationDTO> observationDTOS) {
         this.observationDTOS = observationDTOS;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 }

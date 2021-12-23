@@ -12,7 +12,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 @Stateless
-public class DataTypeBean {
+public class QuantityDataTypeBean {
     @PersistenceContext
     private EntityManager em;
 
@@ -37,7 +37,7 @@ public class DataTypeBean {
         return (List<QuantitativeDataType>) em.createNamedQuery("getAllQuantitativeDataTypes").getResultList();
     }
 
-    public void updateDataType(int id, String name, String unit, int min, int max) throws MyEntityNotFoundException {
+    public void update(int id, String name, String unit, int min, int max) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = findDataType(id);
         em.lock(quantitativeDataType, LockModeType.OPTIMISTIC);
         quantitativeDataType.setName(name);
@@ -47,7 +47,7 @@ public class DataTypeBean {
         em.merge(quantitativeDataType);
     }
 
-    public void deleteDataType(int id) throws MyEntityNotFoundException {
+    public void delete(int id) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = findDataType(id);
         em.remove(quantitativeDataType);
     }

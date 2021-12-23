@@ -11,6 +11,7 @@ import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -93,10 +94,10 @@ public class ProfessionalService {
 
     @PUT
     @Path("{username}")
-    public Response updateProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws Exception {
-        professionalBean.updateProfessional(
+    public Response updateProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        professionalBean.update(
                 username,
-                professionalDTO.getUsername(),
+                professionalDTO.getPasswordConfirmation(),
                 professionalDTO.getLicenseNumber(),
                 professionalDTO.getName(),
                 professionalDTO.getPassword(),
@@ -107,7 +108,7 @@ public class ProfessionalService {
     @DELETE
     @Path("{username}")
     public Response deleteProfessional (@PathParam("username") String username) throws MyEntityNotFoundException {
-        professionalBean.deleteProfessional(username);
+        professionalBean.delete(username);
         return Response.ok("Professional deleted!").build();
     }
 

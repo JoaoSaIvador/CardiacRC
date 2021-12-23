@@ -14,6 +14,7 @@ public class ProfessionalDTO {
     private List<PatientDTO> patientDTOS;
     private int type;
     private String typeName;
+    private String passwordConfirmation;
 
     public ProfessionalDTO() {
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
@@ -112,5 +113,13 @@ public class ProfessionalDTO {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 }

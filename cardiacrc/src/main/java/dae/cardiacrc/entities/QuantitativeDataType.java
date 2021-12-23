@@ -91,7 +91,11 @@ public class QuantitativeDataType implements Serializable {
         return dataTypes;
     }
 
-    public void setDataTypes(List<QualitativeDataType> dataTypes) {
-        this.dataTypes = dataTypes;
+    public void addQualityDataType(QualitativeDataType dataType) {
+        dataTypes.add(dataType);
+    }
+
+    public void removeQualityDataType(QualitativeDataType dataType){
+        dataTypes.remove(dataType);
     }
 }
