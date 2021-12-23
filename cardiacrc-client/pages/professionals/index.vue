@@ -1,21 +1,14 @@
 <template>
-  <div class="primary-div">
-    <UserTable
-      :items="professionals"
-      :fields="fields"
-      group="professionals"
-      @delete="deleteProfessional"
-    />
-  </div>
+  <UserTable
+    :items="professionals"
+    :fields="fields"
+    group="professionals"
+    @delete="deleteProfessional"
+  />
 </template>
 
 <script>
-import UserTable from "../../components/UserTable.vue";
-
 export default {
-  components: {
-    UserTable,
-  },
   data() {
     return {
       fields: [

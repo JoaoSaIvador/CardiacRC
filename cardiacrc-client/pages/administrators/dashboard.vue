@@ -14,14 +14,7 @@
 </template>
 
 <script>
-import AdminCard from "../../components/AdminCard.vue";
-import AdminCounter from "../../components/AdminCounter.vue";
-
 export default {
-  components: {
-    AdminCard,
-    AdminCounter,
-  },
   data() {
     return {
       cards: [
@@ -74,7 +67,7 @@ export default {
 }
 
 .admin-dashboard {
-  height: 100%;
+  height: calc(100% - 56px);
   display: flex;
   flex-direction: column;
   justify-content: center;

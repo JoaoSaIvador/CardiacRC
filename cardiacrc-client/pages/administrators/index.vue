@@ -1,12 +1,10 @@
 <template>
-  <div class="primary-div">
-    <UserTable
-      :items="administrators"
-      :fields="fields"
-      group="administrators"
-      @delete="deleteAdministrator"
-    />
-  </div>
+  <UserTable
+    :items="administrators"
+    :fields="fields"
+    group="administrators"
+    @delete="deleteAdministrator"
+  />
 </template>
 
 <script>

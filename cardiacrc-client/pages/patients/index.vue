@@ -1,21 +1,14 @@
 <template>
-  <div class="primary-div">
-    <UserTable
-      :items="patients"
-      :fields="fields"
-      group="patients"
-      @delete="deletePatient"
-    />
-  </div>
+  <UserTable
+    :items="patients"
+    :fields="fields"
+    group="patients"
+    @delete="deletePatient"
+  />
 </template>
 
 <script>
-import UserTable from "../../components/UserTable.vue";
-
 export default {
-  components: {
-    UserTable,
-  },
   data() {
     return {
       fields: [

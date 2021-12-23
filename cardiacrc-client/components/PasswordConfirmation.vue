@@ -12,12 +12,11 @@
           type="password"
           v-model.trim="passwordConfirmation"
           placeholder="Enter your password"
-          trim
         ></b-input>
         <div class="input-group-append">
           <b-button
             variant="dark"
-            @click.prevent="$emit('confirmPassword', this.passwordConfirmation)"
+            @click="$emit('confirmPassword', passwordConfirmation)"
           >
             Confirm
           </b-button>

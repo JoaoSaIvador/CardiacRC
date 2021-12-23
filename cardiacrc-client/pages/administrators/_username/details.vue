@@ -1,16 +1,9 @@
 <template>
-  <div class="primary-div">
-    <UserDetails :user="administrator" group="administrators" />
-  </div>
+  <UserDetails :user="administrator" group="administrators" />
 </template>
 
 <script>
-import UserDetails from "../../../components/UserDetails.vue";
-
 export default {
-  components: {
-    UserDetails,
-  },
   data() {
     return {
       administrator: {},
