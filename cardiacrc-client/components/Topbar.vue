@@ -1,32 +1,23 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <nuxt-link to="/" class="navbar-brand mb-0 h1"
-        >Cardiac Rehabilitation Centre</nuxt-link
-      >
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <nuxt-link to="/patients" class="nav-link active"
-              >Patients</nuxt-link
-            >
-          </li>
-          <li class="nav-item">
-            <nuxt-link to="/professionals" class="nav-link active"
-              >Professionals</nuxt-link
-            >
-          </li>
-          <li class="nav-item">
-            <nuxt-link to="/administrators/dashboard" class="nav-link active"
-              >Administrators</nuxt-link
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <b-navbar toggleable="lg" type="light" variant="light" class="customNavbar">
+    <b-navbar-brand href="#">Cardiac Rehabilitation Centre</b-navbar-brand>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <b-nav-item to="/administrators/dashboard">Home</b-nav-item>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
 export default {};
 </script>
+
+<style scoped>
+.customNavbar {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 14px 28px,
+    rgba(0, 0, 0, 0.02) 0px 10px 10px;
+}
+</style>

@@ -1,13 +1,13 @@
 <template>
   <b-container class="secondary-div">
     <b-container class="page-content bg-light">
-      <h2 class="details-title text-center">Account Details</h2>
+      <h2 class="main-title text-center">Account Details</h2>
       <form
         class="needs-validation"
         @submit.prevent="updatePatient"
         :disabled="!isFormValid"
       >
-        <div v-if="!isAdmin" class="details-input">
+        <div v-if="!isAdmin" class="main-input">
           <b-form-group
             id="name"
             label="Change Name:"
@@ -25,25 +25,7 @@
           </b-form-group>
         </div>
 
-        <div v-if="!isAdmin" class="details-input">
-          <b-form-group
-            id="username"
-            label="Change Username:"
-            label-for="username"
-            :invalid-feedback="invalidUsernameFeedback"
-            :state="isUsernameValid"
-          >
-            <b-input
-              id="username"
-              v-model.trim="username"
-              placeholder="Enter your username"
-              :state="isUsernameValid"
-              trim
-            ></b-input>
-          </b-form-group>
-        </div>
-
-        <div v-if="!isAdmin" class="details-input">
+        <div v-if="!isAdmin" class="main-input">
           <b-form-group
             id="email"
             label="Change Email:"
@@ -61,7 +43,7 @@
           </b-form-group>
         </div>
 
-        <div v-if="!isAdmin" class="details-input">
+        <div v-if="!isAdmin" class="main-input">
           <b-form-group
             id="healthNumber"
             label="Health Number:"
@@ -80,7 +62,7 @@
           </b-form-group>
         </div>
 
-        <div class="details-input">
+        <div class="main-input">
           <b-form-group
             id="password"
             label="Change Password:"
@@ -107,14 +89,14 @@
 
         <div class="button-group">
           <b-button
-            class="details-button"
+            class="main-button"
             variant="outline-dark"
             @click="() => this.$router.back()"
           >
             Back
           </b-button>
           <b-button
-            class="details-button"
+            class="main-button"
             variant="dark"
             :disabled="!isFormValid"
             @click.prevent="updatePatient"
@@ -147,25 +129,6 @@ export default {
 
     isAdmin() {
       return this.$auth.user.groups.includes("Administrator");
-    },
-
-    invalidUsernameFeedback() {
-      if (!this.username) {
-        return null;
-      }
-      let usernameLen = this.username.length;
-      if (usernameLen < 3 || usernameLen > 15) {
-        return "The username must be between [3, 15] characters.";
-      }
-
-      return "";
-    },
-
-    isUsernameValid() {
-      if (this.invalidUsernameFeedback === null) {
-        return null;
-      }
-      return this.invalidUsernameFeedback === "";
     },
 
     invalidPasswordFeedback() {
@@ -235,10 +198,6 @@ export default {
 
     isFormValid() {
       if (!this.isAdmin) {
-        if (!this.isUsernameValid) {
-          return false;
-        }
-
         if (!this.isNameValid) {
           return false;
         }
@@ -275,7 +234,6 @@ export default {
     updatePatient() {
       this.$axios
         .$put(`/api/patients/${this.username}`, {
-          username: this.username,
           password: this.password,
           name: this.name,
           email: this.email,
@@ -309,7 +267,7 @@ export default {
       rgba(0, 0, 0, 0.05) 0px 10px 10px;
   }
 
-  .details-title {
+  .main-title {
     margin: 50px 0 50px 0;
   }
 }

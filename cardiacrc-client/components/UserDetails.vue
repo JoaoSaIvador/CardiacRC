@@ -1,27 +1,27 @@
 <template>
   <b-container class="secondary-div">
     <b-container class="page-content bg-light">
-      <h2 class="details-title text-center">Account Details</h2>
+      <h2 class="main-title text-center">Account Details</h2>
       <form>
-        <div class="details-input">
+        <div class="main-input">
           <b-form-group id="name" label="Name:" label-for="name">
             <b-input id="name" :value="user.name" readonly></b-input>
           </b-form-group>
         </div>
 
-        <div class="details-input">
+        <div class="main-input">
           <b-form-group id="username" label="Username:" label-for="username">
             <b-input id="username" :value="user.username" readonly></b-input>
           </b-form-group>
         </div>
 
-        <div class="details-input">
+        <div class="main-input">
           <b-form-group id="email" label="Email:" label-for="email">
-            <b-input id="email" :value="user.username" readonly></b-input>
+            <b-input id="email" :value="user.email" readonly></b-input>
           </b-form-group>
         </div>
 
-        <div v-if="group == 'patients'" class="details-input">
+        <div v-if="group == 'patients'" class="main-input">
           <b-form-group
             id="healthNumber"
             label="Health Number:"
@@ -35,7 +35,7 @@
           </b-form-group>
         </div>
 
-        <div v-if="group == 'professionals'" class="details-input">
+        <div v-if="group == 'professionals'" class="main-input">
           <b-form-group
             id="licenseNumber"
             label="License Number:"
@@ -51,14 +51,14 @@
 
         <div class="button-group">
           <b-button
-            class="details-button"
+            class="main-button"
             variant="outline-dark"
             @click="() => this.$router.back()"
           >
             Back
           </b-button>
           <b-button
-            class="details-button"
+            class="main-button"
             variant="dark"
             :to="`/administrators/${user.username}/update`"
           >
