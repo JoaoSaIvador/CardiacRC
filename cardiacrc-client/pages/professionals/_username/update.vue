@@ -52,7 +52,7 @@ export default {
           passwordConfirmation: user.passwordConfirmation,
         })
         .then(() => {
-          auxiliary.goToDashboard();
+          auxiliary.goToDashboard(this.$auth.user, this.$router);
         })
         .catch((error) => {
           this.errorMsg = error.response.data;

@@ -139,7 +139,7 @@ export default {
   props: {
     name: String,
     email: String,
-    healthNumber: Number,
+    healthNumber: String,
     licenseNumber: String,
     errorMsg: String,
     to: String,
@@ -250,7 +250,7 @@ export default {
       }
 
       if (this.licenseNumberLen != 9) {
-        return "THe health number must have 9 digits.";
+        return "The license number must have 9 digits.";
       }
       return "";
     },
@@ -303,7 +303,7 @@ export default {
         email: this.email,
         password: this.password,
         passwordConfirmation: passwordConfirmation,
-        healthNumber: String(this.healthNumber),
+        healthNumber: this.healthNumber,
         licenseNumber: this.licenseNumber,
       };
       this.$emit("update", this.user);
