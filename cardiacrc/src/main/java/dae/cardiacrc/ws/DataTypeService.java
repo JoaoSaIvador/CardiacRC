@@ -2,10 +2,12 @@ package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.QualitativeDataTypeDTO;
 import dae.cardiacrc.dtos.QuantitativeDataTypeDTO;
+import dae.cardiacrc.ejbs.QualityDataTypeBean;
 import dae.cardiacrc.ejbs.QuantityDataTypeBean;
 import dae.cardiacrc.entities.QualitativeDataType;
 import dae.cardiacrc.entities.QuantitativeDataType;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
+import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -20,6 +22,9 @@ import java.util.stream.Collectors;
 public class DataTypeService {
     @EJB
     private QuantityDataTypeBean quantityDataTypeBean;
+
+    @EJB
+    private QualityDataTypeBean qualitativeDataTypeBean;
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/dataTypes/”
@@ -61,7 +66,22 @@ public class DataTypeService {
     @POST
     @Path("/")
     public Response createNewDataType(QuantitativeDataTypeDTO quantitativeDataTypeDTO) throws MyConstraintViolationException {
-        quantityDataTypeBean.create(quantitativeDataTypeDTO.getName(), quantitativeDataTypeDTO.getUnit(), quantitativeDataTypeDTO.getMin(), quantitativeDataTypeDTO.getMax());
+        quantityDataTypeBean.create(
+                quantitativeDataTypeDTO.getName(),
+                quantitativeDataTypeDTO.getUnit(),
+                quantitativeDataTypeDTO.getMin(),
+                quantitativeDataTypeDTO.getMax());
         return Response.status(Response.Status.CREATED).entity("DataType " + quantitativeDataTypeDTO.getName() + " created!").build();
+    }
+
+    @POST
+    @Path("{dataType}/qualitative")
+    public Response createNewQualitativeDataType(@PathParam("dataType") int id, QualitativeDataTypeDTO qualitativeDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
+        qualitativeDataTypeBean.create(
+                qualitativeDTO.getName(),
+                qualitativeDTO.getMin(),
+                qualitativeDTO.getMax(),
+                id);
+        return Response.status(Response.Status.CREATED).entity("Quality dataType " + qualitativeDTO.getName() + " created!").build();
     }
 }

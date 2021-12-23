@@ -62,7 +62,7 @@
             <b-button
               variant="primary"
               class="table-button"
-              :to="`patients/${row.item.username}/update`"
+              :to="`${group}/${row.item.username}/update`"
             >
               <fa :icon="['fas', 'pen']" />
             </b-button>

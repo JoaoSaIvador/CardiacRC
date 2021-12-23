@@ -62,6 +62,25 @@
           </b-form-group>
         </div>
 
+        <div v-if="isProfessional" class="main-input">
+          <b-form-group
+            id="licenseNumber"
+            label="License Number:"
+            label-for="licenseNumber"
+            :invalid-feedback="invalidLicenseNumberFeedback"
+            :state="isLicenseNumberValid"
+          >
+            <b-input
+              id="licenseNumber"
+              type="number"
+              v-model.trim="licenseNumber"
+              placeholder="Enter your license number"
+              :state="isLicenseNumberValid"
+              trim
+            ></b-input>
+          </b-form-group>
+        </div>
+
         <div class="main-input">
           <b-form-group
             id="password"
@@ -120,7 +139,7 @@ export default {
   props: {
     name: String,
     email: String,
-    healthNumber: String,
+    healthNumber: Number,
     licenseNumber: String,
     errorMsg: String,
     to: String,
@@ -134,7 +153,9 @@ export default {
         password: null,
         passwordConfirmation: null,
         healthNumber: this.healthNumber,
+        healthNumberLen: 9,
         licenseNumber: this.licenseNumber,
+        licenseNumberLen: 9,
       },
       showConfirmation: false,
     };
@@ -148,6 +169,10 @@ export default {
 
     isPatient() {
       return this.$auth.user.groups.includes("Patient");
+    },
+
+    isProfessional() {
+      return this.to == "professional";
     },
 
     invalidPasswordFeedback() {
@@ -215,6 +240,28 @@ export default {
       return this.invalidHealthNumberFeedback === "";
     },
 
+    invalidLicenseNumberFeedback() {
+      if (!this.licenseNumber) {
+        return null;
+      }
+
+      if (this.licenseNumber.length > 0) {
+        this.licenseNumberLen = this.licenseNumber.length;
+      }
+
+      if (this.licenseNumberLen != 9) {
+        return "THe health number must have 9 digits.";
+      }
+      return "";
+    },
+
+    isLicenseNumberValid() {
+      if (this.invalidLicenseNumberFeedback === null) {
+        return null;
+      }
+      return this.invalidLicenseNumberFeedback === "";
+    },
+
     isFormValid() {
       if (!this.isAdminToPatient) {
         if (!this.isNameValid) {
@@ -228,6 +275,12 @@ export default {
 
       if (this.isPatient) {
         if (!this.isHealthNumberValid) {
+          return false;
+        }
+      }
+
+      if (this.isProfessional) {
+        if (!this.isLicenseNumberValid) {
           return false;
         }
       }
@@ -250,7 +303,7 @@ export default {
         email: this.email,
         password: this.password,
         passwordConfirmation: passwordConfirmation,
-        healthNumber: this.healthNumber,
+        healthNumber: String(this.healthNumber),
         licenseNumber: this.licenseNumber,
       };
       this.$emit("update", this.user);
