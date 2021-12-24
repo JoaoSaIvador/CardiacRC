@@ -12,6 +12,7 @@
 import * as auxiliary from "../../../utils/auxiliary.js";
 
 export default {
+  middleware: "professionalUpdate",
   data() {
     return {
       professional: null,

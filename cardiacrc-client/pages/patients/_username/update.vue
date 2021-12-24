@@ -12,6 +12,7 @@
 import * as auxiliary from "../../../utils/auxiliary.js";
 
 export default {
+  middleware: "patientSelf",
   data() {
     return {
       patient: null,

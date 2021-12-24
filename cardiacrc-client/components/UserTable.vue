@@ -60,6 +60,7 @@
         <template v-slot:cell(actions)="row">
           <div class="button-group">
             <b-button
+              v-if="!isAdmin"
               variant="primary"
               class="table-button"
               :to="`${group}/${row.item.username}/update`"
@@ -96,6 +97,11 @@ export default {
       sortDesc: false,
       filter: null,
     };
+  },
+  computed: {
+    isAdmin() {
+      return this.group === "administrators";
+    },
   },
 };
 </script>

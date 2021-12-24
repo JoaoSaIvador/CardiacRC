@@ -151,6 +151,7 @@
 
 <script>
 export default {
+  middleware: "professionalSelf",
   data() {
     return {
       professional: {},

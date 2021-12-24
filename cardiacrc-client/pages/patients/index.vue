@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  middleware: "adminOrProfessional",
   data() {
     return {
       fields: [

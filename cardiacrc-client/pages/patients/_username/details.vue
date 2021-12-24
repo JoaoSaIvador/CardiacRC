@@ -163,6 +163,7 @@
 
 <script>
 export default {
+  middleware: "patientSelf",
   data() {
     return {
       patient: {},

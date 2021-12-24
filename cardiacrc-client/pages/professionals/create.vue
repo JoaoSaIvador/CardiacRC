@@ -11,6 +11,7 @@
 import * as auxiliary from "../../utils/auxiliary.js";
 
 export default {
+  middleware: "admin",
   data() {
     return {
       professional: {

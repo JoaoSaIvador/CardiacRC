@@ -4,6 +4,7 @@
 
 <script>
 export default {
+  middleware: "adminSelf",
   data() {
     return {
       administrator: {},
