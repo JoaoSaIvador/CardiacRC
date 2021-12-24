@@ -59,6 +59,7 @@ export default {
               "faUserMd",
               "faUser",
               "faDatabase",
+              "faPlus",
             ],
           },
         ],

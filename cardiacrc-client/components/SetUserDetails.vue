@@ -165,7 +165,6 @@ export default {
   name: "UpdateUserDetails",
   props: {
     user: Object,
-    errorMsg: String,
     to: String,
     mode: String,
   },
@@ -175,6 +174,7 @@ export default {
       showConfirmation: false,
       healthNumberLen: 9,
       licenseNumberLen: 9,
+      errorMsg: false,
       professionalTypes: [
         { id: 1, name: "Cardiology" },
         { id: 2, name: "Nutrition" },

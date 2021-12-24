@@ -60,7 +60,15 @@
         <template v-slot:cell(actions)="row">
           <div class="button-group">
             <b-button
-              v-if="!isAdmin"
+              v-if="group == 'dataTypes'"
+              variant="success"
+              class="table-button"
+              :to="`${group}/${row.item.id}/details`"
+            >
+              <fa :icon="['fas', 'clipboard-list']" />
+            </b-button>
+            <b-button
+              v-if="group != 'administrators'"
               variant="primary"
               class="table-button"
               :to="`${group}/${
@@ -104,11 +112,6 @@ export default {
       sortDesc: false,
       filter: null,
     };
-  },
-  computed: {
-    isAdmin() {
-      return this.group === "administrators";
-    },
   },
 };
 </script>
