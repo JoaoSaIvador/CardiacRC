@@ -1,8 +1,7 @@
 <template>
   <UpdateUserDetails
-    :name="name"
-    :email="email"
-    :licenseNumber="licenseNumber"
+    v-if="professional"
+    :user="professional"
     @submit="updateProfessional"
     to="professional"
     mode="update"
@@ -10,16 +9,13 @@
 </template>
 
 <script>
+import * as auxiliary from "../../../utils/auxiliary.js";
+
 export default {
   data() {
     return {
-      professional: {},
+      professional: null,
       username: this.$route.params.username,
-      password: null,
-      name: null,
-      email: null,
-      licenseNumber: null,
-      errorMsg: false,
     };
   },
   created() {
@@ -27,9 +23,7 @@ export default {
       .$get(`/api/professionals/${this.username}`)
       .then((professional) => {
         this.professional = professional || {};
-        this.name = professional.name;
-        this.email = professional.email;
-        this.licenseNumber = String(professional.licenseNumber);
+        this.professional.password = null;
       });
   },
   methods: {
@@ -45,22 +39,15 @@ export default {
       }
 
       this.$axios
-        .$put(`/api/professionals/${this.username}`, {
-          ...(user.password ? { password: user.password } : {}),
-          ...(user.name ? { name: user.name } : {}),
-          ...(user.email ? { email: user.email } : {}),
-          ...(user.licenseNumber ? { licenseNumber: user.licenseNumber } : {}),
-          passwordConfirmation: user.passwordConfirmation,
-        })
+        .$put(`/api/professionals/${this.username}`, user)
         .then(() => {
           auxiliary.goToDashboard(this.$auth.user, this.$router);
         })
         .catch((error) => {
-          this.errorMsg = error.response.data;
+          //this.errorMsg = error.response.data;
+          //Notification
         });
     },
   },
 };
 </script>
-
-<style scoped></style>

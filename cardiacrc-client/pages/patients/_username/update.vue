@@ -1,8 +1,7 @@
 <template>
   <UpdateUserDetails
-    :name="name"
-    :email="email"
-    :healthNumber="String(healthNumber)"
+    v-if="patient"
+    :user="patient"
     @submit="updatePatient"
     to="patient"
     mode="update"
@@ -15,21 +14,15 @@ import * as auxiliary from "../../../utils/auxiliary.js";
 export default {
   data() {
     return {
-      patient: {},
+      patient: null,
       username: this.$route.params.username,
-      password: null,
-      name: null,
-      email: null,
-      healthNumber: null,
-      errorMsg: false,
     };
   },
   created() {
     this.$axios.$get(`/api/patients/${this.username}`).then((patient) => {
       this.patient = patient || {};
-      this.name = patient.name;
-      this.email = patient.email;
-      this.healthNumber = patient.healthNumber;
+      this.patient.password = null;
+      this.patient.healthNumber = String(this.patient.healthNumber);
     });
   },
   methods: {
@@ -45,18 +38,13 @@ export default {
       }
 
       this.$axios
-        .$put(`/api/patients/${this.username}`, {
-          ...(user.password ? { password: user.password } : {}),
-          ...(user.name ? { name: user.name } : {}),
-          ...(user.email ? { email: user.email } : {}),
-          ...(user.healthNumber ? { healthNumber: user.healthNumber } : {}),
-          passwordConfirmation: user.passwordConfirmation,
-        })
+        .$put(`/api/patients/${this.username}`, user)
         .then(() => {
           auxiliary.goToDashboard(this.$auth.user, this.$router);
         })
         .catch((error) => {
-          this.errorMsg = error.response.data;
+          //this.errorMsg = error.response.data;
+          //Notification
         });
     },
   },

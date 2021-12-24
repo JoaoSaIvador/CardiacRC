@@ -40,7 +40,8 @@ export default {
           this.$router.push("/administrators/dashboard");
         })
         .catch((error) => {
-          this.errorMsg = error.response.data;
+          //this.errorMsg = error.response.data;
+          //Notification
         });
     },
   },

@@ -1,7 +1,6 @@
 <template>
   <UpdateUserDetails
-    :name="name"
-    :email="email"
+    :user="administrator"
     @submit="createAdministrator"
     to="administrator"
     mode="create"
@@ -12,32 +11,26 @@
 export default {
   data() {
     return {
-      name: null,
-      email: null,
-      errorMsg: false,
+      administrator: {
+        username: null,
+        name: null,
+        email: null,
+        password: null,
+      },
     };
   },
   methods: {
     createAdministrator(user) {
       this.$axios
-        .$post("/api/administrators", {
-          username: user.username,
-          password: user.password,
-          name: user.name,
-          email: user.email,
-        })
+        .$post("/api/administrators", user)
         .then(() => {
           this.$router.push("/administrators/dashboard");
         })
         .catch((error) => {
-          this.errorMsg = error.response.data;
+          //this.errorMsg = error.response.data;
+          //Notification
         });
-    },
-    reset() {
-      this.errorMsg = false;
     },
   },
 };
 </script>
-
-<style scoped></style>

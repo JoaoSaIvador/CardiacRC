@@ -2,14 +2,9 @@
   <b-container class="secondary-div">
     <b-container class="page-content bg-light">
       <h2 class="main-title text-center">Account Details</h2>
-      <form
-        class="needs-validation"
-        @submit.prevent="showConfirmation = true"
-        :disabled="!isFormValid"
-      >
+      <form class="needs-validation" :disabled="!isFormValid">
         <div v-if="isCreate" class="main-input">
           <b-form-group
-            id="username-label"
             label="Username:"
             label-for="username"
             :invalid-feedback="invalidUsernameFeedback"
@@ -20,14 +15,12 @@
               v-model.trim="localUser.username"
               placeholder="Enter your username"
               :state="isUsernameValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="!isAdminToPatient" class="main-input">
           <b-form-group
-            id="name-label"
             label="Change Name:"
             label-for="name"
             :invalid-feedback="invalidNameFeedback"
@@ -38,14 +31,12 @@
               placeholder="Enter your name"
               v-model.trim="localUser.name"
               :state="isNameValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="!isAdminToPatient" class="main-input">
           <b-form-group
-            id="email"
             label="Change Email:"
             label-for="email"
             :state="isEmailValid"
@@ -56,14 +47,12 @@
               type="email"
               :state="isEmailValid"
               placeholder="Enter your e-mail"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="isPatient" class="main-input">
           <b-form-group
-            id="healthNumber"
             label="Health Number:"
             label-for="healthNumber"
             :invalid-feedback="invalidHealthNumberFeedback"
@@ -75,14 +64,12 @@
               v-model.trim="localUser.healthNumber"
               placeholder="Enter your health number"
               :state="isHealthNumberValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="isProfessional" class="main-input">
           <b-form-group
-            id="licenseNumber"
             label="License Number:"
             label-for="licenseNumber"
             :invalid-feedback="invalidLicenseNumberFeedback"
@@ -94,14 +81,12 @@
               v-model.trim="localUser.licenseNumber"
               placeholder="Enter your license number"
               :state="isLicenseNumberValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div class="main-input">
           <b-form-group
-            id="password"
             label="Change Password:"
             label-for="password"
             :invalid-feedback="invalidPasswordFeedback"
@@ -113,7 +98,6 @@
               v-model.trim="localUser.password"
               placeholder="Enter your password"
               :state="isPasswordValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
@@ -137,7 +121,7 @@
             class="main-button"
             variant="dark"
             :disabled="!isFormValid"
-            @click.prevent="this.$emit('submit', this.user)"
+            @click.prevent="$emit('submit', localUser)"
           >
             Create
           </b-button>
@@ -172,7 +156,7 @@ export default {
   },
   data() {
     return {
-      localUser: this.user,
+      localUser: JSON.parse(JSON.stringify(this.user)),
       showConfirmation: false,
       healthNumberLen: 9,
       licenseNumberLen: 9,
@@ -189,7 +173,7 @@ export default {
       return (
         this.$auth.user.groups.includes("Patient") ||
         (this.$auth.user.groups.includes("Patient") &&
-          this.to == "professional")
+          nthis.to == "professional")
       );
     },
 
@@ -209,7 +193,6 @@ export default {
       if (usernameLen < 3 || usernameLen > 15) {
         return "The username must be between [3, 15] characters.";
       }
-
       return "";
     },
 
