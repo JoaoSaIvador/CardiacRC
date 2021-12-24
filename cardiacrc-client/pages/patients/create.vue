@@ -1,5 +1,5 @@
 <template>
-  <UpdateUserDetails
+  <SetUserDetails
     :user="patient"
     @submit="createPatient"
     to="patient"

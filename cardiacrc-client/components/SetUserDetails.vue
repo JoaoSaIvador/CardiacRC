@@ -21,7 +21,7 @@
 
         <div v-if="!isAdminToPatient" class="main-input">
           <b-form-group
-            label="Change Name:"
+            label="Name:"
             label-for="name"
             :invalid-feedback="invalidNameFeedback"
             :state="isNameValid"
@@ -36,11 +36,7 @@
         </div>
 
         <div v-if="!isAdminToPatient" class="main-input">
-          <b-form-group
-            label="Change Email:"
-            label-for="email"
-            :state="isEmailValid"
-          >
+          <b-form-group label="Email:" label-for="email" :state="isEmailValid">
             <b-input
               ref="email"
               v-model.trim="localUser.email"
@@ -85,9 +81,28 @@
           </b-form-group>
         </div>
 
+        <div v-if="isProfessional && isCreate" class="main-input">
+          <b-form-group label="Professional Type:" label-for="type">
+            <b-select
+              id="type"
+              v-model="localUser.type"
+              :options="professionalTypes"
+              required
+              value-field="id"
+              text-field="name"
+            >
+              <template v-slot:first>
+                <option :value="null" disabled>
+                  -- Please select a Type --
+                </option>
+              </template>
+            </b-select>
+          </b-form-group>
+        </div>
+
         <div class="main-input">
           <b-form-group
-            label="Change Password:"
+            label="Password:"
             label-for="password"
             :invalid-feedback="invalidPasswordFeedback"
             :state="isPasswordValid"
@@ -160,6 +175,11 @@ export default {
       showConfirmation: false,
       healthNumberLen: 9,
       licenseNumberLen: 9,
+      professionalTypes: [
+        { id: 1, name: "Cardiology" },
+        { id: 2, name: "Nutrition" },
+        { id: 3, name: "Physiology" },
+      ],
     };
   },
   computed: {

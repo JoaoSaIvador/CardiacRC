@@ -1,5 +1,5 @@
 <template>
-  <UpdateUserDetails
+  <SetUserDetails
     :user="professional"
     @submit="createProfessional"
     to="professional"
@@ -19,13 +19,12 @@ export default {
         email: null,
         password: null,
         licenseNumber: null,
+        type: null,
       },
     };
   },
   methods: {
     createProfessional(user) {
-      user.type = 1;
-
       this.$axios
         .$post("/api/professionals", user)
         .then(() => {
@@ -39,5 +38,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

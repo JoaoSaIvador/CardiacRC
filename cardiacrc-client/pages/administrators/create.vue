@@ -1,5 +1,5 @@
 <template>
-  <UpdateUserDetails
+  <SetUserDetails
     :user="administrator"
     @submit="createAdministrator"
     to="administrator"

@@ -1,5 +1,5 @@
 <template>
-  <UpdateUserDetails
+  <SetUserDetails
     v-if="administrator"
     :user="administrator"
     @submit="updateAdministrator"

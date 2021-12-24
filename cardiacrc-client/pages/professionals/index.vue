@@ -16,6 +16,7 @@ export default {
         { key: "name", sortable: true },
         { key: "email", sortable: true },
         { key: "licenseNumber", sortable: true },
+        { key: "typeName", sortable: true },
         { key: "actions", sortable: false },
       ],
       professionals: [],
