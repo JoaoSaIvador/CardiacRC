@@ -2,6 +2,7 @@
   <UserTable
     :items="patients"
     :fields="fields"
+    sortBy="username"
     group="patients"
     @delete="deletePatient"
   />
@@ -36,5 +37,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

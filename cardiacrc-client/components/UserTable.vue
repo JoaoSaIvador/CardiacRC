@@ -63,14 +63,21 @@
               v-if="!isAdmin"
               variant="primary"
               class="table-button"
-              :to="`${group}/${row.item.username}/update`"
+              :to="`${group}/${
+                row.item.username ? row.item.username : row.item.id
+              }/update`"
             >
               <fa :icon="['fas', 'pen']" />
             </b-button>
             <b-button
               variant="danger"
               class="table-button"
-              @click.prevent="$emit('delete', row.item.username)"
+              @click.prevent="
+                $emit(
+                  'delete',
+                  row.item.username ? row.item.username : row.item.id
+                )
+              "
             >
               <fa :icon="['fas', 'trash']" />
             </b-button>
@@ -87,13 +94,13 @@ export default {
   props: {
     fields: Array,
     items: Array,
+    sortBy: String,
     group: String,
   },
   data() {
     return {
       currentPage: 1,
       perPage: 10,
-      sortBy: "username",
       sortDesc: false,
       filter: null,
     };

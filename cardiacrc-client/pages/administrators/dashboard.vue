@@ -23,11 +23,14 @@ export default {
           title: "Account Details",
           path: `/administrators/${this.$auth.user.sub}/details`,
         },
+        {
+          title: "Update Account Details",
+          path: `/administrators/${this.$auth.user.sub}/update`,
+        },
         { title: "Manage Administrators", path: `/administrators` },
         { title: "Manage Professionals", path: `/professionals` },
         { title: "Manage Patients", path: `/patients` },
-        { title: "Manage Quantitative Data Types", path: "#" },
-        { title: "Manage Qualitative Data Types", path: "#" },
+        { title: "Manage Data Types", path: `/dataTypes` },
       ],
       counters: [
         {

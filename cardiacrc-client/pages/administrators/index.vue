@@ -2,6 +2,7 @@
   <UserTable
     :items="administrators"
     :fields="fields"
+    sortBy="username"
     group="administrators"
     @delete="deleteAdministrator"
   />
@@ -17,11 +18,6 @@ export default {
   },
   data() {
     return {
-      currentPage: 1,
-      perPage: 10,
-      sortBy: "username",
-      sortDesc: false,
-      filter: null,
       fields: [
         { key: "username", sortable: true },
         { key: "name", sortable: true },
@@ -47,5 +43,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

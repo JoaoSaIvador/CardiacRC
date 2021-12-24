@@ -2,6 +2,7 @@
   <UserTable
     :items="professionals"
     :fields="fields"
+    sortBy="username"
     group="professionals"
     @delete="deleteProfessional"
   />
@@ -37,5 +38,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
