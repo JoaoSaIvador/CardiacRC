@@ -3,6 +3,7 @@
     v-if="dataType"
     :dataType="dataType"
     @submit="updateDataType"
+    group="dataType"
     mode="update"
   />
 </template>

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import UserTable from "../../../components/UserTable.vue";
+import UserTable from "../../../../components/UserTable.vue";
 
 export default {
   middleware: "admin",
@@ -21,8 +21,8 @@ export default {
       fields: [
         { key: "id", sortable: true },
         { key: "name", sortable: true },
-        { key: "min", sortable: false },
-        { key: "max", sortable: false },
+        { key: "min", sortable: true },
+        { key: "max", sortable: true },
         { key: "actions", sortable: false },
       ],
       qualities: [],

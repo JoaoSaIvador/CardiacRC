@@ -224,6 +224,10 @@ export default {
     },
 
     invalidPasswordFeedback() {
+      if (this.isCreate && !this.localUser.password) {
+        return "You must insert a password.";
+      }
+
       if (!this.localUser.password) {
         return null;
       }
@@ -316,39 +320,35 @@ export default {
     },
 
     isFormValid() {
-      if (this.isCreate) {
-        if (!this.isUsernameValid) {
-          return false;
-        }
+      if (this.isCreate && !this.isUsernameValid) {
+        return false;
       }
 
-      if (!this.isAdminToPatient) {
-        if (!this.isNameValid) {
-          return false;
-        }
-
-        if (!this.isEmailValid) {
-          return false;
-        }
+      if (!this.isAdminToPatient && !this.isNameValid) {
+        return false;
       }
 
-      if (this.isPatient) {
-        if (!this.isHealthNumberValid) {
-          return false;
-        }
+      if (!this.isAdminToPatient && !this.isEmailValid) {
+        return false;
       }
 
-      if (this.isProfessional) {
-        if (!this.isLicenseNumberValid) {
-          return false;
-        }
+      if (this.isPatient && !this.isHealthNumberValid) {
+        return false;
+      }
+
+      if (this.isProfessional && !this.isLicenseNumberValid) {
+        return false;
+      }
+
+      if (this.isCreate && !this.localUser.password && !this.isPasswordValid) {
+        return false;
       }
 
       if (this.localUser.password != null && this.localUser.password != "") {
         if (!this.isPasswordValid) {
           return false;
         }
-      } else {
+      } else if (!this.isCreate) {
         this.localUser.password = null;
       }
 

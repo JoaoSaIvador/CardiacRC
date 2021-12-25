@@ -1,7 +1,9 @@
 <template>
   <b-container class="secondary-div">
     <b-container class="page-content bg-light">
-      <h2 class="main-title text-center">Data Type Details</h2>
+      <h2 class="main-title text-center">
+        {{ group.charAt(0).toUpperCase() + group.slice(1) }} Details
+      </h2>
       <form class="needs-validation" :disabled="!isFormValid">
         <div class="main-input">
           <b-form-group
@@ -18,7 +20,7 @@
             ></b-input>
           </b-form-group>
         </div>
-        <div class="main-input">
+        <div class="main-input" v-if="group == 'dataType'">
           <b-form-group
             label="Unit:"
             label-for="unit"
@@ -107,7 +109,9 @@ export default {
   name: "UpdateUserDetails",
   props: {
     dataType: Object,
+    parentDataType: Object,
     mode: String,
+    group: String,
   },
   data() {
     return {
@@ -164,6 +168,13 @@ export default {
         return "Minimum value must be less than Maximum value.";
       }
 
+      if (
+        this.group == "quality" &&
+        parseFloat(this.parentDataType.min) > parseFloat(this.localDataType.min)
+      ) {
+        return "Minimum value must be the same or greater than Data Type's Minimum value.";
+      }
+
       return "";
     },
 
@@ -185,6 +196,13 @@ export default {
         return "Maximum value must be greater than Minimum value.";
       }
 
+      if (
+        this.group == "quality" &&
+        parseFloat(this.parentDataType.max) < parseFloat(this.localDataType.max)
+      ) {
+        return "Minimum value must be the same or less than Data Type's Maximum value.";
+      }
+
       return "";
     },
 
@@ -200,7 +218,7 @@ export default {
         return false;
       }
 
-      if (!this.isUnitValid) {
+      if (this.group == "dataType" && !this.isUnitValid) {
         return false;
       }
 
