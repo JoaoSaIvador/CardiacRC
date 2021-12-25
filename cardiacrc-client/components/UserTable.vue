@@ -61,11 +61,12 @@
           <div class="button-group">
             <b-button
               v-if="group == 'dataTypes'"
-              variant="success"
-              class="table-button"
-              :to="`${group}/${row.item.id}/details`"
+              variant="dark"
+              class="table-button qualities-button"
+              :to="`${group}/${row.item.id}/qualities`"
             >
               <fa :icon="['fas', 'clipboard-list']" />
+              <span class="button-text">&nbsp;Qualities</span>
             </b-button>
             <b-button
               v-if="group != 'administrators'"
@@ -115,3 +116,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@media screen and (max-width: 650px) {
+  .button-text {
+    display: none;
+  }
+
+  .qualities-button {
+    width: 30px;
+  }
+}
+
+@media screen and (min-width: 651px) {
+  .qualities-button {
+    width: auto;
+  }
+}
+</style>
