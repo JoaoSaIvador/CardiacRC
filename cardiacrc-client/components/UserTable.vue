@@ -82,8 +82,7 @@
               variant="danger"
               class="table-button"
               @click.prevent="
-                $emit(
-                  'delete',
+                showConfirmation(
                   row.item.username ? row.item.username : row.item.id
                 )
               "
@@ -93,6 +92,11 @@
           </div>
         </template>
       </b-table>
+      <DeleteConfirmation
+        v-show="isShowConfirmation"
+        @closeModal="isShowConfirmation = false"
+        @confirm="confirm"
+      />
     </b-container>
   </b-container>
 </template>
@@ -112,7 +116,20 @@ export default {
       perPage: 10,
       sortDesc: false,
       filter: null,
+      isShowConfirmation: false,
+      affectedLine: null,
     };
+  },
+  methods: {
+    showConfirmation(affectedLine) {
+      this.isShowConfirmation = true;
+      this.affectedLine = affectedLine;
+    },
+    confirm(confirmation) {
+      if (confirmation) {
+        this.$emit("delete", this.affectedLine);
+      }
+    },
   },
 };
 </script>
