@@ -9,13 +9,8 @@
 </template>
 
 <script>
-import UserTable from "../../components/UserTable.vue";
-
 export default {
   middleware: "admin",
-  components: {
-    UserTable,
-  },
   data() {
     return {
       fields: [

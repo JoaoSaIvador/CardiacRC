@@ -44,6 +44,8 @@
   </section>
 </template>
 <script>
+import * as auxiliary from "../../utils/auxiliary.js";
+
 export default {
   layout: "login",
   auth: false,
@@ -63,16 +65,7 @@ export default {
       });
       promise.then(() => {
         this.$toast.success("You are logged in!").goAway(3000);
-        // check if the user $auth.user object is set
-        console.log(this.$auth.person);
-        // TODO redirect based on the user role
-        if (this.$auth.user.groups.includes("Administrator")) {
-          this.$router.push("/administrators/dashboard");
-        } else if (this.$auth.user.groups.includes("Patient")) {
-          this.$router.push("/patients/" + this.username + "/details");
-        } else if (this.$auth.user.groups.includes("Professional")) {
-          this.$router.push("/professionals/" + this.username + "/details");
-        }
+        auxiliary.goToDashboard(this.$auth.user, this.$router);
       });
       promise.catch(() => {
         this.$toast

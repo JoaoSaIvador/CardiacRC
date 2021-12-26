@@ -5,6 +5,12 @@ body,
   background-color: rgb(238, 238, 238);
 }
 
+@media screen and (max-width: 991px) {
+  .dashboard {
+    margin: 50px auto 50px auto;
+  }
+}
+
 @media screen and (min-width: 992px) {
   html,
   body,
@@ -53,6 +59,33 @@ body,
 
 .navbar {
   margin-bottom: 50px;
+}
+
+.dashboard {
+  height: calc(100% - 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dashboard-deck,
+.dashboard-counters {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.dashboard-counters {
+  margin-bottom: 50px;
+  padding: 0 30px 0 30px;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: space-evenly;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 14px 28px,
+    rgba(0, 0, 0, 0.05) 0px 10px 10px;
 }
 
 .primary-div {

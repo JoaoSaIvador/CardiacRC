@@ -162,7 +162,7 @@
 
 <script>
 export default {
-  name: "UpdateUserDetails",
+  name: "SetUserDetails",
   props: {
     user: Object,
     to: String,

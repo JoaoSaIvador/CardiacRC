@@ -1,14 +1,14 @@
 <template>
-  <b-container class="admin-dashboard">
-    <div class="row admin-counters bg-light">
-      <AdminCounter
+  <b-container class="dashboard">
+    <div class="row dashboard-counters bg-light">
+      <DashboardCounter
         v-for="counter in counters"
         :key="counter.title"
         :counter="counter"
       />
     </div>
-    <div class="admin-deck card-deck">
-      <AdminCard v-for="card in cards" :key="card.title" :card="card" />
+    <div class="dashboard-deck card-deck">
+      <DashboardCard v-for="card in cards" :key="card.title" :card="card" />
     </div>
   </b-container>
 </template>
@@ -62,35 +62,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-@media screen and (max-width: 991px) {
-  .admin-dashboard {
-    margin: 50px auto 50px auto;
-  }
-}
-
-.admin-dashboard {
-  height: calc(100% - 56px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.admin-deck,
-.admin-counters {
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.admin-counters {
-  margin-bottom: 50px;
-  border-radius: 20px;
-  align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 14px 28px,
-    rgba(0, 0, 0, 0.05) 0px 10px 10px;
-}
-</style>

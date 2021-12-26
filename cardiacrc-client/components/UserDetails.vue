@@ -60,7 +60,7 @@
           <b-button
             class="main-button"
             variant="dark"
-            :to="`/administrators/${user.username}/update`"
+            :to="`/${group}/${user.username}/update`"
           >
             Update
           </b-button>

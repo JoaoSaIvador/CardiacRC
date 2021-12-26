@@ -2,7 +2,7 @@
   <b-container class="secondary-div">
     <b-container class="page-content-xl bg-light">
       <h1>Manage {{ group.charAt(0).toUpperCase() + group.slice(1) }}</h1>
-      <div class="table-settings">
+      <div class="table-settings" v-if="items.length > 0">
         <div>
           <b-button variant="outline-dark" @click="() => this.$router.back()">
             Back
@@ -44,6 +44,7 @@
         />
       </div>
       <b-table
+        v-if="items.length > 0"
         striped
         hover
         bordered
@@ -92,6 +93,7 @@
           </div>
         </template>
       </b-table>
+      <p v-else>No {{ group }}.</p>
       <DeleteConfirmation
         v-show="isShowConfirmation"
         @closeModal="isShowConfirmation = false"

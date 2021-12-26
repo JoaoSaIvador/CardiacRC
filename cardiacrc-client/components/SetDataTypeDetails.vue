@@ -106,7 +106,7 @@
 
 <script>
 export default {
-  name: "UpdateUserDetails",
+  name: "SetDataTypeDetails",
   props: {
     dataType: Object,
     parentDataType: Object,
