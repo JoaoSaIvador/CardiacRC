@@ -1,8 +1,20 @@
 <template>
-  <b-container class="secondary-div">
-    <b-container class="page-content-xl bg-light">
+  <b-container class="h-100 d-flex align-items-center">
+    <b-container
+      class="page-content-xl d-flex flex-column align-items-center bg-light"
+    >
       <h1>Manage {{ group.charAt(0).toUpperCase() + group.slice(1) }}</h1>
-      <div class="table-settings" v-if="items.length > 0">
+      <div
+        class="
+          w-100
+          d-flex
+          flex-row
+          justify-content-between
+          align-items-center
+          mb-3
+        "
+        v-if="items.length > 0"
+      >
         <div>
           <b-button variant="outline-dark" @click="() => this.$router.back()">
             Back
@@ -59,11 +71,17 @@
         small
       >
         <template v-slot:cell(actions)="row">
-          <div class="button-group">
+          <div class="d-flex flex-row justify-content-center">
             <b-button
               v-if="group == 'dataTypes'"
               variant="dark"
-              class="table-button qualities-button"
+              class="
+                table-button
+                d-flex
+                align-items-center
+                justify-content-center
+                qualities-button
+              "
               :to="`${group}/${row.item.id}/qualities`"
             >
               <fa :icon="['fas', 'clipboard-list']" />
@@ -72,7 +90,12 @@
             <b-button
               v-if="group != 'administrators'"
               variant="primary"
-              class="table-button"
+              class="
+                table-button
+                d-flex
+                align-items-center
+                justify-content-center
+              "
               :to="`${group}/${
                 row.item.username ? row.item.username : row.item.id
               }/update`"
@@ -81,7 +104,12 @@
             </b-button>
             <b-button
               variant="danger"
-              class="table-button"
+              class="
+                table-button
+                d-flex
+                align-items-center
+                justify-content-center
+              "
               @click.prevent="
                 showConfirmation(
                   row.item.username ? row.item.username : row.item.id

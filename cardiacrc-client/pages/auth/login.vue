@@ -1,7 +1,16 @@
 <template>
   <section class="vh-100">
-    <b-container class="vh-100 secondary-div">
-      <b-container class="page-content bg-light">
+    <b-container class="h-100 d-flex align-items-center">
+      <b-container
+        class="
+          page-content
+          d-flex
+          flex-column
+          align-items-center
+          justify-content-center
+          bg-light
+        "
+      >
         <h2 class="main-title">Sign in</h2>
         <b-form @submit.prevent="onSubmit">
           <div class="main-input">
@@ -33,7 +42,7 @@
             </b-form-group>
           </div>
 
-          <div class="button-group">
+          <div class="d-flex flex-row justify-content-center">
             <b-button class="main-button" variant="dark" type="submit">
               Login
             </b-button>

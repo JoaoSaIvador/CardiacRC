@@ -1,16 +1,35 @@
 <template>
-  <b-container class="dashboard">
-    <div class="dashboard-counters bg-light">
+  <b-container
+    class="
+      h-100
+      d-flex
+      flex-column
+      justify-content-center
+      align-items-center
+      flex-wrap
+    "
+  >
+    <div
+      class="
+        d-flex
+        flex-row
+        justify-content-center
+        flex-wrap
+        align-items-center
+        dashboard-counters
+        bg-light
+      "
+    >
       <DashboardCounter
         v-for="counter in counters"
         :key="counter.title"
         :counter="counter"
       />
     </div>
-    <div class="dashboard-deck card-deck">
+    <div class="d-flex flex-row justify-content-center flex-wrap card-deck">
       <DashboardCard v-for="card in cards1" :key="card.title" :card="card" />
     </div>
-    <div class="dashboard-deck card-deck">
+    <div class="d-flex flex-row justify-content-center flex-wrap card-deck">
       <DashboardCard v-for="card in cards2" :key="card.title" :card="card" />
     </div>
   </b-container>
@@ -46,7 +65,7 @@ export default {
           icon: "file",
         },
         {
-          title: "PRCs",
+          title: "CRPs",
           total: "12",
           color: "#54e69d",
           icon: "copy",

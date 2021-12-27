@@ -6,7 +6,7 @@
       </div>
       <h6>Are you sure?</h6>
       <p>Please confirm:</p>
-      <div class="input-group button-group">
+      <div class="input-group d-flex flex-row justify-content-center">
         <b-button
           class="main-button"
           variant="outline-dark"

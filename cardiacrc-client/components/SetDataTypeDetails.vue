@@ -1,6 +1,15 @@
 <template>
-  <b-container class="secondary-div">
-    <b-container class="page-content bg-light">
+  <b-container class="h-100 d-flex align-items-center">
+    <b-container
+      class="
+        page-content
+        d-flex
+        flex-column
+        align-items-center
+        justify-content-center
+        bg-light
+      "
+    >
       <h2 class="main-title text-center">
         {{ group.charAt(0).toUpperCase() + group.slice(1) }} Details
       </h2>
@@ -72,7 +81,7 @@
             {{ errorMsg }}
           </p>
         </div>
-        <div class="button-group">
+        <div class="d-flex flex-row justify-content-center">
           <b-button
             class="main-button"
             variant="outline-dark"
