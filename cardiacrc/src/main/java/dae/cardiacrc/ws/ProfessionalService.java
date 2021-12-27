@@ -1,6 +1,5 @@
 package dae.cardiacrc.ws;
 
-import dae.cardiacrc.dtos.AuthDTO;
 import dae.cardiacrc.dtos.PatientDTO;
 import dae.cardiacrc.dtos.PrescriptionDTO;
 import dae.cardiacrc.dtos.ProfessionalDTO;
@@ -38,11 +37,10 @@ public class ProfessionalService {
         return toDTOsSimple(professionalBean.getAllProfessionals());
     }
 
-    // Converts an entity Student to a DTO Professional class
+    // Converts an entity Professional to a DTO Professional class
     private ProfessionalDTO toDTOSimple(Professional professional) {
         return new ProfessionalDTO(
                 professional.getUsername(),
-                professional.getPassword(),
                 professional.getName(),
                 professional.getEmail(),
                 professional.getLicenseNumber(),
@@ -60,7 +58,6 @@ public class ProfessionalService {
     private ProfessionalDTO toDTO(Professional professional) {
         ProfessionalDTO professionalDTO = new ProfessionalDTO(
                 professional.getUsername(),
-                professional.getPassword(),
                 professional.getName(),
                 professional.getEmail(),
                 professional.getLicenseNumber(),
@@ -70,9 +67,6 @@ public class ProfessionalService {
 
         List<PatientDTO> patientDTOS = patientToDTOs(professional.getPatients());
         professionalDTO.setPatientDTOs(patientDTOS);
-
-        professionalDTO.setActivePrescriptionDTOs(prescriptionsToDTOs(professional.getActivePrescriptions()));
-        professionalDTO.setInactivePrescriptionDTOs(prescriptionsToDTOs(professional.getInactivePrescriptions()));
 
         return professionalDTO;
     }
@@ -95,6 +89,14 @@ public class ProfessionalService {
     public Response getProfessionalDetails(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
         return Response.ok(toDTO(professional)).build();
+    }
+
+    @GET
+    @Path("/count")
+    public Response count() throws MyEntityNotFoundException {
+        Principal principal = securityContext.getUserPrincipal();
+        List total = professionalBean.counts(principal.getName());
+        return Response.ok(total).build();
     }
 
     @PUT
@@ -125,12 +127,8 @@ public class ProfessionalService {
                 prescription.getId(),
                 prescription.getProfessional().getUsername(),
                 prescription.getProfessional().getName(),
-                prescription.getPatient().getUsername(),
-                prescription.getPatient().getName(),
                 prescription.getDescription(),
-                prescription.getName(),
-                prescription.getDuration(),
-                prescription.isState()
+                prescription.getName()
         );
     }
 
@@ -146,31 +144,9 @@ public class ProfessionalService {
         return Response.ok(dtos).build();
     }
 
-    @GET
-    @Path("{username}/activePrescriptions")
-    public Response getProfessionalActivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
-        Professional professional = professionalBean.findProfessional(username);
-        List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getActivePrescriptions());
-        return Response.ok(dtos).build();
-    }
-
-    @GET
-    @Path("{username}/inactivePrescriptions")
-    public Response getProfessionalInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
-        Professional professional = professionalBean.findProfessional(username);
-        List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getInactivePrescriptions());
-        return Response.ok(dtos).build();
-    }
-
-    //TODO: CREATE PRESCRIPTION
-    //TODO: UPDATE PRESCRIPTION
-    //TODO: DELETE PRESCRIPTION
-    //TODO: TOGGLE PRESCRIPTION STATE
-
     private PatientDTO patientToDTO(Patient patient) {
         return new PatientDTO(
                 patient.getUsername(),
-                patient.getPassword(),
                 patient.getName(),
                 patient.getEmail(),
                 patient.getHealthNumber()

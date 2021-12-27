@@ -133,8 +133,8 @@ public class DataTypeService {
 
     @DELETE
     @Path("{dataType}")
-    public Response deleteDataType(@PathParam("dataType") int dataTypeId, QuantitativeDataTypeDTO dataTypeDTO) throws MyEntityNotFoundException {
-        System.out.println(dataTypeDTO);
+    public Response deleteDataType(@PathParam("dataType") int dataTypeId) throws MyEntityNotFoundException {
+        System.out.println(dataTypeId);
         System.out.println("HELLO IAM HERE");
         quantityDataTypeBean.delete(dataTypeId);
 
@@ -143,7 +143,7 @@ public class DataTypeService {
 
     @DELETE
     @Path("{dataType}/qualitatives/{qualitative}")
-    public Response deleteQualitativeDataType(@PathParam("dataType") int dataTypeId, @PathParam("qualitative") int qualitativeId, QualitativeDataTypeDTO qualitativeDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+    public Response deleteQualitativeDataType(@PathParam("dataType") int dataTypeId, @PathParam("qualitative") int qualitativeId) throws MyEntityNotFoundException, MyIllegalArgumentException {
         qualitativeDataTypeBean.delete(dataTypeId, qualitativeId);
         return Response.ok("Qualitative DataType deleted!").build();
     }

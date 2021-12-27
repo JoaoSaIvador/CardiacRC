@@ -14,6 +14,8 @@ import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 import java.io.Console;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 @Stateless
@@ -48,8 +50,14 @@ public class AdministratorBean {
         return (List<Administrator>) em.createNamedQuery("getAllAdministrators").getResultList();
     }
 
-    public List countAdministrators(){
-        return em.createNamedQuery("countAdministrators").getResultList();
+    public List counts(){
+//        System.out.println(em.createNamedQuery("countAdministrators").getResultList());
+        List total = Arrays.asList(
+                em.createNamedQuery("countAdministrators").getResultList(),
+                em.createNamedQuery("countProfessionals").getResultList(),
+                em.createNamedQuery("countPatients").getResultList(),
+                em.createNamedQuery("countDataTypes").getResultList());
+        return total;
     }
 
     public Administrator findAdministrator(String username) throws MyEntityNotFoundException {

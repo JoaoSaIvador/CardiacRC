@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import java.util.Arrays;
 import java.util.List;
 
 @Stateless
@@ -102,14 +103,15 @@ public class PatientBean {
     public void delete(String username) throws MyEntityNotFoundException {
         Patient patient =  findPatient(username);
 
-        for (Prescription prescription : patient.getPrescriptions()) {
-            em.remove(prescription);
-        }
-
         for (Professional professional : patient.getProfessionals()) {
             professional.removePatient(patient);
         }
 
         em.remove(patient);
+    }
+
+    public List counts(String username) throws MyEntityNotFoundException {
+        Patient patient = findPatient(username);
+        return Arrays.asList(patient.getProfessionals());
     }
 }

@@ -21,9 +21,8 @@ public class PatientDTO {
         this.observationDTOS = new ArrayList<ObservationDTO>();
     }
 
-    public PatientDTO(String username, String password, String name, String email, int healthNumber) {
+    public PatientDTO(String username, String name, String email, int healthNumber) {
         this.username = username;
-        this.password = password;
         this.name = name;
         this.email = email;
         this.healthNumber = healthNumber;

@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import java.util.Arrays;
 import java.util.List;
 
 @Stateless
@@ -49,6 +50,11 @@ public class ProfessionalBean {
             throw new MyEntityNotFoundException("Professional not found!");
         }
         return professional;
+    }
+
+    public List counts(String username) throws MyEntityNotFoundException {
+        Professional professional = findProfessional(username);
+        return Arrays.asList(professional.getPatients().size(), professional.getPrescriptions().size());
     }
 
     public void update(String authUsername, String professionalUsername, String password, int licenseNumber, String name, String newPassword, String email) throws MyIllegalArgumentException, MyEntityNotFoundException {

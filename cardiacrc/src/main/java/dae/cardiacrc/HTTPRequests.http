@@ -157,7 +157,7 @@ GET http://localhost:8080/cardiacrc/api/dataTypes
 Accept: application/json
 
 ###GET DATATYPE DETAILS
-GET http://localhost:8080/cardiacrc/api/dataTypes/2
+GET http://localhost:8080/cardiacrc/api/dataTypes/1
 Accept: application/json
 
 ###CREATE DATATYPE

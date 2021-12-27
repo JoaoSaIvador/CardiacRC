@@ -36,12 +36,8 @@ public class PrescriptionService {
                 prescription.getId(),
                 prescription.getProfessional().getUsername(),
                 prescription.getProfessional().getName(),
-                prescription.getPatient().getUsername(),
-                prescription.getPatient().getName(),
                 prescription.getDescription(),
-                prescription.getName(),
-                prescription.getDuration(),
-                prescription.isState()
+                prescription.getName()
         );
         return prescriptionDTO;
     }
@@ -57,10 +53,8 @@ public class PrescriptionService {
     @Path("/")
     public Response createNewPrescription(PrescriptionDTO prescriptionDTO) throws MyConstraintViolationException, MyEntityNotFoundException, MyEntityExistsException {
         prescriptionBean.create(prescriptionDTO.getProfessionalUsername(),
-                prescriptionDTO.getPatientUsername(),
                 prescriptionDTO.getDescription(),
-                prescriptionDTO.getName(),
-                prescriptionDTO.getDuration());
+                prescriptionDTO.getName());
 
         return Response.status(Response.Status.CREATED).entity("Precription " + prescriptionDTO.getName() + " created!").build();
     }
@@ -68,12 +62,10 @@ public class PrescriptionService {
     @PUT
     @Path("{id}")
     public Response updatePrescription(@PathParam("id") int id, PrescriptionDTO prescriptionDTO) throws MyEntityNotFoundException {
-        prescriptionBean.updatePrescription(id,
+        prescriptionBean.update(id,
                 prescriptionDTO.getProfessionalUsername(),
-                prescriptionDTO.getPatientUsername(),
                 prescriptionDTO.getDescription(),
-                prescriptionDTO.getName(),
-                prescriptionDTO.getDuration());
+                prescriptionDTO.getName());
 
         return Response.ok("Prescription updated!").build();
     }
@@ -81,14 +73,7 @@ public class PrescriptionService {
     @DELETE
     @Path("{id}")
     public Response deletePrecription(@PathParam("id") int id) throws MyEntityNotFoundException {
-        prescriptionBean.deletePresciption(id);
+        prescriptionBean.delete(id);
         return Response.ok("Precription deleted!").build();
-    }
-
-    @PATCH
-    @Path("{id}")
-    public Response toggleState(@PathParam("id") int id) throws MyEntityNotFoundException {
-        prescriptionBean.toggleState(id);
-        return Response.ok("Prescription state changed!").build();
     }
 }

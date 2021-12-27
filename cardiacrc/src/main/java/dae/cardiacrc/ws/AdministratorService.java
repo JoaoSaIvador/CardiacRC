@@ -34,7 +34,6 @@ public class AdministratorService {
         return new AdministratorDTO(
                 administrator.getUsername(),
                 administrator.getName(),
-                administrator.getPassword(),
                 administrator.getEmail()
         );
     }
@@ -64,8 +63,8 @@ public class AdministratorService {
 
     @GET
     @Path("/count")
-    public Response countAdministrators(){
-        List total = administratorBean.countAdministrators();
+    public Response count(){
+        List total = administratorBean.counts();
         return Response.ok(total).build();
     }
 

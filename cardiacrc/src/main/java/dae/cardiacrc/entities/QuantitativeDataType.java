@@ -12,6 +12,10 @@ import java.util.List;
         @NamedQuery(
                 name = "getAllQuantitativeDataTypes",
                 query = "SELECT d FROM QuantitativeDataType d ORDER BY d.name"
+        ),
+        @NamedQuery(
+                name = "countDataTypes",
+                query = "SELECT count(d) FROM QuantitativeDataType d"
         )
 })
 @SequenceGenerator(name = "quantitativedatatype_id", sequenceName = "quantitativedatatype_id",  initialValue = 1)

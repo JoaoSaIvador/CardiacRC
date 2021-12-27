@@ -22,9 +22,8 @@ public class ProfessionalDTO {
         this.patientDTOS = new ArrayList<PatientDTO>();
     }
 
-    public ProfessionalDTO(String username, String password, String name, String email, int licenseNumber, int type, String typeName) {
+    public ProfessionalDTO(String username, String name, String email, int licenseNumber, int type, String typeName) {
         this.username = username;
-        this.password = password;
         this.name = name;
         this.email = email;
         this.licenseNumber = licenseNumber;

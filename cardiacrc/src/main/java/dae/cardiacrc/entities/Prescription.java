@@ -11,6 +11,10 @@ import java.io.Serializable;
         @NamedQuery(
                 name = "getAllPrescriptions",
                 query = "SELECT p FROM Prescription p ORDER BY p.name"
+        ),
+        @NamedQuery(
+                name = "countPrescriptions",
+                query = "SELECT count(p) FROM Prescription p"
         )
 })
 @SequenceGenerator(name = "prescription_id", sequenceName = "prescription_id",  initialValue = 1)
@@ -24,10 +28,10 @@ public class Prescription implements Serializable {
     @NotNull
     private Professional professional;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_username")
-    @NotNull
-    private Patient patient;
+//    @ManyToOne
+//    @JoinColumn(name = "patient_username")
+//    @NotNull
+//    private Patient patient;
 
     @NotNull
     private String description;
@@ -35,11 +39,11 @@ public class Prescription implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private int duration;
-
-    @NotNull
-    private boolean state;
+//    @NotNull
+//    private int duration;
+//
+//    @NotNull
+//    private boolean state;
 
     @NotNull
     @OneToOne
@@ -51,14 +55,11 @@ public class Prescription implements Serializable {
     public Prescription() {
     }
 
-    public Prescription(Professional professional, Patient patient, String description, String name, int duration, Type type) {
+    public Prescription(Professional professional, String description, String name, Type type) {
         this.professional = professional;
-        this.patient = patient;
         this.description = description;
         this.name = name;
-        this.duration = duration;
         this.type = type;
-        this.state = true;
     }
 
     public int getId() {
@@ -69,24 +70,12 @@ public class Prescription implements Serializable {
         return professional;
     }
 
-    public Patient getPatient() {
-        return patient;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public String getName() {
         return name;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public boolean isState() {
-        return state;
     }
 
     public void setId(int id) {
@@ -97,25 +86,12 @@ public class Prescription implements Serializable {
         this.professional = professional;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
-
     public void setDescription(String description) {
         this.description = description;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
     }
 
     public Type getType() {

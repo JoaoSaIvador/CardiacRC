@@ -7,16 +7,12 @@ public class QualitativeDataTypeDTO implements Serializable {
     private String name;
     private int min;
     private int max;
-//    private int quantitativeId;
-//    private String quantitativeName;
 
     public QualitativeDataTypeDTO(int id, String name, int min, int max) {
         this.id = id;
         this.name = name;
         this.min = min;
         this.max = max;
-//        this.quantitativeId = quantitativeId;
-//        this.quantitativeName = quantitativeName;
     }
 
     public QualitativeDataTypeDTO() {
@@ -24,6 +20,10 @@ public class QualitativeDataTypeDTO implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

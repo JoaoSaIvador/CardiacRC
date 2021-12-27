@@ -39,11 +39,10 @@ public class PatientService {
         return toDTOsSimple(patientBean.getAllPatients());
     }
 
-    // Converts an entity Student to a DTO Patient class
+    // Converts an entity Patient to a DTO Patient class
     private PatientDTO toDTOSimple(Patient patient) {
         return new PatientDTO(
                 patient.getUsername(),
-                patient.getPassword(),
                 patient.getName(),
                 patient.getEmail(),
                 patient.getHealthNumber()
@@ -59,15 +58,12 @@ public class PatientService {
     private PatientDTO toDTO(Patient patient) {
         PatientDTO patientDTO = new PatientDTO(
                 patient.getUsername(),
-                patient.getPassword(),
                 patient.getName(),
                 patient.getEmail(),
                 patient.getHealthNumber()
         );
 
         patientDTO.setProfessionalDTOs(professionalToDTOs(patient.getProfessionals()));
-        patientDTO.setActivePrescriptionDTOs(prescriptionsToDTOs(patient.getActivePrescriptions()));
-        patientDTO.setInactivePrescriptionDTOs(prescriptionsToDTOs(patient.getInactivePrescriptions()));
         patientDTO.setPatientDataDTOS(patientDataToDTOs(patient.getPatientData()));
 
         return patientDTO;
@@ -95,6 +91,14 @@ public class PatientService {
     public Response getPatientDetails(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
         return Response.ok(toDTO(patient)).build();
+    }
+
+    @GET
+    @Path("/count")
+    public Response count() throws MyEntityNotFoundException {
+        Principal principal = securityContext.getUserPrincipal();
+        List total = patientBean.counts(principal.getName());
+        return Response.ok(total).build();
     }
 
     @PUT
@@ -136,7 +140,6 @@ public class PatientService {
     private ProfessionalDTO professionalToDTO(Professional professional) {
         return  new ProfessionalDTO(
                 professional.getUsername(),
-                professional.getPassword(),
                 professional.getName(),
                 professional.getEmail(),
                 professional.getLicenseNumber(),
@@ -154,12 +157,8 @@ public class PatientService {
                 prescription.getId(),
                 prescription.getProfessional().getUsername(),
                 prescription.getProfessional().getName(),
-                prescription.getPatient().getUsername(),
-                prescription.getPatient().getName(),
                 prescription.getDescription(),
-                prescription.getName(),
-                prescription.getDuration(),
-                prescription.isState()
+                prescription.getName()
         );
     }
 
@@ -167,29 +166,13 @@ public class PatientService {
         return  prescriptions.stream().map(this::prescriptionToDTO).collect(Collectors.toList());
     }
 
-    @GET
-    @Path("{username}/prescriptions")
-    public Response getPatientPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
-        Patient patient = patientBean.findPatient(username);
-        List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getPrescriptions());
-        return Response.ok(dtos).build();
-    }
-
-    @GET
-    @Path("{username}/activePrescriptions")
-    public Response getPatientActivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
-        Patient patient = patientBean.findPatient(username);
-        List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getActivePrescriptions());
-        return Response.ok(dtos).build();
-    }
-
-    @GET
-    @Path("{username}/inactivePrescriptions")
-    public Response getPatientInactivePrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
-        Patient patient = patientBean.findPatient(username);
-        List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getInactivePrescriptions());
-        return Response.ok(dtos).build();
-    }
+//    @GET
+//    @Path("{username}/prescriptions")
+//    public Response getPatientPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+//        Patient patient = patientBean.findPatient(username);
+//        List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getPrescriptions());
+//        return Response.ok(dtos).build();
+//    }
 
     private ObservationDTO patientDataToDTO(Observation observation) {
         return  new ObservationDTO(

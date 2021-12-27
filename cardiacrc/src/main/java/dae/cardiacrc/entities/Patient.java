@@ -12,6 +12,10 @@ import java.util.List;
         @NamedQuery(
                 name = "getAllPatients",
                 query = "SELECT p FROM Patient p ORDER BY p.name"
+        ),
+        @NamedQuery(
+                name = "countPatients",
+                query = "SELECT count(p) From Patient p"
         )
 })
 @Table(name = "patients")
@@ -26,21 +30,17 @@ public class Patient extends Person implements Serializable {
     private List<Professional> professionals;
 
     @OneToMany
-    private List<Prescription> prescriptions;
-
-    @OneToMany
     private  List<Observation> data;
 
     public Patient(String username, int healthNumber, String name, String password, String email) {
         super(username, name, password, email);
         this.healthNumber = healthNumber;
         professionals = new ArrayList<Professional>();
-        prescriptions = new ArrayList<Prescription>();
         data = new ArrayList<Observation>();
     }
 
     public Patient() {
-        prescriptions = new ArrayList<Prescription>();
+
     }
 
     public int getHealthNumber() {
@@ -64,32 +64,6 @@ public class Patient extends Person implements Serializable {
     public void removeProfessional(Professional professional) {
         if (professionals.contains(professional)) {
             this.professionals.remove(professional);
-        }
-    }
-
-    public List<Prescription> getPrescriptions() {
-        return prescriptions;
-    }
-
-    public List<Prescription> getActivePrescriptions() {
-        List<Prescription> activePrescriptions = this.prescriptions;
-        activePrescriptions.removeIf(prescription -> prescription.isState() == false);
-        return activePrescriptions;
-    }
-
-    public List<Prescription> getInactivePrescriptions() {
-        List<Prescription> activePrescriptions = this.prescriptions;
-        activePrescriptions.removeIf(prescription -> prescription.isState() == true);
-        return activePrescriptions;
-    }
-
-    public void addPrescription(Prescription prescription) {
-        this.prescriptions.add(prescription);
-    }
-
-    public void removePrescription(Prescription prescription) {
-        if (this.prescriptions.contains(prescription)) {
-            this.prescriptions.remove(prescription);
         }
     }
 

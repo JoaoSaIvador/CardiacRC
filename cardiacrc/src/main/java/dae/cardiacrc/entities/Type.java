@@ -7,6 +7,12 @@ import java.io.Serializable;
 
 @Table(name = "types")
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllTypes",
+                query = "SELECT t FROM Type t ORDER BY t.name"
+        )
+})
 @SequenceGenerator(name = "type_id", sequenceName = "type_id",  initialValue = 1)
 public class Type implements Serializable {
     @Id

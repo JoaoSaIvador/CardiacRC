@@ -13,6 +13,10 @@ import java.util.Objects;
         @NamedQuery(
                 name = "getAllProfessionals",
                 query = "SELECT p FROM Professional p ORDER BY p.name"
+        ),
+        @NamedQuery(
+                name = "countProfessionals",
+                query = "SELECT count(p) From Professional p"
         )
 })
 @Table(name = "professionals")
@@ -53,18 +57,6 @@ public class Professional extends Person implements Serializable {
 
     public List<Prescription> getPrescriptions() {
         return prescriptions;
-    }
-
-    public List<Prescription> getActivePrescriptions() {
-        List<Prescription> activePrescriptions = this.prescriptions;
-        activePrescriptions.removeIf(prescription -> prescription.isState() == false);
-        return activePrescriptions;
-    }
-
-    public List<Prescription> getInactivePrescriptions() {
-        List<Prescription> activePrescriptions = this.prescriptions;
-        activePrescriptions.removeIf(prescription -> prescription.isState() == true);
-        return activePrescriptions;
     }
 
     public void setLicenseNumber(int licenseNumber) {
