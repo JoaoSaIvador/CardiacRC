@@ -36,7 +36,12 @@
         </div>
 
         <div v-if="!isAdminToPatient" class="main-input">
-          <b-form-group label="Email:" label-for="email" :state="isEmailValid">
+          <b-form-group
+            label="Email:"
+            label-for="email"
+            :invalid-feedback="invalidEmailFeedback"
+            :state="isEmailValid"
+          >
             <b-input
               ref="email"
               v-model.trim="localUser.email"
@@ -206,6 +211,10 @@ export default {
     },
 
     invalidUsernameFeedback() {
+      if (this.isCreate && !this.localUser.username) {
+        return "You must insert a username.";
+      }
+
       if (!this.localUser.username) {
         return null;
       }
@@ -246,6 +255,10 @@ export default {
     },
 
     invalidNameFeedback() {
+      if (this.isCreate && !this.localUser.name) {
+        return "You must insert a name.";
+      }
+
       if (!this.localUser.name) {
         return null;
       }
@@ -263,19 +276,34 @@ export default {
       return this.invalidNameFeedback === "";
     },
 
-    isEmailValid() {
+    invalidEmailFeedback() {
+      if (this.isCreate && !this.localUser.email) {
+        return "You must insert an email.";
+      }
+
       if (!this.localUser.email) {
         return null;
       }
 
-      if (this.$refs.email) {
-        return this.$refs.email.checkValidity();
+      if (this.$refs.email && !this.$refs.email.checkValidity()) {
+        return "Invalid email address";
       }
 
-      return true;
+      return "";
+    },
+
+    isEmailValid() {
+      if (this.invalidEmailFeedback === null) {
+        return null;
+      }
+      return this.invalidEmailFeedback === "";
     },
 
     invalidHealthNumberFeedback() {
+      if (this.isCreate && !this.localUser.healthNumber) {
+        return "You must insert a health number.";
+      }
+
       if (!this.localUser.healthNumber) {
         return null;
       }
@@ -298,6 +326,10 @@ export default {
     },
 
     invalidLicenseNumberFeedback() {
+      if (this.isCreate && !this.localUser.licenseNumber) {
+        return "You must insert a license number.";
+      }
+
       if (!this.localUser.licenseNumber) {
         return null;
       }

@@ -1,11 +1,14 @@
 <template>
-  <SetPrescriptionDetails
-    v-if="prescription"
-    :prescription="prescription"
-    @submit="updatePrescription"
-    group="prescription"
-    mode="update"
-  />
+  <div class="h-100">
+    <SetPrescriptionDetails
+      v-if="prescription"
+      :prescription="prescription"
+      @submit="updatePrescription"
+      group="prescription"
+      mode="update"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>

@@ -1,11 +1,15 @@
 <template>
-  <UserTable
-    :items="administrators"
-    :fields="fields"
-    sortBy="username"
-    group="administrators"
-    @delete="deleteAdministrator"
-  />
+  <div class="h-100">
+    <UserTable
+      v-if="administrators"
+      :items="administrators"
+      :fields="fields"
+      sortBy="username"
+      group="administrators"
+      @delete="deleteAdministrator"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
@@ -19,7 +23,7 @@ export default {
         { key: "email", sortable: true },
         { key: "actions", sortable: false },
       ],
-      administrators: [],
+      administrators: null,
     };
   },
   created() {

@@ -1,12 +1,15 @@
 <template>
-  <SetDataTypeDetails
-    v-if="dataType && quality"
-    :dataType="quality"
-    :parentDataType="dataType"
-    @submit="updateQuality"
-    group="quality"
-    mode="update"
-  />
+  <div class="h-100">
+    <SetDataTypeDetails
+      v-if="dataType && quality"
+      :dataType="quality"
+      :parentDataType="dataType"
+      @submit="updateQuality"
+      group="quality"
+      mode="update"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
@@ -24,7 +27,7 @@ export default {
     this.$axios.$get(`/api/dataTypes/${this.id}`).then((dataType) => {
       this.dataType = dataType || {};
       this.quality = dataType.qualitativeDataTypeDTOs.filter(
-        (a) => a.id === this.qualityId
+        (a) => a.id == this.qualityId
       )[0];
     });
   },

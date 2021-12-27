@@ -1,11 +1,14 @@
 <template>
-  <SetUserDetails
-    v-if="professional"
-    :user="professional"
-    @submit="updateProfessional"
-    to="professional"
-    mode="update"
-  />
+  <div class="h-100">
+    <SetUserDetails
+      v-if="professional"
+      :user="professional"
+      @submit="updateProfessional"
+      to="professional"
+      mode="update"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>

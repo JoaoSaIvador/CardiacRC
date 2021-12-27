@@ -1,5 +1,12 @@
 <template>
-  <UserDetails :user="professional" group="professionals" />
+  <div class="h-100">
+    <UserDetails
+      :user="professional"
+      group="professionals"
+      v-if="professional"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
@@ -7,7 +14,7 @@ export default {
   middleware: "professionalSelf",
   data() {
     return {
-      professional: {},
+      professional: null,
     };
   },
   computed: {

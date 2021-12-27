@@ -1,11 +1,15 @@
 <template>
-  <UserTable
-    :items="prescriptions"
-    :fields="fields"
-    sortBy="id"
-    group="prescriptions"
-    @delete="deletePrescription"
-  />
+  <div class="h-100">
+    <UserTable
+      v-if="prescriptions"
+      :items="prescriptions"
+      :fields="fields"
+      sortBy="id"
+      group="prescriptions"
+      @delete="deletePrescription"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
@@ -19,7 +23,7 @@ export default {
         { key: "duration", sortable: true },
         { key: "actions", sortable: false },
       ],
-      prescriptions: [],
+      prescriptions: null,
     };
   },
   created() {

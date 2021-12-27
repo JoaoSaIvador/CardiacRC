@@ -30,7 +30,7 @@ export default {
       ],
       cards2: [
         { title: "Manage Prescriptions", path: `/prescriptions` },
-        { title: "Manage PRCs", path: `/professionals/dashboard` },
+        { title: "Manage CRPs", path: `/professionals/dashboard` },
       ],
       counters: [
         {

@@ -1,18 +1,21 @@
 <template>
-  <SetUserDetails
-    v-if="patient"
-    :user="patient"
-    @submit="updatePatient"
-    to="patient"
-    mode="update"
-  />
+  <div class="h-100">
+    <SetUserDetails
+      v-if="patient"
+      :user="patient"
+      @submit="updatePatient"
+      to="patient"
+      mode="update"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
 import * as auxiliary from "../../../utils/auxiliary.js";
 
 export default {
-  middleware: "patientSelf",
+  middleware: "patientUpdate",
   data() {
     return {
       patient: null,

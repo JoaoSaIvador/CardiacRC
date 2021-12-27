@@ -1,11 +1,14 @@
 <template>
-  <SetDataTypeDetails
-    v-if="dataType"
-    :dataType="dataType"
-    @submit="updateDataType"
-    group="dataType"
-    mode="update"
-  />
+  <div class="h-100">
+    <SetDataTypeDetails
+      v-if="dataType"
+      :dataType="dataType"
+      @submit="updateDataType"
+      group="dataType"
+      mode="update"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>

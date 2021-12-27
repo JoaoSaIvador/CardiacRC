@@ -1,11 +1,15 @@
 <template>
-  <UserTable
-    :items="qualities"
-    :fields="fields"
-    sortBy="id"
-    group="qualities"
-    @delete="deleteQuality"
-  />
+  <div class="h-100">
+    <UserTable
+      v-if="qualities"
+      :items="qualities"
+      :fields="fields"
+      sortBy="id"
+      group="qualities"
+      @delete="deleteQuality"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
@@ -25,7 +29,7 @@ export default {
         { key: "max", sortable: true },
         { key: "actions", sortable: false },
       ],
-      qualities: [],
+      qualities: null,
       id: this.$route.params.id,
     };
   },

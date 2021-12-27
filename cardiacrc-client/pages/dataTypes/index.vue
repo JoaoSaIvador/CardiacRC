@@ -1,11 +1,15 @@
 <template>
-  <UserTable
-    :items="dataTypes"
-    :fields="fields"
-    sortBy="id"
-    group="dataTypes"
-    @delete="deleteDataType"
-  />
+  <div class="h-100">
+    <UserTable
+      v-if="dataTypes"
+      :items="dataTypes"
+      :fields="fields"
+      sortBy="id"
+      group="dataTypes"
+      @delete="deleteDataType"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
@@ -21,7 +25,7 @@ export default {
         { key: "max", sortable: true },
         { key: "actions", sortable: false },
       ],
-      dataTypes: [],
+      dataTypes: null,
     };
   },
   created() {
