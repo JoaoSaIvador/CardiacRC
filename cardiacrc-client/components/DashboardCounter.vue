@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-3 admin-counter">
+  <div class="admin-counter">
     <div
       class="fa-2x text-white admin-counter-icon"
       :style="`background-color: ${counter.color}`"
@@ -30,12 +30,12 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 30px 0 30px 0;
+  margin: 30px 20px 30px 20px;
 }
 
 .admin-counter-icon {
-  width: 60px;
-  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,7 +1,16 @@
 <template>
   <section class="vh-100">
-    <b-container class="vh-100 secondary-div">
-      <b-container class="page-content bg-light">
+    <b-container class="h-100 d-flex align-items-center">
+      <b-container
+        class="
+          page-content
+          d-flex
+          flex-column
+          align-items-center
+          justify-content-center
+          bg-light
+        "
+      >
         <h2 class="main-title">Sign in</h2>
         <b-form @submit.prevent="onSubmit">
           <div class="main-input">
@@ -33,7 +42,7 @@
             </b-form-group>
           </div>
 
-          <div class="button-group">
+          <div class="d-flex flex-row justify-content-center">
             <b-button class="main-button" variant="dark" type="submit">
               Login
             </b-button>
@@ -44,6 +53,8 @@
   </section>
 </template>
 <script>
+import * as auxiliary from "../../utils/auxiliary.js";
+
 export default {
   layout: "login",
   auth: false,
@@ -63,16 +74,7 @@ export default {
       });
       promise.then(() => {
         this.$toast.success("You are logged in!").goAway(3000);
-        // check if the user $auth.user object is set
-        console.log(this.$auth.person);
-        // TODO redirect based on the user role
-        if (this.$auth.user.groups.includes("Administrator")) {
-          this.$router.push("/administrators/dashboard");
-        } else if (this.$auth.user.groups.includes("Patient")) {
-          this.$router.push("/patients/" + this.username + "/details");
-        } else if (this.$auth.user.groups.includes("Professional")) {
-          this.$router.push("/professionals/" + this.username + "/details");
-        }
+        auxiliary.goToDashboard(this.$auth.user, this.$router);
       });
       promise.catch(() => {
         this.$toast

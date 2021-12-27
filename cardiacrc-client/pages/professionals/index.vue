@@ -1,14 +1,20 @@
 <template>
-  <UserTable
-    :items="professionals"
-    :fields="fields"
-    group="professionals"
-    @delete="deleteProfessional"
-  />
+  <div class="h-100">
+    <UserTable
+      v-if="professionals"
+      :items="professionals"
+      :fields="fields"
+      sortBy="username"
+      group="professionals"
+      @delete="deleteProfessional"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
 export default {
+  middleware: "admin",
   data() {
     return {
       fields: [
@@ -16,9 +22,10 @@ export default {
         { key: "name", sortable: true },
         { key: "email", sortable: true },
         { key: "licenseNumber", sortable: true },
+        { key: "typeName", sortable: true },
         { key: "actions", sortable: false },
       ],
-      professionals: [],
+      professionals: null,
     };
   },
   created() {
@@ -35,5 +42,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

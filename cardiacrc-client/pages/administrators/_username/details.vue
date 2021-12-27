@@ -1,18 +1,22 @@
 <template>
-  <UserDetails :user="administrator" group="administrators" />
+  <div class="h-100">
+    <UserDetails
+      v-if="administrator"
+      :user="administrator"
+      group="administrators"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
 export default {
+  middleware: "adminSelf",
   data() {
     return {
-      administrator: {},
+      username: this.$route.params.username,
+      administrator: null,
     };
-  },
-  computed: {
-    username() {
-      return this.$route.params.username;
-    },
   },
   created() {
     this.$axios

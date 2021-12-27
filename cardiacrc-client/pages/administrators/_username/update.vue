@@ -1,15 +1,19 @@
 <template>
-  <UpdateUserDetails
-    v-if="administrator"
-    :user="administrator"
-    @submit="updateAdministrator"
-    to="administrator"
-    mode="update"
-  />
+  <div class="h-100">
+    <SetUserDetails
+      v-if="administrator"
+      :user="administrator"
+      @submit="updateAdministrator"
+      to="administrator"
+      mode="update"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
 export default {
+  middleware: "adminSelf",
   data() {
     return {
       administrator: null,
@@ -40,7 +44,8 @@ export default {
           this.$router.push("/administrators/dashboard");
         })
         .catch((error) => {
-          this.errorMsg = error.response.data;
+          //this.errorMsg = error.response.data;
+          //Notification
         });
     },
   },

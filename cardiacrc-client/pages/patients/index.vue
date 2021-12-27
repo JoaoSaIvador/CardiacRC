@@ -1,14 +1,20 @@
 <template>
-  <UserTable
-    :items="patients"
-    :fields="fields"
-    group="patients"
-    @delete="deletePatient"
-  />
+  <div class="h-100">
+    <UserTable
+      v-if="patients"
+      :items="patients"
+      :fields="fields"
+      sortBy="username"
+      group="patients"
+      @delete="deletePatient"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
 export default {
+  middleware: "adminOrProfessional",
   data() {
     return {
       fields: [
@@ -18,7 +24,7 @@ export default {
         { key: "healthNumber", sortable: true },
         { key: "actions", sortable: false },
       ],
-      patients: [],
+      patients: null,
     };
   },
   created() {
@@ -35,5 +41,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

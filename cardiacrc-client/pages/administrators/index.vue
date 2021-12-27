@@ -1,33 +1,29 @@
 <template>
-  <UserTable
-    :items="administrators"
-    :fields="fields"
-    group="administrators"
-    @delete="deleteAdministrator"
-  />
+  <div class="h-100">
+    <UserTable
+      v-if="administrators"
+      :items="administrators"
+      :fields="fields"
+      sortBy="username"
+      group="administrators"
+      @delete="deleteAdministrator"
+    />
+    <LoadingPage v-else />
+  </div>
 </template>
 
 <script>
-import UserTable from "../../components/UserTable.vue";
-
 export default {
-  components: {
-    UserTable,
-  },
+  middleware: "admin",
   data() {
     return {
-      currentPage: 1,
-      perPage: 10,
-      sortBy: "username",
-      sortDesc: false,
-      filter: null,
       fields: [
         { key: "username", sortable: true },
         { key: "name", sortable: true },
         { key: "email", sortable: true },
         { key: "actions", sortable: false },
       ],
-      administrators: [],
+      administrators: null,
     };
   },
   created() {
@@ -46,5 +42,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

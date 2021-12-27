@@ -27,54 +27,48 @@
       />
     </div>
     <div class="d-flex flex-row justify-content-center flex-wrap card-deck">
-      <DashboardCard v-for="card in cards" :key="card.title" :card="card" />
+      <DashboardCard v-for="card in cards1" :key="card.title" :card="card" />
+    </div>
+    <div class="d-flex flex-row justify-content-center flex-wrap card-deck">
+      <DashboardCard v-for="card in cards2" :key="card.title" :card="card" />
     </div>
   </b-container>
 </template>
 
 <script>
 export default {
-  middleware: "admin",
+  middleware: "professional",
   data() {
     return {
-      cards: [
+      cards1: [
         {
           title: "Account Details",
-          path: `/administrators/${this.$auth.user.sub}/details`,
+          path: `/professionals/${this.$auth.user.sub}/details`,
         },
-        {
-          title: "Update Account Details",
-          path: `/administrators/${this.$auth.user.sub}/update`,
-        },
-        { title: "Manage Administrators", path: `/administrators` },
-        { title: "Manage Professionals", path: `/professionals` },
         { title: "Manage Patients", path: `/patients` },
-        { title: "Manage Data Types", path: `/dataTypes` },
+      ],
+      cards2: [
+        { title: "Manage Prescriptions", path: `/prescriptions` },
+        { title: "Manage CRPs", path: `/professionals/dashboard` },
       ],
       counters: [
         {
-          title: "Administrators",
+          title: "Patients",
           total: "10",
           color: "#796aee",
-          icon: "shield-alt",
-        },
-        {
-          title: "Professionals",
-          total: "11",
-          color: "#ff7676",
-          icon: "user-md",
-        },
-        {
-          title: "Patients",
-          total: "12",
-          color: "#54e69d",
           icon: "user",
         },
         {
-          title: "Data Types",
-          total: "13",
-          color: "#ffc36d",
-          icon: "database",
+          title: "Prescriptions",
+          total: "11",
+          color: "#ff7676",
+          icon: "file",
+        },
+        {
+          title: "CRPs",
+          total: "12",
+          color: "#54e69d",
+          icon: "copy",
         },
       ],
     };

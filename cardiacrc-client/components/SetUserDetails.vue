@@ -1,15 +1,19 @@
 <template>
-  <b-container class="secondary-div">
-    <b-container class="page-content bg-light">
+  <b-container class="h-100 d-flex align-items-center">
+    <b-container
+      class="
+        page-content
+        d-flex
+        flex-column
+        align-items-center
+        justify-content-center
+        bg-light
+      "
+    >
       <h2 class="main-title text-center">Account Details</h2>
-      <form
-        class="needs-validation"
-        @submit.prevent="showConfirmation = true"
-        :disabled="!isFormValid"
-      >
+      <form class="needs-validation" :disabled="!isFormValid">
         <div v-if="isCreate" class="main-input">
           <b-form-group
-            id="username-label"
             label="Username:"
             label-for="username"
             :invalid-feedback="invalidUsernameFeedback"
@@ -20,15 +24,13 @@
               v-model.trim="localUser.username"
               placeholder="Enter your username"
               :state="isUsernameValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="!isAdminToPatient" class="main-input">
           <b-form-group
-            id="name-label"
-            label="Change Name:"
+            label="Name:"
             label-for="name"
             :invalid-feedback="invalidNameFeedback"
             :state="isNameValid"
@@ -38,16 +40,15 @@
               placeholder="Enter your name"
               v-model.trim="localUser.name"
               :state="isNameValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="!isAdminToPatient" class="main-input">
           <b-form-group
-            id="email"
-            label="Change Email:"
+            label="Email:"
             label-for="email"
+            :invalid-feedback="invalidEmailFeedback"
             :state="isEmailValid"
           >
             <b-input
@@ -56,14 +57,12 @@
               type="email"
               :state="isEmailValid"
               placeholder="Enter your e-mail"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="isPatient" class="main-input">
           <b-form-group
-            id="healthNumber"
             label="Health Number:"
             label-for="healthNumber"
             :invalid-feedback="invalidHealthNumberFeedback"
@@ -75,14 +74,12 @@
               v-model.trim="localUser.healthNumber"
               placeholder="Enter your health number"
               :state="isHealthNumberValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
 
         <div v-if="isProfessional" class="main-input">
           <b-form-group
-            id="licenseNumber"
             label="License Number:"
             label-for="licenseNumber"
             :invalid-feedback="invalidLicenseNumberFeedback"
@@ -94,15 +91,32 @@
               v-model.trim="localUser.licenseNumber"
               placeholder="Enter your license number"
               :state="isLicenseNumberValid"
-              trim
             ></b-input>
+          </b-form-group>
+        </div>
+
+        <div v-if="isProfessional && isCreate" class="main-input">
+          <b-form-group label="Professional Type:" label-for="type">
+            <b-select
+              id="type"
+              v-model="localUser.type"
+              :options="professionalTypes"
+              required
+              value-field="id"
+              text-field="name"
+            >
+              <template v-slot:first>
+                <option :value="null" disabled>
+                  -- Please select a Type --
+                </option>
+              </template>
+            </b-select>
           </b-form-group>
         </div>
 
         <div class="main-input">
           <b-form-group
-            id="password"
-            label="Change Password:"
+            label="Password:"
             label-for="password"
             :invalid-feedback="invalidPasswordFeedback"
             :state="isPasswordValid"
@@ -113,7 +127,6 @@
               v-model.trim="localUser.password"
               placeholder="Enter your password"
               :state="isPasswordValid"
-              trim
             ></b-input>
           </b-form-group>
         </div>
@@ -124,7 +137,7 @@
           </p>
         </div>
 
-        <div class="button-group">
+        <div class="d-flex flex-row justify-content-center">
           <b-button
             class="main-button"
             variant="outline-dark"
@@ -137,7 +150,7 @@
             class="main-button"
             variant="dark"
             :disabled="!isFormValid"
-            @click.prevent="this.$emit('submit', this.user)"
+            @click.prevent="$emit('submit', localUser)"
           >
             Create
           </b-button>
@@ -163,19 +176,24 @@
 
 <script>
 export default {
-  name: "UpdateUserDetails",
+  name: "SetUserDetails",
   props: {
     user: Object,
-    errorMsg: String,
     to: String,
     mode: String,
   },
   data() {
     return {
-      localUser: this.user,
+      localUser: JSON.parse(JSON.stringify(this.user)),
       showConfirmation: false,
       healthNumberLen: 9,
       licenseNumberLen: 9,
+      errorMsg: false,
+      professionalTypes: [
+        { id: 1, name: "Cardiology" },
+        { id: 2, name: "Nutrition" },
+        { id: 3, name: "Physiology" },
+      ],
     };
   },
   computed: {
@@ -189,7 +207,7 @@ export default {
       return (
         this.$auth.user.groups.includes("Patient") ||
         (this.$auth.user.groups.includes("Patient") &&
-          this.to == "professional")
+          nthis.to == "professional")
       );
     },
 
@@ -202,6 +220,10 @@ export default {
     },
 
     invalidUsernameFeedback() {
+      if (this.isCreate && !this.localUser.username) {
+        return "You must insert a username.";
+      }
+
       if (!this.localUser.username) {
         return null;
       }
@@ -209,7 +231,6 @@ export default {
       if (usernameLen < 3 || usernameLen > 15) {
         return "The username must be between [3, 15] characters.";
       }
-
       return "";
     },
 
@@ -221,6 +242,10 @@ export default {
     },
 
     invalidPasswordFeedback() {
+      if (this.isCreate && !this.localUser.password) {
+        return "You must insert a password.";
+      }
+
       if (!this.localUser.password) {
         return null;
       }
@@ -239,6 +264,10 @@ export default {
     },
 
     invalidNameFeedback() {
+      if (this.isCreate && !this.localUser.name) {
+        return "You must insert a name.";
+      }
+
       if (!this.localUser.name) {
         return null;
       }
@@ -256,19 +285,34 @@ export default {
       return this.invalidNameFeedback === "";
     },
 
-    isEmailValid() {
+    invalidEmailFeedback() {
+      if (this.isCreate && !this.localUser.email) {
+        return "You must insert an email.";
+      }
+
       if (!this.localUser.email) {
         return null;
       }
 
-      if (this.$refs.email) {
-        return this.$refs.email.checkValidity();
+      if (this.$refs.email && !this.$refs.email.checkValidity()) {
+        return "Invalid email address";
       }
 
-      return true;
+      return "";
+    },
+
+    isEmailValid() {
+      if (this.invalidEmailFeedback === null) {
+        return null;
+      }
+      return this.invalidEmailFeedback === "";
     },
 
     invalidHealthNumberFeedback() {
+      if (this.isCreate && !this.localUser.healthNumber) {
+        return "You must insert a health number.";
+      }
+
       if (!this.localUser.healthNumber) {
         return null;
       }
@@ -291,6 +335,10 @@ export default {
     },
 
     invalidLicenseNumberFeedback() {
+      if (this.isCreate && !this.localUser.licenseNumber) {
+        return "You must insert a license number.";
+      }
+
       if (!this.localUser.licenseNumber) {
         return null;
       }
@@ -313,39 +361,35 @@ export default {
     },
 
     isFormValid() {
-      if (this.isCreate) {
-        if (!this.isUsernameValid) {
-          return false;
-        }
+      if (this.isCreate && !this.isUsernameValid) {
+        return false;
       }
 
-      if (!this.isAdminToPatient) {
-        if (!this.isNameValid) {
-          return false;
-        }
-
-        if (!this.isEmailValid) {
-          return false;
-        }
+      if (!this.isAdminToPatient && !this.isNameValid) {
+        return false;
       }
 
-      if (this.isPatient) {
-        if (!this.isHealthNumberValid) {
-          return false;
-        }
+      if (!this.isAdminToPatient && !this.isEmailValid) {
+        return false;
       }
 
-      if (this.isProfessional) {
-        if (!this.isLicenseNumberValid) {
-          return false;
-        }
+      if (this.isPatient && !this.isHealthNumberValid) {
+        return false;
+      }
+
+      if (this.isProfessional && !this.isLicenseNumberValid) {
+        return false;
+      }
+
+      if (this.isCreate && !this.localUser.password && !this.isPasswordValid) {
+        return false;
       }
 
       if (this.localUser.password != null && this.localUser.password != "") {
         if (!this.isPasswordValid) {
           return false;
         }
-      } else {
+      } else if (!this.isCreate) {
         this.localUser.password = null;
       }
 

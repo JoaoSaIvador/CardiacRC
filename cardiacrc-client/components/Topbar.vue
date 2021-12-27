@@ -1,7 +1,8 @@
 <template>
   <b-navbar toggleable="lg" type="light" variant="light" class="customNavbar">
     <b-navbar-brand @click="goToDashboard"
-      >Cardiac Rehabilitation Centre</b-navbar-brand
+      ><span class="longBrand">Cardiac Rehabilitation Centre</span>
+      <span class="shortBrand">CardiacRC</span></b-navbar-brand
     >
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -36,5 +37,25 @@ export default {
   padding-left: 10%;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 14px 28px,
     rgba(0, 0, 0, 0.02) 0px 10px 10px;
+}
+
+@media screen and (max-width: 411px) {
+  .shortBrand {
+    display: block;
+  }
+
+  .longBrand {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 411px) {
+  .shortBrand {
+    display: none;
+  }
+
+  .longBrand {
+    display: block;
+  }
 }
 </style>

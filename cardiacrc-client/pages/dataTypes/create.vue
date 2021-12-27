@@ -1,8 +1,8 @@
 <template>
-  <SetUserDetails
-    :user="administrator"
-    @submit="createAdministrator"
-    to="administrator"
+  <SetDataTypeDetails
+    :dataType="dataType"
+    @submit="createDataType"
+    group="dataType"
     mode="create"
   />
 </template>
@@ -12,18 +12,18 @@ export default {
   middleware: "admin",
   data() {
     return {
-      administrator: {
-        username: null,
+      dataType: {
         name: null,
-        email: null,
-        password: null,
+        unit: null,
+        min: null,
+        max: null,
       },
     };
   },
   methods: {
-    createAdministrator(user) {
+    createDataType(dataType) {
       this.$axios
-        .$post("/api/administrators", user)
+        .$post("/api/dataTypes", dataType)
         .then(() => {
           this.$router.push("/administrators/dashboard");
         })
