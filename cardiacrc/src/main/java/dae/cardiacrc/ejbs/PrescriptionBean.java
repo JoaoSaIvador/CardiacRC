@@ -27,8 +27,8 @@ public class PrescriptionBean {
 
         try {
             Prescription prescription = new Prescription(professional, description, name, professional.getType());
-            em.persist(prescription);
             professional.addPrescription(prescription);
+            em.persist(prescription);
         } catch (ConstraintViolationException e) {
             throw new MyConstraintViolationException(e);
         }

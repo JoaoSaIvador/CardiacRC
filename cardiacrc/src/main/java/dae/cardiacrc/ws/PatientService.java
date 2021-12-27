@@ -64,7 +64,7 @@ public class PatientService {
         );
 
         patientDTO.setProfessionalDTOs(professionalToDTOs(patient.getProfessionals()));
-        patientDTO.setPatientDataDTOS(patientDataToDTOs(patient.getPatientData()));
+        patientDTO.setPatientDataDTOS(patientDataToDTOs(patient.getPatientObservations()));
 
         return patientDTO;
     }
@@ -194,7 +194,7 @@ public class PatientService {
     @Path("{username}/patientData")
     public Response getPatientData(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
-        List<ObservationDTO> dtos = patientDataToDTOs(patient.getPatientData());
+        List<ObservationDTO> dtos = patientDataToDTOs(patient.getPatientObservations());
         return Response.ok(dtos).build();
     }
 }

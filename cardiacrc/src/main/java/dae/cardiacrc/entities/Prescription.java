@@ -28,26 +28,21 @@ public class Prescription implements Serializable {
     @NotNull
     private Professional professional;
 
-//    @ManyToOne
-//    @JoinColumn(name = "patient_username")
-//    @NotNull
-//    private Patient patient;
-
     @NotNull
     private String description;
 
     @NotNull
     private String name;
 
-//    @NotNull
-//    private int duration;
-//
-//    @NotNull
-//    private boolean state;
+    @NotNull
+    private int frequency;
 
     @NotNull
     @OneToOne
     private Type type;
+
+    @ManyToOne
+    private Program program;
 
     @Version
     private int version;
@@ -100,5 +95,21 @@ public class Prescription implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
+
+    public Program getProgram() {
+        return program;
+    }
+
+    public void setProgram(Program program) {
+        this.program = program;
     }
 }
