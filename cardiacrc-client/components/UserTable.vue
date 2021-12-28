@@ -20,11 +20,20 @@
             Back
           </b-button>
           <b-button
-            v-if="group != 'patients'"
+            v-if="!$auth.user.groups.includes('Patient')"
             variant="dark"
             :to="`${group}/create`"
           >
             Create
+          </b-button>
+          <b-button
+            v-if="
+              group == 'patients' && $auth.user.groups.includes('Professional')
+            "
+            variant="dark"
+            :to="`${group}/create`"
+          >
+            Associated Patients
           </b-button>
         </div>
         <div>
@@ -80,12 +89,34 @@
                 d-flex
                 align-items-center
                 justify-content-center
-                qualities-button
+                button-extra
               "
               :to="`${group}/${row.item.id}/qualities`"
             >
               <fa :icon="['fas', 'clipboard-list']" />
               <span class="button-text">&nbsp;Qualities</span>
+            </b-button>
+            <b-button
+              v-if="
+                group == 'patients' &&
+                $auth.user.groups.includes('Professional')
+              "
+              variant="dark"
+              class="
+                table-button
+                d-flex
+                align-items-center
+                justify-content-center
+                button-extra
+              "
+              @click.prevent="
+                showConfirmation(
+                  row.item.username ? row.item.username : row.item.id
+                )
+              "
+            >
+              <fa :icon="['fas', 'plus']" />
+              <span class="button-text">&nbsp;Associate</span>
             </b-button>
             <b-button
               v-if="group != 'administrators'"
@@ -170,13 +201,13 @@ export default {
     display: none;
   }
 
-  .qualities-button {
+  .button-extra {
     width: 30px;
   }
 }
 
 @media screen and (min-width: 651px) {
-  .qualities-button {
+  .button-extra {
     width: auto;
   }
 }

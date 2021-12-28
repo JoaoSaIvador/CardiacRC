@@ -1,5 +1,6 @@
 <template>
   <b-container
+    v-if="counterData"
     class="
       h-100
       d-flex
@@ -21,9 +22,10 @@
       "
     >
       <DashboardCounter
-        v-for="counter in counters"
+        v-for="(counter, index) in counters"
         :key="counter.title"
         :counter="counter"
+        :counterData="counterData[index]"
       />
     </div>
     <div class="d-flex flex-row justify-content-center flex-wrap card-deck">
@@ -40,6 +42,7 @@ export default {
   middleware: "professional",
   data() {
     return {
+      counterData: null,
       cards1: [
         {
           title: "Account Details",
@@ -54,24 +57,26 @@ export default {
       counters: [
         {
           title: "Patients",
-          total: "10",
           color: "#796aee",
           icon: "user",
         },
         {
           title: "Prescriptions",
-          total: "11",
           color: "#ff7676",
           icon: "file",
         },
         {
           title: "CRPs",
-          total: "12",
           color: "#54e69d",
           icon: "copy",
         },
       ],
     };
+  },
+  created() {
+    this.$axios
+      .$get(`/api/professionals/count`)
+      .then((counterData) => (this.counterData = counterData || []));
   },
 };
 </script>
