@@ -21,6 +21,7 @@ D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\exceptions\MyEntityE
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\ejbs\TypeBean.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\exceptions\MyConstraintViolationExceptionMapper.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\dtos\PatientDTO.java
+D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\ws\TypeService.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\ejbs\PrescriptionBean.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\entities\Program.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\entities\Observation.java

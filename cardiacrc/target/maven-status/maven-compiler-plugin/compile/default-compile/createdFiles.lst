@@ -47,3 +47,4 @@ dae\cardiacrc\providers\CorsFilter.class
 dae\cardiacrc\exceptions\MyEntityExistsException.class
 dae\cardiacrc\entities\Administrator.class
 dae\cardiacrc\ejbs\QualityDataTypeBean.class
+dae\cardiacrc\ws\TypeService.class

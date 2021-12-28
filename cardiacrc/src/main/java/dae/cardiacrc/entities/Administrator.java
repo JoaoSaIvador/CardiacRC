@@ -10,10 +10,6 @@ import javax.persistence.Table;
         @NamedQuery(
                 name = "getAllAdministrators",
                 query = "SELECT a FROM Administrator a ORDER BY a.name"
-        ),
-        @NamedQuery(
-                name = "countAdministrators",
-                query = "SELECT count(a) From Administrator a"
         )
 })
 @Table(name = "administrators")

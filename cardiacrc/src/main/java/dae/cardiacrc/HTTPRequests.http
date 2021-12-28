@@ -86,10 +86,17 @@ Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJqYWNrc3Bhc
 DELETE http://localhost:8080/cardiacrc/api/patients/jackviole
 Accept: application/json
 
-### GET PATIENT PRESCRIPTIONS
-GET http://localhost:8080/cardiacrc/api/patients/joaosalvador/prescriptions
+### GET PATIENT PROGRAMS
+GET http://localhost:8080/cardiacrc/api/patients/joaosalvador/programs
 Accept: application/json
 
+### ASSOCIATE PROFESSIONAL
+PATCH http://localhost:8080/cardiacrc/api/patients/jackviole/addProfessional
+Content-Type: application/json
+
+{
+  "username": "marcopolo"
+}
 
 
 ########## ADMINISTRATORS ##########

@@ -34,6 +34,9 @@ public class Program implements Serializable {
     @JoinColumn(name = "patient_username")
     private Patient patient;
 
+    @ManyToOne
+    private Professional professional;
+
     @OneToMany
     private List<Prescription> prescriptions;
 
@@ -41,10 +44,11 @@ public class Program implements Serializable {
     private int version;
     SimpleDateFormat formatter= new SimpleDateFormat("dd-MM-yyyy");
 
-    public Program(int duration, Patient patient) {
+    public Program(int duration, Patient patient, Professional professional) {
         this.duration = duration;
         this.startDate = formatter.format(new Date(System.currentTimeMillis()));
         this.patient = patient;
+        this.professional = professional;
         prescriptions = new ArrayList<Prescription>();
     }
 
@@ -78,6 +82,14 @@ public class Program implements Serializable {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public Professional getProfessional() {
+        return professional;
+    }
+
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
     }
 
     public void addPrescription(Prescription prescription){

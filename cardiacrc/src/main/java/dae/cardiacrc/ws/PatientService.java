@@ -1,14 +1,8 @@
 package dae.cardiacrc.ws;
 
-import dae.cardiacrc.dtos.PatientDTO;
-import dae.cardiacrc.dtos.ObservationDTO;
-import dae.cardiacrc.dtos.PrescriptionDTO;
-import dae.cardiacrc.dtos.ProfessionalDTO;
+import dae.cardiacrc.dtos.*;
 import dae.cardiacrc.ejbs.PatientBean;
-import dae.cardiacrc.entities.Patient;
-import dae.cardiacrc.entities.Observation;
-import dae.cardiacrc.entities.Prescription;
-import dae.cardiacrc.entities.Professional;
+import dae.cardiacrc.entities.*;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
@@ -118,15 +112,15 @@ public class PatientService {
 
     @PATCH
     @Path("{username}/addProfessional")
-    public Response addProfessional (@PathParam("username") String username, String professionalUsername) throws MyEntityNotFoundException {
-        patientBean.addProfessional(username, professionalUsername);
+    public Response addProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException {
+        patientBean.addProfessional(username, professionalDTO.getUsername());
         return Response.ok("Professional added!").build();
     }
 
     @PATCH
     @Path("{username}/removeProfessional")
-    public Response removeProfessional (@PathParam("username") String username, String professionalUsername) throws MyEntityNotFoundException, MyIllegalArgumentException {
-        patientBean.removeProfessional(username, professionalUsername);
+    public Response removeProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        patientBean.removeProfessional(username, professionalDTO.getUsername());
         return Response.ok("Professional added!").build();
     }
 
@@ -152,27 +146,29 @@ public class PatientService {
         return  professionals.stream().map(this::professionalToDTO).collect(Collectors.toList());
     }
 
-    private PrescriptionDTO prescriptionToDTO(Prescription prescription) {
-        return  new PrescriptionDTO(
-                prescription.getId(),
-                prescription.getProfessional().getUsername(),
-                prescription.getProfessional().getName(),
-                prescription.getDescription(),
-                prescription.getName()
+    private ProgramDTO programToDTO(Program program) {
+        return new ProgramDTO(
+                program.getId(),
+                program.getProfessional().getUsername(),
+                program.getProfessional().getName(),
+                program.getPatient().getUsername(),
+                program.getPatient().getName(),
+                program.getStartDate(),
+                program.getDuration()
         );
     }
 
-    private List<PrescriptionDTO> prescriptionsToDTOs(List<Prescription> prescriptions) {
-        return  prescriptions.stream().map(this::prescriptionToDTO).collect(Collectors.toList());
+    private List<ProgramDTO> programsToDTOs(List<Program> programs) {
+        return programs.stream().map(this::programToDTO).collect(Collectors.toList());
     }
 
-//    @GET
-//    @Path("{username}/prescriptions")
-//    public Response getPatientPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
-//        Patient patient = patientBean.findPatient(username);
-//        List<PrescriptionDTO> dtos = prescriptionsToDTOs(patient.getPrescriptions());
-//        return Response.ok(dtos).build();
-//    }
+    @GET
+    @Path("{username}/programs")
+    public Response getPatientPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        List<ProgramDTO> dtos = programsToDTOs(patient.getPrograms());
+        return Response.ok(dtos).build();
+    }
 
     private ObservationDTO patientDataToDTO(Observation observation) {
         return  new ObservationDTO(

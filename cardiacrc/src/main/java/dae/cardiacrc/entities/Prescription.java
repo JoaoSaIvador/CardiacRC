@@ -11,10 +11,6 @@ import java.io.Serializable;
         @NamedQuery(
                 name = "getAllPrescriptions",
                 query = "SELECT p FROM Prescription p ORDER BY p.name"
-        ),
-        @NamedQuery(
-                name = "countPrescriptions",
-                query = "SELECT count(p) FROM Prescription p"
         )
 })
 @SequenceGenerator(name = "prescription_id", sequenceName = "prescription_id",  initialValue = 1)

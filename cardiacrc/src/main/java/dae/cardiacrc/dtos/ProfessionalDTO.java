@@ -1,5 +1,7 @@
 package dae.cardiacrc.dtos;
 
+import dae.cardiacrc.entities.Program;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class ProfessionalDTO {
     private List<PrescriptionDTO> activePrescriptionDTOs;
     private List<PrescriptionDTO> inactivePrescriptionDTOs;
     private List<PatientDTO> patientDTOS;
+    private List<ProgramDTO> programsDTOs;
     private int type;
     private String typeName;
     private String passwordConfirmation;
@@ -20,6 +23,7 @@ public class ProfessionalDTO {
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
+        programsDTOs = new ArrayList<ProgramDTO>();
     }
 
     public ProfessionalDTO(String username, String name, String email, int licenseNumber, int type, String typeName) {
@@ -32,6 +36,7 @@ public class ProfessionalDTO {
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
+        programsDTOs = new ArrayList<ProgramDTO>();
     }
 
     public String getUsername() {
@@ -120,5 +125,13 @@ public class ProfessionalDTO {
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public List<ProgramDTO> getProgramsDTOs() {
+        return programsDTOs;
+    }
+
+    public void setProgramsDTOs(List<ProgramDTO> programsDTOs) {
+        this.programsDTOs = programsDTOs;
     }
 }

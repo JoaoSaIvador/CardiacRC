@@ -51,12 +51,11 @@ public class AdministratorBean {
     }
 
     public List counts(){
-//        System.out.println(em.createNamedQuery("countAdministrators").getResultList());
         List total = Arrays.asList(
-                em.createNamedQuery("countAdministrators").getResultList(),
-                em.createNamedQuery("countProfessionals").getResultList(),
-                em.createNamedQuery("countPatients").getResultList(),
-                em.createNamedQuery("countDataTypes").getResultList());
+                em.createNamedQuery("getAllAdministrators").getResultList().size(),
+                em.createNamedQuery("getAllProfessionals").getResultList().size(),
+                em.createNamedQuery("getAllPatients").getResultList().size(),
+                em.createNamedQuery("getAllQuantitativeDataTypes").getResultList().size());
         return total;
     }
 

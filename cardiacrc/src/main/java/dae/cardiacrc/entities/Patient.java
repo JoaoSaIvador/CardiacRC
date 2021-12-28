@@ -12,10 +12,6 @@ import java.util.List;
         @NamedQuery(
                 name = "getAllPatients",
                 query = "SELECT p FROM Patient p ORDER BY p.name"
-        ),
-        @NamedQuery(
-                name = "countPatients",
-                query = "SELECT count(p) From Patient p"
         )
 })
 @Table(name = "patients")

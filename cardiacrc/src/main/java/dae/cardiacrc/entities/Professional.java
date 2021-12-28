@@ -13,10 +13,6 @@ import java.util.Objects;
         @NamedQuery(
                 name = "getAllProfessionals",
                 query = "SELECT p FROM Professional p ORDER BY p.name"
-        ),
-        @NamedQuery(
-                name = "countProfessionals",
-                query = "SELECT count(p) From Professional p"
         )
 })
 @Table(name = "professionals")
@@ -30,6 +26,9 @@ public class Professional extends Person implements Serializable {
     @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE)
     private List<Prescription> prescriptions;
 
+    @OneToMany
+    private List<Program> programs;
+
     @NotNull
     @OneToOne
     private Type type;
@@ -40,11 +39,13 @@ public class Professional extends Person implements Serializable {
         this.type = type;
         patients = new ArrayList<Patient>();
         prescriptions = new ArrayList<Prescription>();
+        programs = new ArrayList<Program>();
     }
 
     public Professional() {
         patients = new ArrayList<Patient>();
         prescriptions = new ArrayList<Prescription>();
+        programs = new ArrayList<Program>();
     }
 
     public int getLicenseNumber() {
@@ -89,6 +90,22 @@ public class Professional extends Person implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public List<Program> getPrograms() {
+        return programs;
+    }
+
+    public void addProgram(Program program){
+        if (program != null) {
+            this.programs.add(program);
+        }
+    }
+
+    public void removeProgram(Program program){
+        if (programs.contains(program)) {
+            this.programs.remove(program);
+        }
     }
 
     @Override

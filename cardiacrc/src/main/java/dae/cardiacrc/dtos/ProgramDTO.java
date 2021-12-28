@@ -2,6 +2,7 @@ package dae.cardiacrc.dtos;
 
 import dae.cardiacrc.entities.Prescription;
 import dae.cardiacrc.entities.Professional;
+import dae.cardiacrc.entities.Program;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,20 +11,28 @@ import java.util.List;
 public class ProgramDTO implements Serializable {
     private int id;
     private int duration;
+    private String professionalUsername;
+    private String professionalName;
     private String startDate;
     private String patientUsername;
-    private List<Prescription> prescriptionsDTOs;
+    private String patientName;
+    private List<PrescriptionDTO> prescriptionsDTOs;
 
-    public ProgramDTO(int id, int duration, String startDate, String patientUsername) {
+
+    public ProgramDTO(int id, String professionalUsername, String professionalName ,String patientUsername, String patientName, String startDate, int duration) {
         this.id = id;
         this.duration = duration;
+        this.professionalUsername = professionalUsername;
+        this.professionalName = professionalName;
         this.startDate = startDate;
         this.patientUsername = patientUsername;
-        prescriptionsDTOs = new ArrayList<Prescription>();
+        this.patientName = patientName;
+        prescriptionsDTOs = new ArrayList<PrescriptionDTO>();
     }
 
     public ProgramDTO() {
-        prescriptionsDTOs = new ArrayList<Prescription>();
+        prescriptionsDTOs = new ArrayList<PrescriptionDTO>();
+
     }
 
     public int getId() {
@@ -58,11 +67,35 @@ public class ProgramDTO implements Serializable {
         this.patientUsername = patientUsername;
     }
 
-    public List<Prescription> getPrescriptions() {
+    public List<PrescriptionDTO> getPrescriptions() {
         return prescriptionsDTOs;
     }
 
-    public void setPrescriptions(List<Prescription> prescriptions) {
+    public void setPrescriptions(List<PrescriptionDTO> prescriptions) {
         this.prescriptionsDTOs = prescriptions;
+    }
+
+    public String getProfessionalUsername() {
+        return professionalUsername;
+    }
+
+    public void setProfessionalUsername(String professionalUsername) {
+        this.professionalUsername = professionalUsername;
+    }
+
+    public String getProfessionalName() {
+        return professionalName;
+    }
+
+    public void setProfessionalName(String professionalName) {
+        this.professionalName = professionalName;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 }
