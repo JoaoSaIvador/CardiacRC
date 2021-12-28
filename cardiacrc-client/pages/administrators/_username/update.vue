@@ -26,7 +26,6 @@ export default {
       .$get(`/api/administrators/${this.username}`)
       .then((administrator) => {
         this.administrator = administrator || {};
-        this.administrator.password = null;
       });
   },
   methods: {

@@ -167,7 +167,7 @@ export default {
     },
 
     invalidMinFeedback() {
-      if (!this.localDataType.min) {
+      if (!(parseFloat(this.localDataType.min) >= 0)) {
         return null;
       }
 
