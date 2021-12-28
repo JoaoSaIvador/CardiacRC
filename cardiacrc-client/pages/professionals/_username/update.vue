@@ -27,7 +27,6 @@ export default {
       .$get(`/api/professionals/${this.username}`)
       .then((professional) => {
         this.professional = professional || {};
-        this.professional.password = null;
       });
   },
   methods: {

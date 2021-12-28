@@ -206,8 +206,8 @@ export default {
     isPatient() {
       return (
         this.$auth.user.groups.includes("Patient") ||
-        (this.$auth.user.groups.includes("Patient") &&
-          nthis.to == "professional")
+        (this.$auth.user.groups.includes("Professional") &&
+          this.to == "patient")
       );
     },
 

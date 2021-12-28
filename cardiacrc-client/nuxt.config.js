@@ -60,6 +60,7 @@ export default {
               "faUser",
               "faDatabase",
               "faPlus",
+              "faMinus",
               "faFile",
               "faCopy",
             ],

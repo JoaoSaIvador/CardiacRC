@@ -65,7 +65,7 @@ GET http://localhost:8080/cardiacrc/api/patients
 Accept: application/json
 
 ### GET PATIENT DETAILS
-GET http://localhost:8080/cardiacrc/api/patients/jackviole
+GET http://localhost:8080/cardiacrc/api/patients/joaosalvador
 Accept: application/json
 
 ### UPDATE PATIENT

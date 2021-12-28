@@ -1,53 +1,63 @@
 <template>
-  <div>
-    <b-container class="page-body">
-      <div class="container">
-        <h2 class="mb-3 text-center">Prescription Details</h2>
+  <div class="h-100">
+    <b-container class="h-100 d-flex align-items-center" v-if="prescription">
+      <b-container
+        class="
+          page-content
+          d-flex
+          flex-column
+          align-items-center
+          justify-content-center
+          bg-light
+        "
+      >
+        <h2 class="main-title text-center">Description Details</h2>
         <form>
-          <div class="col-sm-4 offset-sm-4">
-            <label for="name">Name:</label>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                :value="prescription.name"
-                readonly
-              />
-            </div>
+          <div class="main-input">
+            <b-form-group label="Name:" label-for="name">
+              <b-input id="name" :value="prescription.name" readonly></b-input>
+            </b-form-group>
           </div>
-          <div class="col-sm-4 offset-sm-4">
-            <label for="duration">Duration:</label>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                id="duration"
-                :value="prescription.duration"
+          <div class="main-input">
+            <b-form-group label="Frequency:" label-for="frequency">
+              <b-input
+                id="frequency"
+                :value="prescription.frequency"
                 readonly
-              />
-            </div>
+              ></b-input>
+            </b-form-group>
           </div>
-          <div class="col-sm-4 offset-sm-4">
-            <label for="description">Description:</label>
-            <div class="input-group">
+          <div class="main-input">
+            <b-form-group label="Description:" label-for="description">
               <textarea
-                class="form-control"
+                class="main-input"
                 rows="5"
                 id="description"
+                :value="prescription.description"
+                readonly
               ></textarea>
-            </div>
+            </b-form-group>
+          </div>
+          <div class="d-flex flex-row justify-content-center">
+            <b-button
+              class="main-button"
+              variant="outline-dark"
+              @click="() => this.$router.back()"
+            >
+              Back
+            </b-button>
+            <b-button
+              class="main-button"
+              variant="dark"
+              :to="`/prescriptions/${prescription.id}/update`"
+            >
+              Update
+            </b-button>
           </div>
         </form>
-        <b-container class="col-sm-4 offset-sm-4">
-          <nuxt-link
-            :to="`/patients/${prescription.patientUsername}/details`"
-            class="btn btn-primary"
-            >Back</nuxt-link
-          >
-        </b-container>
-      </div>
+      </b-container>
     </b-container>
+    <LoadingPage v-else />
   </div>
 </template>
 
@@ -55,8 +65,7 @@
 export default {
   data() {
     return {
-      patient: {},
-      prescription: {},
+      prescription: null,
     };
   },
   computed: {
@@ -69,12 +78,5 @@ export default {
       .$get(`/api/prescriptions/${this.id}`)
       .then((prescription) => (this.prescription = prescription || {}));
   },
-  methods: {},
 };
 </script>
-
-<style scoped>
-.page-body {
-  padding-bottom: 50px;
-}
-</style>

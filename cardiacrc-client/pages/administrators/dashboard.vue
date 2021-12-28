@@ -1,5 +1,6 @@
 <template>
   <b-container
+    v-if="counterData"
     class="
       h-100
       d-flex
@@ -21,9 +22,10 @@
       "
     >
       <DashboardCounter
-        v-for="counter in counters"
+        v-for="(counter, index) in counters"
         :key="counter.title"
         :counter="counter"
+        :counterData="counterData[index][0]"
       />
     </div>
     <div class="d-flex flex-row justify-content-center flex-wrap card-deck">
@@ -37,6 +39,7 @@ export default {
   middleware: "admin",
   data() {
     return {
+      counterData: null,
       cards: [
         {
           title: "Account Details",
@@ -54,30 +57,31 @@ export default {
       counters: [
         {
           title: "Administrators",
-          total: "10",
           color: "#796aee",
           icon: "shield-alt",
         },
         {
           title: "Professionals",
-          total: "11",
           color: "#ff7676",
           icon: "user-md",
         },
         {
           title: "Patients",
-          total: "12",
           color: "#54e69d",
           icon: "user",
         },
         {
           title: "Data Types",
-          total: "13",
           color: "#ffc36d",
           icon: "database",
         },
       ],
     };
+  },
+  created() {
+    this.$axios
+      .$get(`/api/administrators/count`)
+      .then((counterData) => (this.counterData = counterData || []));
   },
 };
 </script>

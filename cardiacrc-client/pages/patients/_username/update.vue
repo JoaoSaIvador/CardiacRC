@@ -25,7 +25,6 @@ export default {
   created() {
     this.$axios.$get(`/api/patients/${this.username}`).then((patient) => {
       this.patient = patient || {};
-      this.patient.password = null;
       this.patient.healthNumber = String(this.patient.healthNumber);
     });
   },

@@ -15,6 +15,7 @@ export default {
       prescription: {
         name: null,
         frequency: null,
+        description: null,
       },
     };
   },

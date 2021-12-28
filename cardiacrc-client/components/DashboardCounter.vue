@@ -10,7 +10,7 @@
       <h5>Total<br />{{ counter.title }}</h5>
     </div>
     <div class="admin-counter-total">
-      <h2>{{ counter.total }}</h2>
+      <h2>{{ counterData }}</h2>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
   name: "AdminCounter",
   props: {
     counter: Object,
+    counterData: Number,
   },
 };
 </script>
