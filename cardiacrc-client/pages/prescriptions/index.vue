@@ -20,16 +20,19 @@ export default {
       fields: [
         { key: "id", sortable: true },
         { key: "name", sortable: true },
-        { key: "duration", sortable: true },
+        { key: "frequency", sortable: true },
         { key: "actions", sortable: false },
       ],
       prescriptions: null,
+      username: this.$auth.user.sub,
     };
   },
   created() {
-    this.$axios.$get("/api/prescriptions").then((prescriptions) => {
-      this.prescriptions = prescriptions;
-    });
+    this.$axios
+      .$get(`/api/professionals/${this.username}/prescriptions`)
+      .then((prescriptions) => {
+        this.prescriptions = prescriptions;
+      });
   },
   methods: {
     deletePrescription(id) {

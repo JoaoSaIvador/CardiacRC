@@ -37,11 +37,22 @@
             :state="isFrequencyValid"
           >
             <b-input
-              id="unit"
+              id="frequency"
               placeholder="Enter a frequency"
               v-model.trim="localPrescription.frequency"
               :state="isFrequencyValid"
             ></b-input>
+          </b-form-group>
+        </div>
+        <div class="main-input">
+          <b-form-group label="Description:" label-for="description">
+            <textarea
+              class="main-input"
+              rows="5"
+              id="description"
+              placeholder="Enter a description"
+              v-model="localPrescription.description"
+            ></textarea>
           </b-form-group>
         </div>
         <div>

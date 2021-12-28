@@ -119,6 +119,19 @@
               <span class="button-text">&nbsp;Associate</span>
             </b-button>
             <b-button
+              v-if="group == 'prescriptions'"
+              variant="success"
+              class="
+                table-button
+                d-flex
+                align-items-center
+                justify-content-center
+              "
+              :to="`${group}/${row.item.id}/details`"
+            >
+              <fa :icon="['fas', 'clipboard-list']" />
+            </b-button>
+            <b-button
               v-if="group != 'administrators'"
               variant="primary"
               class="
