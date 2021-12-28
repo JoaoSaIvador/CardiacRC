@@ -12,11 +12,11 @@ public class ObservationDTO {
     private int dataTypeId;
     private String dataTypeName;
     private String date;
-
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
     public ObservationDTO() {
     }
 
-    public ObservationDTO(int id, String patientUsername, String patientName, int value, int dataTypeId, String dataTypeName, Date date) {
+    public ObservationDTO(int id, String patientUsername, String patientName, int value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
         this.id = id;
         this.patientUsername = patientUsername;
         this.patientName = patientName;
@@ -24,7 +24,7 @@ public class ObservationDTO {
         this.dataTypeId = dataTypeId;
         this.dataTypeName = dataTypeName;
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+
         this.date = formatter.format(date);
     }
 

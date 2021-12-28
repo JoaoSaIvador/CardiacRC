@@ -1,12 +1,10 @@
 package dae.cardiacrc.dtos;
 
-import dae.cardiacrc.entities.Prescription;
-import dae.cardiacrc.entities.Professional;
-import dae.cardiacrc.entities.Program;
-
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ProgramDTO implements Serializable {
     private int id;
@@ -17,6 +15,7 @@ public class ProgramDTO implements Serializable {
     private String patientUsername;
     private String patientName;
     private List<PrescriptionDTO> prescriptionsDTOs;
+    SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
 
     public ProgramDTO(int id, String professionalUsername, String professionalName ,String patientUsername, String patientName, String startDate, String duration) {
@@ -24,7 +23,7 @@ public class ProgramDTO implements Serializable {
         this.duration = duration;
         this.professionalUsername = professionalUsername;
         this.professionalName = professionalName;
-        this.startDate = startDate;
+        this.startDate = formatter.format(startDate);
         this.patientUsername = patientUsername;
         this.patientName = patientName;
         prescriptionsDTOs = new ArrayList<PrescriptionDTO>();

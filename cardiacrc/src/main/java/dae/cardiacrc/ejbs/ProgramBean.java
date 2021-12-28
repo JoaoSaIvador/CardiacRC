@@ -1,10 +1,12 @@
 package dae.cardiacrc.ejbs;
 
 import dae.cardiacrc.entities.Patient;
+import dae.cardiacrc.entities.Prescription;
 import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.entities.Program;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -68,5 +70,30 @@ public class ProgramBean {
         patient.removeProgram(program);
         professional.removeProgram(program);
         em.remove(program);
+    }
+
+    public void addPrescription(int id, int prescriptionId) throws MyEntityNotFoundException {
+        Program program = findProgram(id);
+        Prescription prescription = em.find(Prescription.class, prescriptionId);
+        if (prescription == null){
+            throw new MyEntityNotFoundException("Prescription not found!");
+        }
+
+        prescription.setProgram(program);
+        program.addPrescription(prescription);
+    }
+
+    public void removePrescription(int id, int prescriptionId) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Program program = findProgram(id);
+        Prescription prescription = em.find(Prescription.class, prescriptionId);
+        if (prescription == null){
+            throw new MyEntityNotFoundException("Prescription not found!");
+        }
+        if (!program.getPrescriptions().contains(prescription)){
+            throw new MyIllegalArgumentException("Prescription not associated!");
+        }
+
+        prescription.setProgram(null);
+        program.removePrescription(prescription);
     }
 }

@@ -178,6 +178,7 @@ public class PatientService {
                 observation.getValue(),
                 observation.getDataType().getId(),
                 observation.getDataType().getName(),
+                observation.getQualitativeDataType(),
                 observation.getDate()
         );
     }

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @NamedQueries(
         @NamedQuery(
@@ -42,7 +43,7 @@ public class Program implements Serializable {
 
     @Version
     private int version;
-    SimpleDateFormat formatter= new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
 
     public Program(String duration, Patient patient, Professional professional) {
         this.duration = duration;

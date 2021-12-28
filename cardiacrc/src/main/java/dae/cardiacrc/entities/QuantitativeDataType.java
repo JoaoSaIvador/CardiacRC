@@ -98,4 +98,21 @@ public class QuantitativeDataType implements Serializable {
     public void removeQualityDataType(QualitativeDataType dataType){
         dataTypes.remove(dataType);
     }
+
+    public String getQualitativeDataTypeName(int value){
+        String valueName = null;
+        if (value < min){
+            valueName = String.valueOf(min);
+        }else if (value > max){
+            valueName = String.valueOf(max);
+        }
+        else{
+            for (QualitativeDataType dataType : dataTypes) {
+                if (dataType.getMin() <= value && value <= dataType.getMax()){
+                    valueName = dataType.getName();
+                }
+            }
+        }
+        return valueName;
+    }
 }

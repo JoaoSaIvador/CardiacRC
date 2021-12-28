@@ -6,16 +6,18 @@ import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 import java.util.Date;
 
+@Stateless
 public class ObservationBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String patientUsername, int value, String name, int dataTypeId) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException, MyIllegalArgumentException {
+    public void create(String patientUsername, int value, int dataTypeId) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException, MyIllegalArgumentException {
         Patient patient =  em.find(Patient.class, patientUsername);
 
         if(patient == null) {
@@ -29,8 +31,7 @@ public class ObservationBean {
         }
 
         try {
-            Date date = new Date();
-            Observation observation = new Observation(patient, value, quantitativeDataType, date);
+            Observation observation = new Observation(patient, value, quantitativeDataType);
             em.persist(observation);
             patient.addPatientData(observation);
         } catch (ConstraintViolationException e) {
@@ -38,16 +39,16 @@ public class ObservationBean {
         }
     }
 
-    public Observation findPatientData(int id) throws MyEntityNotFoundException {
+    public Observation findObservation(int id) throws MyEntityNotFoundException {
         Observation observation = em.find(Observation.class, id);
         if(observation == null) {
-            throw new MyEntityNotFoundException("Patient data not found!");
+            throw new MyEntityNotFoundException("Observation not found!");
         }
         return observation;
     }
 
-    public void deletePatientData (int id) throws MyEntityNotFoundException {
-        Observation observation = em.find(Observation.class, id);
+    public void delete(int id) throws MyEntityNotFoundException {
+        Observation observation = findObservation(id);
         observation.getPatient().removePatientData(observation);
         em.remove(observation);
     }

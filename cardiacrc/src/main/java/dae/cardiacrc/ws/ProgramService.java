@@ -7,6 +7,7 @@ import dae.cardiacrc.entities.Prescription;
 import dae.cardiacrc.entities.Program;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -97,5 +98,19 @@ public class ProgramService {
     public Response deleteProgram(@PathParam("program") int programId) throws MyEntityNotFoundException {
         programBean.delete(programId);
         return Response.ok("Program deleted!").build();
+    }
+
+    @PATCH
+    @Path("{program}/addPrescription")
+    public Response addPrescription (@PathParam("program") int programId, PrescriptionDTO prescriptionDTO) throws MyEntityNotFoundException {
+        programBean.addPrescription(programId, prescriptionDTO.getId());
+        return Response.ok("Prescription added!").build();
+    }
+
+    @PATCH
+    @Path("{program}/removePrescription")
+    public Response removePrescription (@PathParam("program") int programId, PrescriptionDTO prescriptionDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        programBean.removePrescription(programId, prescriptionDTO.getId());
+        return Response.ok("Prescription added!").build();
     }
 }

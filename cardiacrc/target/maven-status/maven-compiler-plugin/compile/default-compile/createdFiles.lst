@@ -29,6 +29,7 @@ dae\cardiacrc\exceptions\MyIllegalArgumentException.class
 dae\cardiacrc\dtos\PatientDTO.class
 dae\cardiacrc\entities\QualitativeDataType.class
 dae\cardiacrc\ws\PatientService.class
+dae\cardiacrc\ws\ObservationService.class
 dae\cardiacrc\ws\LoginService.class
 dae\cardiacrc\ejbs\ObservationBean.class
 dae\cardiacrc\entities\Prescription.class

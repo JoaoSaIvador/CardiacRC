@@ -3,7 +3,9 @@ package dae.cardiacrc.entities;
 import io.smallrye.common.constraint.NotNull;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Table(name = "observations")
 @SequenceGenerator(name = "userdata_id", sequenceName = "userdata_id",  initialValue = 1)
@@ -26,20 +28,24 @@ public class Observation {
     @NotNull
     private QuantitativeDataType quantitativeDataType;
 
+    private String qualitativeDataType;
+
     @NotNull
-    private Date date;
+    private String date;
 
     @Version
     private int version;
+    SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
     public Observation() {
     }
 
-    public Observation(Patient patient, int value, QuantitativeDataType quantitativeDataType, Date date) {
+    public Observation(Patient patient, int value, QuantitativeDataType quantitativeDataType) {
         this.patient = patient;
         this.value = value;
         this.quantitativeDataType = quantitativeDataType;
-        this.date = date;
+        this.date = formatter.format(new Date(System.currentTimeMillis()));
+        this.qualitativeDataType = quantitativeDataType.getQualitativeDataTypeName(value);
     }
 
     public int getId() {
@@ -70,11 +76,15 @@ public class Observation {
         this.quantitativeDataType = quantitativeDataType;
     }
 
-    public Date getDate() {
+    public String getQualitativeDataType() {
+        return qualitativeDataType;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

@@ -109,9 +109,4 @@ public class PatientBean {
 
         em.remove(patient);
     }
-
-//    public List counts(String username) throws MyEntityNotFoundException {
-//        Patient patient = findPatient(username);
-//        return Arrays.asList(patient.getProfessionals());
-//    }
 }
