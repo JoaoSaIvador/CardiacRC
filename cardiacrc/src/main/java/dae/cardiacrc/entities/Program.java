@@ -24,7 +24,7 @@ public class Program implements Serializable {
     private int id;
 
     @NotNull
-    private int duration;
+    private String duration;
 
     @NotNull
     private String startDate;
@@ -44,7 +44,7 @@ public class Program implements Serializable {
     private int version;
     SimpleDateFormat formatter= new SimpleDateFormat("dd-MM-yyyy");
 
-    public Program(int duration, Patient patient, Professional professional) {
+    public Program(String duration, Patient patient, Professional professional) {
         this.duration = duration;
         this.startDate = formatter.format(new Date(System.currentTimeMillis()));
         this.patient = patient;
@@ -60,11 +60,11 @@ public class Program implements Serializable {
         return id;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -90,6 +90,10 @@ public class Program implements Serializable {
 
     public void setProfessional(Professional professional) {
         this.professional = professional;
+    }
+
+    public List<Prescription> getPrescriptions() {
+        return prescriptions;
     }
 
     public void addPrescription(Prescription prescription){

@@ -3,6 +3,7 @@ D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\exceptions\MyEntityE
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\exceptions\MyIllegalArgumentExceptionMapper.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\providers\CorsFilter.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\ejbs\QuantityDataTypeBean.java
+D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\ws\ProgramService.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\dtos\TypeDTO.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\CardiacRCApplication.java
 D:\Projects\CardiacRC\CardiacRC\src\main\java\dae\cardiacrc\entities\Professional.java

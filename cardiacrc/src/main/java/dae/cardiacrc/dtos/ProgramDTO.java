@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ProgramDTO implements Serializable {
     private int id;
-    private int duration;
+    private String duration;
     private String professionalUsername;
     private String professionalName;
     private String startDate;
@@ -19,7 +19,7 @@ public class ProgramDTO implements Serializable {
     private List<PrescriptionDTO> prescriptionsDTOs;
 
 
-    public ProgramDTO(int id, String professionalUsername, String professionalName ,String patientUsername, String patientName, String startDate, int duration) {
+    public ProgramDTO(int id, String professionalUsername, String professionalName ,String patientUsername, String patientName, String startDate, String duration) {
         this.id = id;
         this.duration = duration;
         this.professionalUsername = professionalUsername;
@@ -43,11 +43,11 @@ public class ProgramDTO implements Serializable {
         this.id = id;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

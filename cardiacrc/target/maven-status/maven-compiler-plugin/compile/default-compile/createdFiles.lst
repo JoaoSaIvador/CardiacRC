@@ -34,6 +34,7 @@ dae\cardiacrc\ejbs\ObservationBean.class
 dae\cardiacrc\entities\Prescription.class
 dae\cardiacrc\entities\Program.class
 dae\cardiacrc\ejbs\PatientBean.class
+dae\cardiacrc\ws\ProgramService.class
 dae\cardiacrc\CardiacRCApplication.class
 dae\cardiacrc\dtos\QuantitativeDataTypeDTO.class
 dae\cardiacrc\exceptions\MyIllegalArgumentExceptionMapper.class

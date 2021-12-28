@@ -8,6 +8,7 @@ import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -17,7 +18,7 @@ public class ProgramBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(int duration, String patientUserName, String professionalUsername) throws MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String duration, String patientUserName, String professionalUsername) throws MyEntityNotFoundException, MyConstraintViolationException {
         Patient patient = em.find(Patient.class, patientUserName);
         if (patient == null){
             throw new MyEntityNotFoundException("Patient not found!");
@@ -47,6 +48,16 @@ public class ProgramBean {
             throw new MyEntityNotFoundException("Program not found!");
         }
         return program;
+    }
+
+    public void update(int id, String duration) throws MyEntityNotFoundException {
+        Program program = findProgram(id);
+
+        em.lock(program, LockModeType.OPTIMISTIC);
+        if (duration != null){
+            program.setDuration(duration);
+        }
+        em.merge(program);
     }
 
     public void delete(int id) throws MyEntityNotFoundException {

@@ -1,7 +1,5 @@
 package dae.cardiacrc.dtos;
 
-import dae.cardiacrc.entities.Program;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +9,17 @@ public class ProfessionalDTO {
     private String name;
     private String email;
     private int licenseNumber;
-    private List<PrescriptionDTO> activePrescriptionDTOs;
-    private List<PrescriptionDTO> inactivePrescriptionDTOs;
-    private List<PatientDTO> patientDTOS;
+    private List<PrescriptionDTO> prescriptionsDTOs;
     private List<ProgramDTO> programsDTOs;
+    private List<PatientDTO> patientDTOS;
     private int type;
     private String typeName;
     private String passwordConfirmation;
 
     public ProfessionalDTO() {
-        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
-        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.prescriptionsDTOs = new ArrayList<PrescriptionDTO>();
+        this.programsDTOs = new ArrayList<ProgramDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
-        programsDTOs = new ArrayList<ProgramDTO>();
     }
 
     public ProfessionalDTO(String username, String name, String email, int licenseNumber, int type, String typeName) {
@@ -33,10 +29,9 @@ public class ProfessionalDTO {
         this.licenseNumber = licenseNumber;
         this.type = type;
         this.typeName = typeName;
-        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
-        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.prescriptionsDTOs = new ArrayList<PrescriptionDTO>();
+        this.programsDTOs = new ArrayList<ProgramDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
-        programsDTOs = new ArrayList<ProgramDTO>();
     }
 
     public String getUsername() {
@@ -59,12 +54,12 @@ public class ProfessionalDTO {
         return licenseNumber;
     }
 
-    public List<PrescriptionDTO> getActivePrescriptionDTOs() {
-        return activePrescriptionDTOs;
+    public List<PrescriptionDTO> getPrescriptionsDTOs() {
+        return prescriptionsDTOs;
     }
 
-    public List<PrescriptionDTO> getInactivePrescriptionDTOs() {
-        return inactivePrescriptionDTOs;
+    public List<ProgramDTO> getProgramsDTOs() {
+        return programsDTOs;
     }
 
     public List<PatientDTO> getPatientDTOs() {
@@ -91,12 +86,12 @@ public class ProfessionalDTO {
         this.licenseNumber = licenseNumber;
     }
 
-    public void setActivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
-        this.activePrescriptionDTOs = prescriptionDTOs;
+    public void setPrescriptionsDTOs(List<PrescriptionDTO> prescriptionDTOs) {
+        this.prescriptionsDTOs = prescriptionDTOs;
     }
 
-    public void setInactivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
-        this.inactivePrescriptionDTOs = prescriptionDTOs;
+    public void setProgramsDTOs(List<ProgramDTO> prescriptionDTOs) {
+        this.programsDTOs = prescriptionDTOs;
     }
 
     public void setPatientDTOs(List<PatientDTO> patientDTOS) {
@@ -127,11 +122,4 @@ public class ProfessionalDTO {
         this.passwordConfirmation = passwordConfirmation;
     }
 
-    public List<ProgramDTO> getProgramsDTOs() {
-        return programsDTOs;
-    }
-
-    public void setProgramsDTOs(List<ProgramDTO> programsDTOs) {
-        this.programsDTOs = programsDTOs;
-    }
 }

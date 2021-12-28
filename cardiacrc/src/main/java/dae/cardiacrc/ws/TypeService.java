@@ -44,7 +44,7 @@ public class TypeService {
 
     @POST
     @Path("/")
-    public Response createNewAdministrator (TypeDTO typeDTO) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
+    public Response createNewType (TypeDTO typeDTO) throws MyConstraintViolationException {
         typeBean.create(typeDTO.getName());
 
         return Response.status(Response.Status.CREATED).entity("Type " + typeDTO.getName() + " created!").build();

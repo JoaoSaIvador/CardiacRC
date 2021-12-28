@@ -3,10 +3,12 @@ package dae.cardiacrc.ws;
 import dae.cardiacrc.dtos.PatientDTO;
 import dae.cardiacrc.dtos.PrescriptionDTO;
 import dae.cardiacrc.dtos.ProfessionalDTO;
+import dae.cardiacrc.dtos.ProgramDTO;
 import dae.cardiacrc.ejbs.ProfessionalBean;
 import dae.cardiacrc.entities.Patient;
 import dae.cardiacrc.entities.Prescription;
 import dae.cardiacrc.entities.Professional;
+import dae.cardiacrc.entities.Program;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
@@ -54,7 +56,6 @@ public class ProfessionalService {
         return professionals.stream().map(this::toDTOSimple).collect(Collectors.toList());
     }
 
-    // Converts an entity Student to a DTO Student class
     private ProfessionalDTO toDTO(Professional professional) {
         ProfessionalDTO professionalDTO = new ProfessionalDTO(
                 professional.getUsername(),
@@ -65,8 +66,11 @@ public class ProfessionalService {
                 professional.getType().getName()
         );
 
-        List<PatientDTO> patientDTOS = patientToDTOs(professional.getPatients());
+        List<PatientDTO> patientDTOS = patientsToDTOs(professional.getPatients());
         professionalDTO.setPatientDTOs(patientDTOS);
+
+        List<ProgramDTO> programDTOS = programsToDTOs(professional.getPrograms());
+        professionalDTO.setProgramsDTOs(programDTOS);
 
         return professionalDTO;
     }
@@ -153,7 +157,7 @@ public class ProfessionalService {
         );
     }
 
-    private List<PatientDTO> patientToDTOs(List<Patient> patients) {
+    private List<PatientDTO> patientsToDTOs(List<Patient> patients) {
         return patients.stream().map(this::patientToDTO).collect(Collectors.toList());
     }
 
@@ -161,7 +165,23 @@ public class ProfessionalService {
     @Path("{username}/patients")
     public Response getProfessionalPatients(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
-        List<PatientDTO> dtos = patientToDTOs(professional.getPatients());
+        List<PatientDTO> dtos = patientsToDTOs(professional.getPatients());
         return Response.ok(dtos).build();
+    }
+
+    private ProgramDTO programToDTO(Program program) {
+        return new ProgramDTO(
+                program.getId(),
+                program.getProfessional().getUsername(),
+                program.getProfessional().getName(),
+                program.getPatient().getUsername(),
+                program.getPatient().getName(),
+                program.getStartDate(),
+                program.getDuration()
+        );
+    }
+
+    private List<ProgramDTO> programsToDTOs(List<Program> programs) {
+        return programs.stream().map(this::programToDTO).collect(Collectors.toList());
     }
 }

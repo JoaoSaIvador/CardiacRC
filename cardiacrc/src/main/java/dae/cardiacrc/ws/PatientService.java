@@ -87,13 +87,13 @@ public class PatientService {
         return Response.ok(toDTO(patient)).build();
     }
 
-    @GET
-    @Path("/count")
-    public Response count() throws MyEntityNotFoundException {
-        Principal principal = securityContext.getUserPrincipal();
-        List total = patientBean.counts(principal.getName());
-        return Response.ok(total).build();
-    }
+//    @GET
+//    @Path("/count")
+//    public Response count() throws MyEntityNotFoundException {
+//        Principal principal = securityContext.getUserPrincipal();
+//        List total = patientBean.counts(principal.getName());
+//        return Response.ok(total).build();
+//    }
 
     @PUT
     @Path("{username}")
@@ -164,7 +164,7 @@ public class PatientService {
 
     @GET
     @Path("{username}/programs")
-    public Response getPatientPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
+    public Response getPatientPrograms(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
         List<ProgramDTO> dtos = programsToDTOs(patient.getPrograms());
         return Response.ok(dtos).build();
