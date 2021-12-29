@@ -1,12 +1,13 @@
 <template>
   <div class="h-100">
     <UserTable
-      v-if="patients"
+      v-if="patients && associatedPatients"
       :items="patients"
       :fields="fields"
       sortBy="username"
       group="patients"
       @delete="deletePatient"
+      :associatedPatients="associatedPatients"
     />
     <LoadingPage v-else />
   </div>
@@ -25,12 +26,21 @@ export default {
         { key: "actions", sortable: false },
       ],
       patients: null,
+      associatedPatients: null,
     };
   },
   created() {
     this.$axios.$get("/api/patients").then((patients) => {
       this.patients = patients;
     });
+
+    if (this.$auth.user.groups.includes("Professional")) {
+      this.$axios
+        .$get(`/api/professionals/${this.$auth.user.sub}/patients`)
+        .then((associatedPatients) => {
+          this.associatedPatients = associatedPatients;
+        });
+    }
   },
   methods: {
     deletePatient(username) {

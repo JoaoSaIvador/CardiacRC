@@ -50,6 +50,29 @@
             </b-select>
           </b-form-group>
         </div>
+        <div v-if="mode == 'create'" class="main-input">
+          <b-form-group label="Prescriptions:" label-for="prescription">
+            <div class="d-flex flex-row">
+              <b-select
+                id="prescription"
+                v-model="prescriptionChoice"
+                :options="prescriptions"
+                required
+                value-field="id"
+                text-field="name"
+              >
+                <template v-slot:first>
+                  <option :value="null" disabled>
+                    -- Select a Prescription --
+                  </option>
+                </template>
+              </b-select>
+              <b-button variant="dark" class="ml-2" @click="addPrescription">
+                Add
+              </b-button>
+            </div>
+          </b-form-group>
+        </div>
         <div>
           <p v-show="errorMsg" class="text-danger">
             {{ errorMsg }}
@@ -95,10 +118,12 @@ export default {
     mode: String,
     group: String,
     professionalPatients: Array,
+    prescriptions: Array,
   },
   data() {
     return {
       errorMsg: false,
+      prescriptionChoice: null,
       localProgram: JSON.parse(JSON.stringify(this.program)),
     };
   },
@@ -150,6 +175,11 @@ export default {
       }
 
       return true;
+    },
+  },
+  methods: {
+    addPrescription() {
+      this.localProgram.prescriptionIds.push(this.prescriptionChoice);
     },
   },
 };

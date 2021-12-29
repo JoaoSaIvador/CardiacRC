@@ -22,6 +22,7 @@ export default {
         { key: "duration", sortable: true },
         { key: "startDate", sortable: true },
         { key: "professionalUsername", sortable: true },
+        { key: "patientUsername", sortable: true },
         { key: "actions", sortable: false },
       ],
       programs: null,
