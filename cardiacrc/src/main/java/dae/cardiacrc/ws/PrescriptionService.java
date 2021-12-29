@@ -37,7 +37,9 @@ public class PrescriptionService {
                 prescription.getProfessional().getUsername(),
                 prescription.getProfessional().getName(),
                 prescription.getDescription(),
-                prescription.getName()
+                prescription.getName(),
+                prescription.getType().getId(),
+                prescription.getType().getName()
         );
         return prescriptionDTO;
     }

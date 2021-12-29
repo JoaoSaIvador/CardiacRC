@@ -64,7 +64,9 @@ public class ProgramService {
                 prescription.getProfessional().getUsername(),
                 prescription.getProfessional().getName(),
                 prescription.getDescription(),
-                prescription.getName()
+                prescription.getName(),
+                prescription.getType().getId(),
+                prescription.getType().getName()
         );
     }
 
@@ -75,7 +77,7 @@ public class ProgramService {
     @POST
     @Path("/")
     public Response createNewProgram(ProgramDTO programDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
-        programBean.create(programDTO.getDuration(), programDTO.getProfessionalUsername(), programDTO.getPatientUsername());
+        programBean.create(programDTO.getDuration(), programDTO.getPatientUsername(), programDTO.getProfessionalUsername());
         return Response.status(Response.Status.CREATED).entity("Program created!").build();
     }
 

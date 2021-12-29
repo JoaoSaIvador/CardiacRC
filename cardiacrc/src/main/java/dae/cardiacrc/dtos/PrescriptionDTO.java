@@ -6,16 +6,20 @@ public class PrescriptionDTO {
     private String professionalName;
     private String description;
     private String name;
+    private int typeId;
+    private String typeName;
 
     public PrescriptionDTO() {
     }
 
-    public PrescriptionDTO(int id, String professionalUsername, String professionalName, String description, String name) {
+    public PrescriptionDTO(int id, String professionalUsername, String professionalName, String description, String name, int typeId, String typeName) {
         this.id = id;
         this.professionalUsername = professionalUsername;
         this.professionalName = professionalName;
         this.description = description;
         this.name = name;
+        this.typeId = typeId;
+        this.typeName = typeName;
     }
 
     public int getId() {
@@ -56,5 +60,21 @@ public class PrescriptionDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

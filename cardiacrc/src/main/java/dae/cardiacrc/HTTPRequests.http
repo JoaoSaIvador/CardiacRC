@@ -216,3 +216,16 @@ Accept: application/json
 ###DELETE QUANTITATY DATATYPE
 DELETE http://localhost:8080/cardiacrc/api/dataTypes/1/qualitatives/3
 Accept: application/json
+
+
+###CREATE PROGRAM
+POST http://localhost:8080/cardiacrc/api/programs
+Content-Type: application/json
+
+{
+  "duration": 2,
+  "professionalUsername": "marcopolo",
+  "patientUsername": "joaosalvador"
+}
+
+###
