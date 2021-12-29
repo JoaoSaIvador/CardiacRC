@@ -121,7 +121,7 @@
 
 <script>
 export default {
-  middleware: "adminOrProfessional",
+  middleware: "professionalSelf",
   data() {
     return {
       fields: [
