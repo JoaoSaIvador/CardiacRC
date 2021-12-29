@@ -106,9 +106,7 @@
               text-field="name"
             >
               <template v-slot:first>
-                <option :value="null" disabled>
-                  -- Please select a Type --
-                </option>
+                <option :value="null" disabled>-- Select a Type --</option>
               </template>
             </b-select>
           </b-form-group>

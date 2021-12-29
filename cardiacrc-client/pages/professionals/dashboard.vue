@@ -52,7 +52,7 @@ export default {
       ],
       cards2: [
         { title: "Manage Prescriptions", path: `/prescriptions` },
-        { title: "Manage CRPs", path: `/professionals/dashboard` },
+        { title: "Manage CRPs", path: `/programs` },
       ],
       counters: [
         {
