@@ -7,6 +7,7 @@
       group="prescription"
       mode="create"
       :professionalPatients="patients"
+      :prescriptions="prescriptions"
     />
     <LoadingPage v-else />
   </div>
@@ -19,10 +20,12 @@ export default {
     return {
       username: this.$auth.user.sub,
       patients: null,
+      prescriptions: null,
       program: {
         duration: null,
         patientUsername: null,
         professionalUsername: this.$auth.user.sub,
+        prescriptionIds: [],
       },
     };
   },
@@ -32,10 +35,15 @@ export default {
       .then((patients) => {
         this.patients = patients;
       });
+
+    this.$axios
+      .$get(`/api/professionals/${this.username}/prescriptions`)
+      .then((prescriptions) => {
+        this.prescriptions = prescriptions;
+      });
   },
   methods: {
     createProgram(program) {
-      console.log(program);
       this.$axios
         .$post("/api/programs", program)
         .then(() => {

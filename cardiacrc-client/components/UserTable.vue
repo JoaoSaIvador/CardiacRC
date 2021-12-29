@@ -99,7 +99,10 @@
             <b-button
               v-if="
                 group == 'patients' &&
-                $auth.user.groups.includes('Professional')
+                $auth.user.groups.includes('Professional') &&
+                !associatedPatients.filter(
+                  (p) => p.username == row.item.username
+                ).length > 0
               "
               variant="dark"
               class="
@@ -115,7 +118,22 @@
               <span class="button-text">&nbsp;Associate</span>
             </b-button>
             <b-button
-              v-if="group == 'prescriptions'"
+              v-else
+              variant="dark"
+              class="
+                table-button
+                d-flex
+                align-items-center
+                justify-content-center
+                button-extra
+              "
+              @click.prevent="disassociatePatient(row.item.username)"
+            >
+              <fa :icon="['fas', 'minus']" />
+              <span class="button-text">&nbsp;Disassociate</span>
+            </b-button>
+            <b-button
+              v-if="group == 'prescriptions' || group == 'programs'"
               variant="success"
               class="
                 table-button
@@ -179,6 +197,7 @@ export default {
     items: Array,
     sortBy: String,
     group: String,
+    associatedPatients: Array,
   },
   data() {
     return {
