@@ -25,7 +25,7 @@
         v-for="(counter, index) in counters"
         :key="counter.title"
         :counter="counter"
-        :counterData="counterData[index][0]"
+        :counterData="counterData[index]"
       />
     </div>
     <div class="d-flex flex-row justify-content-center flex-wrap card-deck">
