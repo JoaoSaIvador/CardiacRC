@@ -19,8 +19,9 @@ export default {
     return {
       fields: [
         { key: "id", sortable: true },
-        { key: "name", sortable: true },
-        { key: "frequency", sortable: true },
+        { key: "duration", sortable: true },
+        { key: "startDate", sortable: true },
+        { key: "professionalUsername", sortable: true },
         { key: "actions", sortable: false },
       ],
       programs: null,
