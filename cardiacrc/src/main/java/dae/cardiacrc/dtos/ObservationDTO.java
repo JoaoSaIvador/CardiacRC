@@ -16,16 +16,13 @@ public class ObservationDTO {
     }
 
     public ObservationDTO(int id, String patientUsername, String patientName, int value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         this.id = id;
         this.patientUsername = patientUsername;
         this.patientName = patientName;
         this.value = value;
         this.dataTypeId = dataTypeId;
         this.dataTypeName = dataTypeName;
-
-
-        this.date = formatter.format(date);
+        this.date = date;
     }
 
     public int getId() {

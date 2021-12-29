@@ -17,12 +17,11 @@ public class ProgramDTO implements Serializable {
     private List<PrescriptionDTO> prescriptionsDTOs;
 
     public ProgramDTO(int id, String professionalUsername, String professionalName ,String patientUsername, String patientName, String startDate, String duration) {
-        SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         this.id = id;
         this.duration = duration;
         this.professionalUsername = professionalUsername;
         this.professionalName = professionalName;
-        this.startDate = formatter.format(startDate);
+        this.startDate = startDate;
         this.patientUsername = patientUsername;
         this.patientName = patientName;
         prescriptionsDTOs = new ArrayList<PrescriptionDTO>();
