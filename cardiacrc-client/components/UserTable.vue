@@ -13,7 +13,6 @@
           align-items-center
           mb-3
         "
-        v-if="items.length > 0"
       >
         <div>
           <b-button variant="outline-dark" @click="() => this.$router.back()">
@@ -31,12 +30,12 @@
               group == 'patients' && $auth.user.groups.includes('Professional')
             "
             variant="dark"
-            :to="`${group}/create`"
+            :to="`professionals/${this.$auth.user.sub}/associatedPatients`"
           >
             Associated Patients
           </b-button>
         </div>
-        <div>
+        <div v-if="items.length > 0">
           <b-form-group style="margin: 0">
             <b-input-group size="sm">
               <b-form-input
@@ -58,6 +57,7 @@
           </b-form-group>
         </div>
         <b-pagination
+          v-if="items.length > 0"
           v-model="currentPage"
           :total-rows="items.length"
           :per-page="perPage"
@@ -109,11 +109,7 @@
                 justify-content-center
                 button-extra
               "
-              @click.prevent="
-                showConfirmation(
-                  row.item.username ? row.item.username : row.item.id
-                )
-              "
+              @click.prevent="associatePatient(row.item.username)"
             >
               <fa :icon="['fas', 'plus']" />
               <span class="button-text">&nbsp;Associate</span>
@@ -177,7 +173,7 @@
 
 <script>
 export default {
-  name: "ManageUserTable",
+  name: "UserTable",
   props: {
     fields: Array,
     items: Array,
@@ -203,6 +199,16 @@ export default {
       if (confirmation) {
         this.$emit("delete", this.affectedLine);
       }
+    },
+    associatePatient(patientUsername) {
+      this.$axios
+        .$patch(`/api/patients/${patientUsername}/addProfessional`, {
+          username: this.$auth.user.sub,
+        })
+        .catch((error) => {
+          //this.errorMsg = error.response.data;
+          //Notification
+        });
     },
   },
 };
