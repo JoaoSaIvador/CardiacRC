@@ -225,7 +225,8 @@ Content-Type: application/json
 {
   "duration": 2,
   "professionalUsername": "marcopolo",
-  "patientUsername": "joaosalvador"
+  "patientUsername": "joaosalvador",
+  "prescriptionIds": [1,2,3]
 }
 
 ###
