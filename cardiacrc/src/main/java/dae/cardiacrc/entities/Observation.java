@@ -35,12 +35,12 @@ public class Observation {
 
     @Version
     private int version;
-    SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
     public Observation() {
     }
 
     public Observation(Patient patient, int value, QuantitativeDataType quantitativeDataType) {
+        SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         this.patient = patient;
         this.value = value;
         this.quantitativeDataType = quantitativeDataType;
@@ -85,6 +85,7 @@ public class Observation {
     }
 
     public void setDate(String date) {
-        this.date = date;
+        SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
+        this.date = formatter.format(date);
     }
 }

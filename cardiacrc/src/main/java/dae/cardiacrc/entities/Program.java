@@ -43,9 +43,9 @@ public class Program implements Serializable {
 
     @Version
     private int version;
-    SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
 
     public Program(String duration, Patient patient, Professional professional) {
+        SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
         this.duration = duration;
         this.startDate = formatter.format(new Date(System.currentTimeMillis()));
         this.patient = patient;
@@ -74,6 +74,7 @@ public class Program implements Serializable {
     }
 
     public void setStartDate(String startDate) {
+        SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
         this.startDate = formatter.format(startDate);
     }
 

@@ -15,10 +15,9 @@ public class ProgramDTO implements Serializable {
     private String patientUsername;
     private String patientName;
     private List<PrescriptionDTO> prescriptionsDTOs;
-    SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-
 
     public ProgramDTO(int id, String professionalUsername, String professionalName ,String patientUsername, String patientName, String startDate, String duration) {
+        SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         this.id = id;
         this.duration = duration;
         this.professionalUsername = professionalUsername;
