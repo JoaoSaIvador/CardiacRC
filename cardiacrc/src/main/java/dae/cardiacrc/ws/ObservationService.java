@@ -1,20 +1,19 @@
 package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.ObservationDTO;
-import dae.cardiacrc.dtos.PrescriptionDTO;
-import dae.cardiacrc.dtos.ProgramDTO;
 import dae.cardiacrc.ejbs.ObservationBean;
 import dae.cardiacrc.entities.Observation;
-import dae.cardiacrc.entities.Program;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
-import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
-import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +23,8 @@ import java.util.stream.Collectors;
 public class ObservationService {
     @EJB
     private ObservationBean observationBean;
+    @Context
+    private SecurityContext securityContext;
 
     // Converts an entity Program to a DTO Program class
     private ObservationDTO toDTO(Observation observation) {
@@ -46,21 +47,44 @@ public class ObservationService {
 
     @POST
     @Path("/")
-    public Response createNewObservation(ObservationDTO observationDTO) throws MyConstraintViolationException, MyEntityNotFoundException, MyEntityExistsException, MyIllegalArgumentException {
-        observationBean.create(observationDTO.getPatientUsername(), observationDTO.getValue(), observationDTO.getDataTypeId());
+    @RolesAllowed("Patient")
+    public Response createNewObservation(ObservationDTO observationDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
+        Principal principal = securityContext.getUserPrincipal();
+        observationBean.create(principal.getName(), observationDTO.getValue(), observationDTO.getDataTypeId());
         return Response.status(Response.Status.CREATED).entity("Observation created!").build();
     }
 
     @GET
+    @Path("/")
+    @RolesAllowed("Patient")
+    public List<ObservationDTO> getAllPrescriptionsWS(){
+        Principal principal = securityContext.getUserPrincipal();
+        return toDTOs(observationBean.getAllObservations(principal.getName()));
+    }
+
+    @GET
     @Path("{observation}")
+    @RolesAllowed("Patient")
     public Response getObservationDetails(@PathParam("observation") int id) throws MyEntityNotFoundException {
         Observation observation = observationBean.findObservation(id);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(observation.getPatient().getUsername()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         return Response.ok(toDTO(observation)).build();
     }
 
     @DELETE
     @Path("{observation}")
+    @RolesAllowed("Patient")
     public Response removeObservation(@PathParam("observation") int id) throws MyEntityNotFoundException {
+        Observation observation = observationBean.findObservation(id);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Patient") &&
+                        principal.getName().equals(observation.getPatient().getUsername()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         observationBean.delete(id);
         return Response.ok("Observation deleted!").build();
     }

@@ -8,6 +8,12 @@ import java.util.Date;
 import java.util.Locale;
 
 @Table(name = "observations")
+@NamedQueries(
+        @NamedQuery(
+                name = "getAllObservations",
+                query = "SELECT o FROM Observation o WHERE o.patient.username = :username"
+        )
+)
 @SequenceGenerator(name = "userdata_id", sequenceName = "userdata_id",  initialValue = 1)
 @Entity
 public class Observation {
@@ -21,7 +27,7 @@ public class Observation {
     private Patient patient;
 
     @NotNull
-    private int value;
+    private float value;
 
     @ManyToOne
     @JoinColumn(name = "data_type")
@@ -39,7 +45,7 @@ public class Observation {
     public Observation() {
     }
 
-    public Observation(Patient patient, int value, QuantitativeDataType quantitativeDataType) {
+    public Observation(Patient patient, float value, QuantitativeDataType quantitativeDataType) {
         SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         this.patient = patient;
         this.value = value;
@@ -60,11 +66,11 @@ public class Observation {
         this.patient = patient;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(float value) {
         this.value = value;
     }
 

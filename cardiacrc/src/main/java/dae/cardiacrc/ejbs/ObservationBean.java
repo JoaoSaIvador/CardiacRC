@@ -10,33 +10,36 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
-import java.util.Date;
+import java.util.List;
 
 @Stateless
 public class ObservationBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String patientUsername, int value, int dataTypeId) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException, MyIllegalArgumentException {
+    public void create(String patientUsername, float value, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
         Patient patient =  em.find(Patient.class, patientUsername);
-
         if(patient == null) {
-            throw new MyEntityExistsException("Patient does not exist!");
+            throw new MyEntityNotFoundException("Patient does not exist!");
         }
 
         QuantitativeDataType quantitativeDataType = em.find(QuantitativeDataType.class, dataTypeId);
-
         if(quantitativeDataType == null) {
-            throw new MyEntityExistsException("Data type does not exist!");
+            throw new MyEntityNotFoundException("Data type does not exist!");
         }
 
         try {
+
             Observation observation = new Observation(patient, value, quantitativeDataType);
             em.persist(observation);
             patient.addPatientData(observation);
         } catch (ConstraintViolationException e) {
             throw new MyConstraintViolationException(e);
         }
+    }
+
+    public List<Observation> getAllObservations(String username){
+        return (List<Observation>) em.createNamedQuery("getAllObservations").setParameter("username", username).getResultList();
     }
 
     public Observation findObservation(int id) throws MyEntityNotFoundException {

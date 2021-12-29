@@ -1,0 +1,31 @@
+### Get JWT token (ADMIN)
+POST http://localhost:8080/cardiacrc/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin1",
+  "password": "123456"
+}
+
+### Get JWT token (PROFESSIONAL)
+POST http://localhost:8080/cardiacrc/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "tomasalves",
+  "password": "123456"
+}
+
+### Get JWT token (PATIENT)
+POST http://localhost:8080/cardiacrc/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "joaosalvador",
+  "password": "123456"
+}
+
+### Who am I?
+GET http://localhost:8080/cardiacrc/api/auth/user
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJqYWNrc3BhcnJvdyIsImlzcyI6InF1aWNrc3RhcnQtand0LWlzc3VlciIsImF1ZCI6Imp3dC1hdWRpZW5jZSIsImdyb3VwcyI6WyJBZG1pbmlzdHJhdG9yIl0sImV4cCI6MTY0MDI4OTk3N30.fVbEo5EkpLinvAeYIebh9B_4cSjF6WSjtkecvJlh6-adizs-3F4vY-DBP5tSO5vCjmIhtOmKWgsjYLbAwNteVu-Bf2pXCUI_z9KwDwC17aLsIqya5dprMx2JyLZ4iaqd8o-f-bDuv9qeOQDdPXeccvIMeOHNjo8sHvAxoDd2UZO1ouMhATyVsKoMmvDbhdmmW10AhXYOQGnx8qza3RY-3n-pc_J6ZLKAwJKbeQRIhkKR33ScJce4bS_Z9cqnpISg9wcp6hfG7HDvMeHm6GMf5F07Qal408dFhJs5Vtr1V60MQr5hW6bUS9zioqf2UW2Zne_UTs6hrpx9oU8465Rf0Q

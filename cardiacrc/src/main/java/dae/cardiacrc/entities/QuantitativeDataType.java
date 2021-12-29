@@ -28,10 +28,10 @@ public class QuantitativeDataType implements Serializable {
     private String unit;
 
     @NotNull
-    private int min;
+    private float min;
 
     @NotNull
-    private int max;
+    private float max;
 
     @OneToMany
     private List<QualitativeDataType> dataTypes;
@@ -39,7 +39,7 @@ public class QuantitativeDataType implements Serializable {
     @Version
     private int version;
 
-    public QuantitativeDataType(String name, String unit, int min, int max) {
+    public QuantitativeDataType(String name, String unit, float min, float max) {
         this.name = name;
         this.unit = unit;
         this.min = min;
@@ -71,19 +71,19 @@ public class QuantitativeDataType implements Serializable {
         this.unit = unit;
     }
 
-    public int getMin() {
+    public float getMin() {
         return min;
     }
 
-    public void setMin(int min) {
+    public void setMin(float min) {
         this.min = min;
     }
 
-    public int getMax() {
+    public float getMax() {
         return max;
     }
 
-    public void setMax(int max) {
+    public void setMax(float max) {
         this.max = max;
     }
 
@@ -99,7 +99,7 @@ public class QuantitativeDataType implements Serializable {
         dataTypes.remove(dataType);
     }
 
-    public String getQualitativeDataTypeName(int value){
+    public String getQualitativeDataTypeName(float value){
         String valueName = null;
         if (value < min){
             valueName = String.valueOf(min);

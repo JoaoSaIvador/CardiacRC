@@ -14,6 +14,7 @@ import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -35,6 +36,7 @@ public class ProfessionalService {
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/professionals/”
+    @RolesAllowed("Administrator")
     public List<ProfessionalDTO> getAllProfessionalsWS() {
         return toDTOsSimple(professionalBean.getAllProfessionals());
     }
@@ -77,6 +79,7 @@ public class ProfessionalService {
 
     @POST
     @Path("/")
+    @RolesAllowed("Administrator")
     public Response createNewProfessional (ProfessionalDTO professionalDTO) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
         professionalBean.create(
                 professionalDTO.getUsername(),
@@ -92,11 +95,18 @@ public class ProfessionalService {
     @Path("{username}")
     public Response getProfessionalDetails(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Administrator") ||
+                securityContext.isUserInRole("Professional") && professional.getUsername().equals(principal.getName()))) {
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         return Response.ok(toDTO(professional)).build();
     }
 
     @GET
     @Path("/count")
+    @RolesAllowed("Professional")
     public Response count() throws MyEntityNotFoundException {
         Principal principal = securityContext.getUserPrincipal();
         List total = professionalBean.counts(principal.getName());
@@ -106,7 +116,13 @@ public class ProfessionalService {
     @PUT
     @Path("{username}")
     public Response updateProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Professional professional = professionalBean.findProfessional(username);
         Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Administrator") ||
+                securityContext.isUserInRole("Professional") && professional.getUsername().equals(principal.getName()))) {
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         professionalBean.update(
                     principal.getName(),
                     username,
@@ -120,6 +136,7 @@ public class ProfessionalService {
 
     @DELETE
     @Path("{username}")
+    @RolesAllowed("Administrator")
     public Response deleteProfessional (@PathParam("username") String username) throws MyEntityNotFoundException {
         professionalBean.delete(username);
         return Response.ok("Professional deleted!").build();
@@ -146,6 +163,11 @@ public class ProfessionalService {
     @Path("{username}/prescriptions")
     public Response getProfessionalPrescriptions(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && professional.getUsername().equals(principal.getName()))) {
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         List<PrescriptionDTO> dtos = prescriptionsToDTOs(professional.getPrescriptions());
         return Response.ok(dtos).build();
     }
@@ -167,6 +189,11 @@ public class ProfessionalService {
     @Path("{username}/patients")
     public Response getProfessionalPatients(@PathParam("username") String username) throws MyEntityNotFoundException {
         Professional professional = professionalBean.findProfessional(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && professional.getUsername().equals(principal.getName()))) {
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         List<PatientDTO> dtos = patientsToDTOs(professional.getPatients());
         return Response.ok(dtos).build();
     }

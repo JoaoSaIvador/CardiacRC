@@ -1,21 +1,19 @@
 package dae.cardiacrc.dtos;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 public class ObservationDTO {
     private int id;
     private String patientUsername;
     private String patientName;
-    private int value;
+    private float value;
     private int dataTypeId;
     private String dataTypeName;
     private String date;
+    private String qualitativeName;
+
     public ObservationDTO() {
     }
 
-    public ObservationDTO(int id, String patientUsername, String patientName, int value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
+    public ObservationDTO(int id, String patientUsername, String patientName, float value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
         this.id = id;
         this.patientUsername = patientUsername;
         this.patientName = patientName;
@@ -23,6 +21,7 @@ public class ObservationDTO {
         this.dataTypeId = dataTypeId;
         this.dataTypeName = dataTypeName;
         this.date = date;
+        this.qualitativeName = qualitativeName;
     }
 
     public int getId() {
@@ -49,11 +48,11 @@ public class ObservationDTO {
         this.patientName = patientName;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(float value) {
         this.value = value;
     }
 
@@ -79,5 +78,13 @@ public class ObservationDTO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getQualitativeName() {
+        return qualitativeName;
+    }
+
+    public void setQualitativeName(String qualitativeName) {
+        this.qualitativeName = qualitativeName;
     }
 }

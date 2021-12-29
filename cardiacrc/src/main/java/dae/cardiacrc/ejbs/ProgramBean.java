@@ -49,8 +49,8 @@ public class ProgramBean {
         }
     }
 
-    public List<Program> getAllPrograms(){
-        return (List<Program>) em.createNamedQuery("getAllPrograms").getResultList();
+    public List<Program> getAllPrograms(String username){
+        return (List<Program>) em.createNamedQuery("getAllPrograms").setParameter("username", username).getResultList();
     }
 
     public Program findProgram(int id) throws MyEntityNotFoundException {

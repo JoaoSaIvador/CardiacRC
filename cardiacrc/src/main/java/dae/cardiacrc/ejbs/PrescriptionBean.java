@@ -74,7 +74,7 @@ public class PrescriptionBean {
 
     public void delete(int id) throws MyEntityNotFoundException {
         Prescription prescription = findPrescription(id);
-        Professional professional = em.find(Professional.class, prescription.getProfessional());
+        Professional professional = em.find(Professional.class, prescription.getProfessional().getUsername());
         if(professional == null) {
             throw new MyEntityNotFoundException("Professional not found!");
         }

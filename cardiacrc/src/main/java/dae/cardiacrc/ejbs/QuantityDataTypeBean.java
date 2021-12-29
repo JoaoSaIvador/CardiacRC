@@ -17,7 +17,7 @@ public class QuantityDataTypeBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String name, String unit, int min, int max) throws MyConstraintViolationException {
+    public void create(String name, String unit, float min, float max) throws MyConstraintViolationException {
         try {
             QuantitativeDataType quantitativeDataType = new QuantitativeDataType(name, unit, min, max);
             em.persist(quantitativeDataType);
@@ -38,7 +38,7 @@ public class QuantityDataTypeBean {
         return (List<QuantitativeDataType>) em.createNamedQuery("getAllQuantitativeDataTypes").getResultList();
     }
 
-    public void update(int id, String name, String unit, int min, int max) throws MyEntityNotFoundException {
+    public void update(int id, String name, String unit, float min, float max) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = findDataType(id);
         em.lock(quantitativeDataType, LockModeType.OPTIMISTIC);
         if (name != null){

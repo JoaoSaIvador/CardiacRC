@@ -7,10 +7,14 @@ import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +24,12 @@ import java.util.stream.Collectors;
 public class PrescriptionService {
     @EJB
     private PrescriptionBean prescriptionBean;
+    @Context
+    private SecurityContext securityContext;
 
     @GET
     @Path("/")
+    @RolesAllowed("Administrator")
     public List<PrescriptionDTO> getAllPrescriptionsWS(){
         return toDTOs(prescriptionBean.getAllPrescriptions());
     }
@@ -48,13 +55,20 @@ public class PrescriptionService {
     @Path("{id}")
     public Response getPrescriptionDetails(@PathParam("id") int id) throws MyEntityNotFoundException {
         Prescription prescription = prescriptionBean.findPrescription(id);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Administrator") ||
+                securityContext.isUserInRole("Professional")  && prescription.getProfessional().getUsername().equals(principal.getName()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         return Response.ok(toDTO(prescription)).build();
     }
 
     @POST
     @Path("/")
+    @RolesAllowed("Professional")
     public Response createNewPrescription(PrescriptionDTO prescriptionDTO) throws MyConstraintViolationException, MyEntityNotFoundException, MyEntityExistsException {
-        prescriptionBean.create(prescriptionDTO.getProfessionalUsername(),
+        Principal principal = securityContext.getUserPrincipal();
+        prescriptionBean.create(principal.getName(),
                 prescriptionDTO.getDescription(),
                 prescriptionDTO.getName());
 
@@ -64,6 +78,11 @@ public class PrescriptionService {
     @PUT
     @Path("{id}")
     public Response updatePrescription(@PathParam("id") int id, PrescriptionDTO prescriptionDTO) throws MyEntityNotFoundException {
+        Prescription prescription = prescriptionBean.findPrescription(id);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional")  && prescription.getProfessional().getUsername().equals(principal.getName()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         prescriptionBean.update(id,
                 prescriptionDTO.getProfessionalUsername(),
                 prescriptionDTO.getDescription(),
@@ -75,6 +94,11 @@ public class PrescriptionService {
     @DELETE
     @Path("{id}")
     public Response deletePrecription(@PathParam("id") int id) throws MyEntityNotFoundException {
+        Prescription prescription = prescriptionBean.findPrescription(id);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional")  && prescription.getProfessional().getUsername().equals(principal.getName()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         prescriptionBean.delete(id);
         return Response.ok("Precription deleted!").build();
     }

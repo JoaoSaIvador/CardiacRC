@@ -9,6 +9,7 @@ import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -24,7 +25,8 @@ public class TypeService {
     private TypeBean typeBean;
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
-    @Path("/") // means: the relative url path is “/api/administrators/”
+    @Path("/") // means: the relative url path is “/api/types/”
+    @RolesAllowed({"Administrator","Patient"})
     public List<TypeDTO> getAllAdministratorsWS() {
         return toDTOs(typeBean.getAllTypes());
     }
@@ -44,9 +46,19 @@ public class TypeService {
 
     @POST
     @Path("/")
+    @RolesAllowed("Administrator")
     public Response createNewType (TypeDTO typeDTO) throws MyConstraintViolationException {
         typeBean.create(typeDTO.getName());
 
         return Response.status(Response.Status.CREATED).entity("Type " + typeDTO.getName() + " created!").build();
+    }
+
+    @GET
+    @Path("{type}")
+    @RolesAllowed({"Administrator","Patient"})
+    public Response getTypeDetails(@PathParam("type") int typeId) throws MyEntityNotFoundException {
+        Type type = typeBean.findType(typeId);
+
+        return Response.ok(toDTO(type)).build();
     }
 }

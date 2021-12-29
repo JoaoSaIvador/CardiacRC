@@ -51,6 +51,7 @@ public class ConfigBean {
             prescriptionBean.create("carlossantos","testeFisico","prescricao3");
 
             patientBean.addProfessional("joaosalvador", "tomasalves");
+            patientBean.addProfessional("joaosalvador","carlossantos");
 
             administratorBean.create("jacksparrow", "Jack Sparrow", "123456", "jack.sparrow@mail.com");
             administratorBean.create("admin1", "Admin 1", "123456", "admin1@mail.com");

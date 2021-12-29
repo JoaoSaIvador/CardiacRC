@@ -10,6 +10,7 @@ import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -29,6 +30,7 @@ public class DataTypeService {
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/dataTypes/”
+    @RolesAllowed({"Administrator", "Patient"})
     public List<QuantitativeDataTypeDTO> getAllDataTypesWS() {
         return toDTOs(quantityDataTypeBean.getAllDataTypes());
     }
@@ -76,6 +78,7 @@ public class DataTypeService {
 
     @POST
     @Path("/")
+    @RolesAllowed("Administrator")
     public Response createNewDataType(QuantitativeDataTypeDTO quantitativeDataTypeDTO) throws MyConstraintViolationException {
         quantityDataTypeBean.create(
                 quantitativeDataTypeDTO.getName(),
@@ -87,6 +90,7 @@ public class DataTypeService {
 
     @POST
     @Path("{dataType}/qualitatives")
+    @RolesAllowed("Administrator")
     public Response createNewQualitativeDataType(@PathParam("dataType") int id, QualitativeDataTypeDTO qualitativeDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
         qualitativeDataTypeBean.create(
                 qualitativeDTO.getName(),
@@ -98,6 +102,7 @@ public class DataTypeService {
 
     @GET
     @Path("{dataType}")
+    @RolesAllowed({"Administrator", "Patient"})
     public Response getDataTypeDetails(@PathParam("dataType") int dataTypeId) throws MyEntityNotFoundException {
         QuantitativeDataType dataType = quantityDataTypeBean.findDataType(dataTypeId);
         return Response.ok(toDTO(dataType)).build();
@@ -105,8 +110,8 @@ public class DataTypeService {
 
     @PUT
     @Path("{dataType}")
+    @RolesAllowed("Administrator")
     public Response updateDataType(@PathParam("dataType") int dataTypeId, QuantitativeDataTypeDTO dataTypeDTO) throws MyEntityNotFoundException {
-        System.out.println(dataTypeDTO);
         quantityDataTypeBean.update(
                 dataTypeId,
                 dataTypeDTO.getName(),
@@ -120,6 +125,7 @@ public class DataTypeService {
 
     @PUT
     @Path("{dataType}/qualitatives/{qualitative}")
+    @RolesAllowed("Administrator")
     public Response updateQualitativeDataType(@PathParam("dataType") int dataTypeId, @PathParam("qualitative") int qualitativeId, QualitativeDataTypeDTO qualitativeDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
         qualitativeDataTypeBean.update(
                 dataTypeId,
@@ -133,9 +139,8 @@ public class DataTypeService {
 
     @DELETE
     @Path("{dataType}")
+    @RolesAllowed("Administrator")
     public Response deleteDataType(@PathParam("dataType") int dataTypeId) throws MyEntityNotFoundException {
-        System.out.println(dataTypeId);
-        System.out.println("HELLO IAM HERE");
         quantityDataTypeBean.delete(dataTypeId);
 
         return Response.ok("DataType deleted!").build();
@@ -143,6 +148,7 @@ public class DataTypeService {
 
     @DELETE
     @Path("{dataType}/qualitatives/{qualitative}")
+    @RolesAllowed("Administrator")
     public Response deleteQualitativeDataType(@PathParam("dataType") int dataTypeId, @PathParam("qualitative") int qualitativeId) throws MyEntityNotFoundException, MyIllegalArgumentException {
         qualitativeDataTypeBean.delete(dataTypeId, qualitativeId);
         return Response.ok("Qualitative DataType deleted!").build();

@@ -8,11 +8,11 @@ public class QuantitativeDataTypeDTO implements Serializable {
     private int id;
     private String name;
     private String unit;
-    private int min;
-    private int max;
+    private float min;
+    private float max;
     private List<QualitativeDataTypeDTO> qualitativeDataTypeDTOs;
 
-    public QuantitativeDataTypeDTO(int id, String name, String unit, int min, int max) {
+    public QuantitativeDataTypeDTO(int id, String name, String unit, float min, float max) {
         this.id = id;
         this.name = name;
         this.unit = unit;
@@ -49,19 +49,19 @@ public class QuantitativeDataTypeDTO implements Serializable {
         this.unit = unit;
     }
 
-    public int getMin() {
+    public float getMin() {
         return min;
     }
 
-    public void setMin(int min) {
+    public void setMin(float min) {
         this.min = min;
     }
 
-    public int getMax() {
+    public float getMax() {
         return max;
     }
 
-    public void setMax(int max) {
+    public void setMax(float max) {
         this.max = max;
     }
 

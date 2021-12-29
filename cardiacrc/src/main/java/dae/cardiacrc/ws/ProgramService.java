@@ -4,15 +4,20 @@ import dae.cardiacrc.dtos.PrescriptionDTO;
 import dae.cardiacrc.dtos.ProgramDTO;
 import dae.cardiacrc.ejbs.ProgramBean;
 import dae.cardiacrc.entities.Prescription;
+import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.entities.Program;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +27,8 @@ import java.util.stream.Collectors;
 public class ProgramService {
     @EJB
     private ProgramBean programBean;
+    @Context
+    private SecurityContext securityContext;
 
     // Converts an entity Program to a DTO Program class
     private ProgramDTO toDTO(Program program) {
@@ -76,21 +83,41 @@ public class ProgramService {
 
     @POST
     @Path("/")
+    @RolesAllowed("Professional")
     public Response createNewProgram(ProgramDTO programDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
         programBean.create(programDTO.getDuration(), programDTO.getPatientUsername(), programDTO.getProfessionalUsername(), programDTO.getPrescriptionIds());
         return Response.status(Response.Status.CREATED).entity("Program created!").build();
     }
 
     @GET
+    @Path("/")
+    @RolesAllowed("Professional")
+    public List<ProgramDTO> getAllPrescriptionsWS(){
+        Principal principal = securityContext.getUserPrincipal();
+        return toDTOs(programBean.getAllPrograms(principal.getName()));
+    }
+
+    @GET
     @Path("{program}")
     public Response getProgramDetails(@PathParam("program") int programId) throws MyEntityNotFoundException {
         Program program = programBean.findProgram(programId);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && program.getProfessional().getUsername().equals(principal.getName()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         return Response.ok(toDTO(program)).build();
     }
 
     @PATCH
     @Path("{program}")
     public Response updateProgram(@PathParam("program") int programId, ProgramDTO programDTO) throws MyEntityNotFoundException {
+        Program program = programBean.findProgram(programId);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && program.getProfessional().getUsername().equals(principal.getName()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         programBean.update(programId, programDTO.getDuration());
         return Response.ok("Program updated!").build();
     }
@@ -98,12 +125,19 @@ public class ProgramService {
     @DELETE
     @Path("{program}")
     public Response deleteProgram(@PathParam("program") int programId) throws MyEntityNotFoundException {
+        Program program = programBean.findProgram(programId);
+        Principal principal = securityContext.getUserPrincipal();
+        if(!(securityContext.isUserInRole("Professional") && program.getProfessional().getUsername().equals(principal.getName()))) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         programBean.delete(programId);
         return Response.ok("Program deleted!").build();
     }
 
     @PATCH
     @Path("{program}/addPrescription")
+    @RolesAllowed("Professional")
     public Response addPrescription (@PathParam("program") int programId, PrescriptionDTO prescriptionDTO) throws MyEntityNotFoundException {
         programBean.addPrescription(programId, prescriptionDTO.getId());
         return Response.ok("Prescription added!").build();
@@ -111,6 +145,7 @@ public class ProgramService {
 
     @PATCH
     @Path("{program}/removePrescription")
+    @RolesAllowed("Professional")
     public Response removePrescription (@PathParam("program") int programId, PrescriptionDTO prescriptionDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
         programBean.removePrescription(programId, prescriptionDTO.getId());
         return Response.ok("Prescription added!").build();

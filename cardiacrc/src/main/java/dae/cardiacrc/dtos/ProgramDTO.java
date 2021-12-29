@@ -1,10 +1,8 @@
 package dae.cardiacrc.dtos;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ProgramDTO implements Serializable {
     private int id;
