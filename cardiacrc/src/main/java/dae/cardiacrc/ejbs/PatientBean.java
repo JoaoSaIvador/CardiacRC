@@ -101,7 +101,7 @@ public class PatientBean {
     }
 
     public void delete(String username) throws MyEntityNotFoundException {
-        Patient patient =  findPatient(username);
+        Patient patient = findPatient(username);
 
         for (Professional professional : patient.getProfessionals()) {
             professional.removePatient(patient);

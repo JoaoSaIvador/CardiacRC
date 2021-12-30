@@ -54,7 +54,7 @@ public class ProfessionalBean {
 
     public List counts(String username) throws MyEntityNotFoundException {
         Professional professional = findProfessional(username);
-        return Arrays.asList(professional.getPatients().size(), professional.getPrescriptions().size());
+        return Arrays.asList(professional.getPatients().size(), professional.getPrescriptions().size(), professional.getPrograms().size());
     }
 
     public void update(String authUsername, String professionalUsername, String password, int licenseNumber, String name, String newPassword, String email) throws MyIllegalArgumentException, MyEntityNotFoundException {
