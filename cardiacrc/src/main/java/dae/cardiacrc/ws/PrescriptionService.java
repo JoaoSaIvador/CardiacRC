@@ -46,7 +46,8 @@ public class PrescriptionService {
                 prescription.getDescription(),
                 prescription.getName(),
                 prescription.getType().getId(),
-                prescription.getType().getName()
+                prescription.getType().getName(),
+                prescription.getProgram().getId()
         );
         return prescriptionDTO;
     }
@@ -70,7 +71,8 @@ public class PrescriptionService {
         Principal principal = securityContext.getUserPrincipal();
         prescriptionBean.create(principal.getName(),
                 prescriptionDTO.getDescription(),
-                prescriptionDTO.getName());
+                prescriptionDTO.getName(),
+                prescriptionDTO.getProgramId());
 
         return Response.status(Response.Status.CREATED).entity("Precription " + prescriptionDTO.getName() + " created!").build();
     }

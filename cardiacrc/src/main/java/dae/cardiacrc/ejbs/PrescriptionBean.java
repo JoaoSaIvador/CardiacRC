@@ -3,6 +3,7 @@ package dae.cardiacrc.ejbs;
 import dae.cardiacrc.entities.Patient;
 import dae.cardiacrc.entities.Prescription;
 import dae.cardiacrc.entities.Professional;
+import dae.cardiacrc.entities.Program;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
@@ -19,14 +20,18 @@ public class PrescriptionBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String professionalUsername, String description, String name) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String professionalUsername, String description, String name, int programId) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
         Professional professional =  em.find(Professional.class, professionalUsername);
         if(professional == null) {
             throw new MyEntityNotFoundException("Professional not found!");
         }
+        Program program = em.find(Program.class,programId);
+        if (program == null){
+            throw new MyEntityNotFoundException("Program not found!");
+        }
 
         try {
-            Prescription prescription = new Prescription(professional, description, name, professional.getType());
+            Prescription prescription = new Prescription(professional, description, name, professional.getType(), program);
             professional.addPrescription(prescription);
             em.persist(prescription);
         } catch (ConstraintViolationException e) {

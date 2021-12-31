@@ -8,11 +8,12 @@ public class PrescriptionDTO {
     private String name;
     private int typeId;
     private String typeName;
+    private int programId;
 
     public PrescriptionDTO() {
     }
 
-    public PrescriptionDTO(int id, String professionalUsername, String professionalName, String description, String name, int typeId, String typeName) {
+    public PrescriptionDTO(int id, String professionalUsername, String professionalName, String description, String name, int typeId, String typeName, int programId) {
         this.id = id;
         this.professionalUsername = professionalUsername;
         this.professionalName = professionalName;
@@ -20,6 +21,7 @@ public class PrescriptionDTO {
         this.name = name;
         this.typeId = typeId;
         this.typeName = typeName;
+        this.programId = programId;
     }
 
     public int getId() {
@@ -76,5 +78,13 @@ public class PrescriptionDTO {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public int getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(int programId) {
+        this.programId = programId;
     }
 }

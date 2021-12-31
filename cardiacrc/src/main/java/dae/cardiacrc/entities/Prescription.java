@@ -37,6 +37,7 @@ public class Prescription implements Serializable {
     @OneToOne
     private Type type;
 
+    @NotNull
     @ManyToOne
     private Program program;
 
@@ -46,11 +47,12 @@ public class Prescription implements Serializable {
     public Prescription() {
     }
 
-    public Prescription(Professional professional, String description, String name, Type type) {
+    public Prescription(Professional professional, String description, String name, Type type, Program program) {
         this.professional = professional;
         this.description = description;
         this.name = name;
         this.type = type;
+        this.program = program;
     }
 
     public int getId() {

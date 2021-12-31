@@ -31,6 +31,9 @@ public class ConfigBean {
     @EJB
     QualityDataTypeBean qualityDataTypeBean;
 
+    @EJB
+    ProgramBean programBean;
+
     private static final Logger logger = Logger.getLogger("ejbs.ConfigBean");
 
     @PostConstruct
@@ -46,9 +49,11 @@ public class ConfigBean {
 
             patientBean.create("joaosalvador", 123456789, "João Salvador", "123456", "joao.salvador@mail.com");
 
-            prescriptionBean.create("tomasalves","testeCardiologia", "prescricao1");
-            prescriptionBean.create("marcopolo","testeNutricao","prescricao2");
-            prescriptionBean.create("carlossantos","testeFisico","prescricao3");
+            programBean.create("7","joaosalvador","marcopolo",null);
+
+            prescriptionBean.create("tomasalves","testeCardiologia", "prescricao1",1);
+            prescriptionBean.create("marcopolo","testeNutricao","prescricao2",1);
+            prescriptionBean.create("carlossantos","testeFisico","prescricao3",1);
 
             patientBean.addProfessional("joaosalvador", "tomasalves");
             patientBean.addProfessional("joaosalvador","carlossantos");
