@@ -118,7 +118,10 @@
               <span class="button-text">&nbsp;Associate</span>
             </b-button>
             <b-button
-              v-else
+              v-else-if="
+                group == 'patients' &&
+                $auth.user.groups.includes('Professional')
+              "
               variant="dark"
               class="
                 table-button
@@ -223,6 +226,22 @@ export default {
       this.$axios
         .$patch(`/api/patients/${patientUsername}/addProfessional`, {
           username: this.$auth.user.sub,
+        })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((error) => {
+          //this.errorMsg = error.response.data;
+          //Notification
+        });
+    },
+    disassociatePatient(patientUsername) {
+      this.$axios
+        .$patch(`/api/patients/${patientUsername}/removeProfessional`, {
+          username: this.$auth.user.sub,
+        })
+        .then(() => {
+          window.location.reload();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;
