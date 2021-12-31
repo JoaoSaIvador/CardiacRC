@@ -25,10 +25,10 @@ public class Patient extends Person implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "professional_username", referencedColumnName = "USERNAME"))
     private List<Professional> professionals;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Observation> observations;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Program> programs;
 
     public Patient(String username, int healthNumber, String name, String password, String email) {

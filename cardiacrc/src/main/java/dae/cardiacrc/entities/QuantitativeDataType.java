@@ -33,7 +33,7 @@ public class QuantitativeDataType implements Serializable {
     @NotNull
     private float max;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<QualitativeDataType> dataTypes;
 
     @Version

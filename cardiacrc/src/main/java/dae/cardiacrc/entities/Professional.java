@@ -23,10 +23,10 @@ public class Professional extends Person implements Serializable {
     @ManyToMany(mappedBy = "professionals")
     private List<Patient> patients;
 
-    @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Prescription> prescriptions;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Program> programs;
 
     @NotNull

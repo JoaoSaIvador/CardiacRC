@@ -38,7 +38,7 @@ public class Program implements Serializable {
     @ManyToOne
     private Professional professional;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Prescription> prescriptions;
 
     @Version
