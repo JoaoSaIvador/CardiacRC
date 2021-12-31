@@ -1,163 +1,277 @@
 <template>
-  <div>
-    <b-container class="page-body">
-      <div class="d-md-flex h-md-100">
-        <div class="col-md-6 h-md-100">
-          <div class="d-md-flex h-100">
-            <div>
-              <h2>Details</h2>
-              <form>
-                <div class="patient-info">
-                  <label for="name">Name:</label>
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="name"
-                      :value="patient.name"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="patient-info">
-                  <label for="username">Username:</label>
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="username"
-                      :value="patient.username"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="patient-info">
-                  <label for="email">Email:</label>
-                  <div class="input-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="email"
-                      :value="patient.email"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="patient-info">
-                  <label for="healthNumber">Health Number:</label>
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="healthNumber"
-                      :value="patient.healthNumber"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="patient-info">
-                  <label for="associatedProfessional"
-                    >Associated Professional:</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="associatedProfessional"
-                      :value="patient.associatedProfessional"
-                      readonly
-                    />
-                  </div>
-                </div>
-              </form>
-              <div>
-                <nuxt-link
-                  :to="`/patients/${patient.username}/update`"
-                  class="btn btn-primary"
-                  >Update</nuxt-link
-                >
-              </div>
-            </div>
+  <div
+    class="
+      h-auto
+      d-flex
+      flex-row
+      align-items-start
+      justify-content-center
+      flex-wrap
+    "
+  >
+    <div class="mt-5 mr-5" v-if="patient && observations && programs">
+      <b-container
+        class="
+          page-content
+          d-flex
+          flex-column
+          align-items-center
+          justify-content-center
+          bg-light
+        "
+      >
+        <h2 class="main-title text-center">Account Details</h2>
+        <form>
+          <div class="main-input">
+            <b-form-group id="name" label="Name:" label-for="name">
+              <b-input id="name" :value="patient.name" readonly></b-input>
+            </b-form-group>
           </div>
-        </div>
 
-        <div class="col-md-6 h-md-100">
-          <div class="d-md-flex h-md-100">
-            <h2 class="mb-3">Biomedical Data</h2>
+          <div class="main-input">
+            <b-form-group id="username" label="Username:" label-for="username">
+              <b-input
+                id="username"
+                :value="patient.username"
+                readonly
+              ></b-input>
+            </b-form-group>
           </div>
-          <div class="d-md-flex h-md-100">
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-              <b-table
-                v-if="patientData.length > 0"
-                striped
-                over
-                outlined
-                :items="patientData"
-                :fields="patientDataFields"
-                class="mt-3"
-                style="width: 525px"
-              />
-              <p v-else>No patient data found.</p>
-            </div>
-          </div>
-          <div>
-            <nuxt-link
-              :to="`/patients/${patient.username}/createData`"
-              class="btn btn-primary"
-              >Insert</nuxt-link
-            >
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 order-md-1">
-        <h2 class="mb-3">Active Prescriptions</h2>
-        <b-table
-          v-if="activePrescriptions.length > 0"
-          striped
-          over
-          outlined
-          :items="activePrescriptions"
-          :fields="prescriptionFields"
-          class="mt-3"
-        >
-          <template v-slot:cell(actions)="row">
-            <nuxt-link
-              class="btn btn-primary btn-xs"
-              :to="`/prescriptions/${row.item.id}/details`"
-            >
-              <fa :icon="['fas', 'clipboard-list']" />
-            </nuxt-link>
-          </template>
-        </b-table>
-        <p v-else>No active prescriptions.</p>
-      </div>
 
-      <div class="col-md-12 order-md-1">
-        <h2 class="mb-3">Inactive Prescriptions</h2>
-        <b-table
-          v-if="inactivePrescriptions.length > 0"
-          striped
-          over
-          outlined
-          :items="inactivePrescriptions"
-          :fields="prescriptionFields"
-          class="mt-3"
-        >
-          <template v-slot:cell(actions)="row">
-            <nuxt-link
-              class="btn btn-primary btn-xs"
-              :to="`/prescriptions/${row.item.id}/details`"
+          <div class="main-input">
+            <b-form-group id="email" label="Email:" label-for="email">
+              <b-input id="email" :value="patient.email" readonly></b-input>
+            </b-form-group>
+          </div>
+
+          <div class="main-input">
+            <b-form-group
+              id="healthNumber"
+              label="Health Number:"
+              label-for="healthNumber"
             >
-              <fa :icon="['fas', 'clipboard-list']" />
-            </nuxt-link>
-          </template>
-        </b-table>
-        <p v-else>No inactive prescriptions.</p>
-      </div>
-      <b-container>
-        <nuxt-link to="/patients" class="btn btn-primary">Back</nuxt-link>
+              <b-input
+                id="healthNumber"
+                :value="patient.healthNumber"
+                readonly
+              ></b-input>
+            </b-form-group>
+          </div>
+
+          <div class="d-flex flex-row justify-content-center">
+            <b-button
+              class="main-button"
+              variant="dark"
+              :to="`/patients/${patient.username}/update`"
+            >
+              Update
+            </b-button>
+          </div>
+        </form>
       </b-container>
-    </b-container>
+    </div>
+
+    <div class="d-flex flex-column justify-content-around my-5">
+      <b-container
+        class="d-flex align-items-center"
+        v-if="patient && observations && programs"
+      >
+        <b-container
+          class="page-content-xl d-flex flex-column align-items-center bg-light"
+        >
+          <h1>Manage Observations</h1>
+          <div
+            class="
+              w-100
+              d-flex
+              flex-row
+              justify-content-between
+              align-items-center
+              mb-3
+            "
+          >
+            <div>
+              <b-button variant="dark" :to="`observations/create`">
+                Create
+              </b-button>
+            </div>
+            <div v-if="observations.length > 0">
+              <b-form-group style="margin: 0">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="filter-input"
+                    v-model="filter"
+                    type="search"
+                    placeholder="Type to Search"
+                  ></b-form-input>
+
+                  <b-input-group-append>
+                    <b-button
+                      variant="dark"
+                      :disabled="!filter"
+                      @click="filter = ''"
+                      >Clear</b-button
+                    >
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </div>
+            <b-pagination
+              v-if="observations.length > 0"
+              v-model="currentPage"
+              :total-rows="observations.length"
+              :per-page="perPage"
+              class="m-0"
+            />
+          </div>
+          <b-table
+            v-if="observations.length > 0"
+            striped
+            hover
+            bordered
+            head-variant="dark"
+            :items="observations"
+            :fields="fields"
+            :current-page="currentPageObservations"
+            :per-page="perPage"
+            :filter="filter"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            small
+          >
+            <template v-slot:cell(actions)="row">
+              <div class="d-flex flex-row justify-content-center">
+                <b-button
+                  variant="success"
+                  class="
+                    table-button
+                    d-flex
+                    align-items-center
+                    justify-content-center
+                  "
+                  :to="`observations/${row.item.id}/details`"
+                >
+                  <fa :icon="['fas', 'clipboard-list']" />
+                </b-button>
+                <b-button
+                  variant="primary"
+                  class="
+                    table-button
+                    d-flex
+                    align-items-center
+                    justify-content-center
+                  "
+                  :to="`observations/${row.item.id}/update`"
+                >
+                  <fa :icon="['fas', 'pen']" />
+                </b-button>
+                <b-button
+                  variant="danger"
+                  class="
+                    table-button
+                    d-flex
+                    align-items-center
+                    justify-content-center
+                  "
+                  @click.prevent="showConfirmation(row.item.id)"
+                >
+                  <fa :icon="['fas', 'trash']" />
+                </b-button>
+              </div>
+            </template>
+          </b-table>
+          <p v-else>No observations.</p>
+          <DeleteConfirmation
+            v-show="isShowConfirmation"
+            @closeModal="isShowConfirmation = false"
+            @confirm="confirm"
+          />
+        </b-container>
+      </b-container>
+
+      <b-container
+        class="d-flex align-items-center mt-5"
+        v-if="patient && observations && programs"
+      >
+        <b-container
+          class="page-content-xl d-flex flex-column align-items-center bg-light"
+        >
+          <h1>Manage Programs</h1>
+          <div
+            class="
+              w-100
+              d-flex
+              flex-row
+              justify-content-between
+              align-items-center
+              mb-3
+            "
+          >
+            <div v-if="programs.length > 0">
+              <b-form-group style="margin: 0">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="filter-input"
+                    v-model="filter"
+                    type="search"
+                    placeholder="Type to Search"
+                  ></b-form-input>
+
+                  <b-input-group-append>
+                    <b-button
+                      variant="dark"
+                      :disabled="!filter"
+                      @click="filter = ''"
+                      >Clear</b-button
+                    >
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </div>
+            <b-pagination
+              v-if="programs.length > 0"
+              v-model="currentPage"
+              :total-rows="programs.length"
+              :per-page="perPage"
+              class="m-0"
+            />
+          </div>
+          <b-table
+            v-if="programs.length > 0"
+            striped
+            hover
+            bordered
+            head-variant="dark"
+            :items="programs"
+            :fields="fields"
+            :current-page="currentPagePrograms"
+            :per-page="perPage"
+            :filter="filter"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            small
+          >
+            <template v-slot:cell(actions)="row">
+              <div class="d-flex flex-row justify-content-center">
+                <b-button
+                  variant="success"
+                  class="
+                    table-button
+                    d-flex
+                    align-items-center
+                    justify-content-center
+                  "
+                  :to="`programs/${row.item.id}/details`"
+                >
+                  <fa :icon="['fas', 'clipboard-list']" />
+                </b-button>
+              </div>
+            </template>
+          </b-table>
+          <p v-else>No programs.</p>
+        </b-container>
+      </b-container>
+    </div>
   </div>
 </template>
 
@@ -166,52 +280,63 @@ export default {
   middleware: "patientSelf",
   data() {
     return {
-      patient: {},
-      professional: {},
-      prescriptionFields: ["id", "name", "duration", "actions"],
-      patientDataFields: ["id", "value", "dataType", "date"],
+      patient: null,
+      observations: null,
+      programs: null,
+      observationFields: [
+        { key: "id", sortable: true },
+        { key: "value", sortable: true },
+        { key: "dataTypeName", sortable: true },
+        { key: "qualitativeName", sortable: true },
+        { key: "date", sortable: true },
+        { key: "actions", sortable: false },
+      ],
+      programFields: [
+        { key: "id", sortable: true },
+        { key: "duration", sortable: true },
+        { key: "startDate", sortable: true },
+        { key: "professionalUsername", sortable: true },
+        { key: "patientUsername", sortable: true },
+        { key: "actions", sortable: false },
+      ],
+      sortBy: "id",
+      currentPageObservations: 1,
+      currentPagePrograms: 1,
+      perPage: 10,
+      sortDesc: false,
+      filter: null,
+      isShowConfirmation: false,
+      affectedLine: null,
     };
   },
   computed: {
     username() {
       return this.$route.params.username;
     },
-    activePrescriptions() {
-      return this.patient.activePrescriptionDTOs || [];
-    },
-    inactivePrescriptions() {
-      return this.patient.inactivePrescriptionDTOs || [];
-    },
-    patientData() {
-      return this.patient.patientData || [];
-    },
   },
   created() {
     this.$axios
       .$get(`/api/patients/${this.username}`)
       .then((patient) => (this.patient = patient || {}));
+
+    this.$axios
+      .$get(`/api/patients/${this.username}/observations`)
+      .then((observations) => (this.observations = observations || {}));
+
+    this.$axios
+      .$get(`/api/patients/${this.username}/programs`)
+      .then((programs) => (this.programs = programs || {}));
   },
-  methods: {},
+  methods: {
+    showConfirmation(affectedLine) {
+      this.isShowConfirmation = true;
+      this.affectedLine = affectedLine;
+    },
+    confirm(confirmation) {
+      if (confirmation) {
+        //this.$emit("delete", this.affectedLine);
+      }
+    },
+  },
 };
 </script>
-
-<style scoped>
-.page-body {
-  padding-bottom: 50px;
-}
-
-.patient-info {
-  width: 300px;
-  margin-bottom: 10px;
-}
-
-.my-custom-scrollbar {
-  position: relative;
-  max-height: 380px;
-  overflow: auto;
-  margin-bottom: 10px;
-}
-.table-wrapper-scroll-y {
-  display: block;
-}
-</style>

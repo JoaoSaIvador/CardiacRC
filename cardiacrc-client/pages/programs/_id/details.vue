@@ -129,6 +129,7 @@
 
 <script>
 export default {
+  middleware: "professional",
   data() {
     return {
       program: null,
