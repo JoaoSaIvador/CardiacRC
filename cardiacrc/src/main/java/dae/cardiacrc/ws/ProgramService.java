@@ -84,7 +84,6 @@ public class ProgramService {
 
     @POST
     @Path("/")
-    @RolesAllowed("Professional")
     public Response createNewProgram(ProgramDTO programDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
         programBean.create(programDTO.getDuration(), programDTO.getPatientUsername(), programDTO.getProfessionalUsername(), programDTO.getPrescriptionIds());
         return Response.status(Response.Status.CREATED).entity("Program created!").build();
@@ -93,7 +92,7 @@ public class ProgramService {
     @GET
     @Path("/")
     @RolesAllowed("Professional")
-    public List<ProgramDTO> getAllPrescriptionsWS(){
+    public List<ProgramDTO> getAllPrograms(){
         Principal principal = securityContext.getUserPrincipal();
         return toDTOs(programBean.getAllPrograms(principal.getName()));
     }
@@ -103,7 +102,7 @@ public class ProgramService {
     public Response getProgramDetails(@PathParam("program") int programId) throws MyEntityNotFoundException {
         Program program = programBean.findProgram(programId);
         Principal principal = securityContext.getUserPrincipal();
-        if(!(securityContext.isUserInRole("Professional") && program.getProfessional().getUsername().equals(principal.getName()))) {
+        if(!(securityContext.isUserInRole("Professional") || securityContext.isUserInRole("Patient") && program.getPatient().getUsername().equals(principal.getName()))) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
 
