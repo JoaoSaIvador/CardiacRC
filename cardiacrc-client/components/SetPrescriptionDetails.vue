@@ -38,6 +38,7 @@
           >
             <b-input
               id="frequency"
+              type="number"
               placeholder="Enter a frequency"
               v-model.trim="localPrescription.frequency"
               :state="isFrequencyValid"

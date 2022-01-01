@@ -23,6 +23,7 @@
               <b-input
                 id="duration"
                 placeholder="Enter a duration"
+                type="number"
                 v-model.trim="program.duration"
                 :state="isDurationValid"
               ></b-input>
