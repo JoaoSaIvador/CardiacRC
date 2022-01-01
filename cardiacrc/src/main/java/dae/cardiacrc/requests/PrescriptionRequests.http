@@ -7,7 +7,9 @@ Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ0b21hc2Fsd
 
 {
   "description": "Got milk?",
-  "name": "Drink"
+  "name": "Drink",
+  "frequency": "FOREVER",
+  "programId": 1
 }
 
 ### GET ALL PRESCRIPTIONS

@@ -11,6 +11,10 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "getAllPatients",
+                query = "SELECT p FROM Patient p WHERE p.deleted = false ORDER BY p.name"
+        ),
+        @NamedQuery(
+                name = "getPatients",
                 query = "SELECT p FROM Patient p ORDER BY p.name"
         )
 })

@@ -9,11 +9,12 @@ public class PrescriptionDTO {
     private int typeId;
     private String typeName;
     private int programId;
+    private String frequency;
 
     public PrescriptionDTO() {
     }
 
-    public PrescriptionDTO(int id, String professionalUsername, String professionalName, String description, String name, int typeId, String typeName, int programId) {
+    public PrescriptionDTO(int id, String professionalUsername, String professionalName, String description, String name, int typeId, String typeName, int programId, String frequency) {
         this.id = id;
         this.professionalUsername = professionalUsername;
         this.professionalName = professionalName;
@@ -22,6 +23,7 @@ public class PrescriptionDTO {
         this.typeId = typeId;
         this.typeName = typeName;
         this.programId = programId;
+        this.frequency = frequency;
     }
 
     public int getId() {
@@ -86,5 +88,13 @@ public class PrescriptionDTO {
 
     public void setProgramId(int programId) {
         this.programId = programId;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 }

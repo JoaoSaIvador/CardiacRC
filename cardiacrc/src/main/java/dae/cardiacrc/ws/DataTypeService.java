@@ -13,8 +13,11 @@ import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +31,20 @@ public class DataTypeService {
     @EJB
     private QualityDataTypeBean qualitativeDataTypeBean;
 
+    @Context
+    private SecurityContext securityContext;
+
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/dataTypes/”
     @RolesAllowed({"Administrator", "Patient"})
     public List<QuantitativeDataTypeDTO> getAllDataTypesWS() {
-        return toDTOs(quantityDataTypeBean.getAllDataTypes());
+        Principal principal = securityContext.getUserPrincipal();
+        if (securityContext.isUserInRole("Administrator")) {
+            return toDTOs(quantityDataTypeBean.getAllDataTypes("full"));
+        }
+        else {
+            return toDTOs(quantityDataTypeBean.getAllDataTypes(null));
+        }
     }
 
     private List<QuantitativeDataTypeDTO> toDTOs(List<QuantitativeDataType> dataTypes) {
@@ -45,7 +57,8 @@ public class DataTypeService {
                 quantitativeDataType.getName(),
                 quantitativeDataType.getUnit(),
                 quantitativeDataType.getMin(),
-                quantitativeDataType.getMax()
+                quantitativeDataType.getMax(),
+                quantitativeDataType.isDeleted()
         );
     }
 
@@ -55,7 +68,8 @@ public class DataTypeService {
                 quantitativeDataType.getName(),
                 quantitativeDataType.getUnit(),
                 quantitativeDataType.getMin(),
-                quantitativeDataType.getMax()
+                quantitativeDataType.getMax(),
+                quantitativeDataType.isDeleted()
         );
 
         List<QualitativeDataTypeDTO> qualitativeTypes = qualitativeTypesDTOs(quantitativeDataType.getDataTypes());

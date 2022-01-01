@@ -32,7 +32,7 @@ public class AdministratorBean {
     }
 
     public void create(String username, String name, String password, String email) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
-        Administrator administrator =  em.find(Administrator.class, username);
+        Person administrator =  em.find(Person.class, username);
 
         if(administrator != null) {
             throw new MyEntityExistsException("Administrator already exists!");

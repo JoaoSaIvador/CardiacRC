@@ -31,7 +31,7 @@ public class Prescription implements Serializable {
     private String name;
 
     @NotNull
-    private int frequency;
+    private String frequency;
 
     @NotNull
     @OneToOne
@@ -47,12 +47,13 @@ public class Prescription implements Serializable {
     public Prescription() {
     }
 
-    public Prescription(Professional professional, String description, String name, Type type, Program program) {
+    public Prescription(Professional professional, String description, String name, Type type, Program program, String frequency) {
         this.professional = professional;
         this.description = description;
         this.name = name;
         this.type = type;
         this.program = program;
+        this.frequency = frequency;
     }
 
     public int getId() {
@@ -95,11 +96,11 @@ public class Prescription implements Serializable {
         this.type = type;
     }
 
-    public int getFrequency() {
+    public String getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(int frequency) {
+    public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
 

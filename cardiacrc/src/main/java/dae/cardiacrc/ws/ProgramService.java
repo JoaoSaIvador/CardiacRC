@@ -74,7 +74,8 @@ public class ProgramService {
                 prescription.getName(),
                 prescription.getType().getId(),
                 prescription.getType().getName(),
-                prescription.getProgram().getId()
+                prescription.getProgram().getId(),
+                prescription.getFrequency()
         );
     }
 

@@ -23,10 +23,10 @@ public class QualitativeDataType implements Serializable {
     private String name;
 
     @NotNull
-    private float min;
+    private double min;
 
     @NotNull
-    private float max;
+    private double max;
 
     @ManyToOne
     @JoinColumn(name = "quantitativeDataType")
@@ -39,7 +39,7 @@ public class QualitativeDataType implements Serializable {
     public QualitativeDataType() {
     }
 
-    public QualitativeDataType(String name, float min, float max, QuantitativeDataType quantitativeDataType) {
+    public QualitativeDataType(String name, double min, double max, QuantitativeDataType quantitativeDataType) {
         this.name = name;
         this.min = min;
         this.max = max;
@@ -58,19 +58,19 @@ public class QualitativeDataType implements Serializable {
         this.name = name;
     }
 
-    public float getMin() {
+    public double getMin() {
         return min;
     }
 
-    public void setMin(float min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public float getMax() {
+    public double getMax() {
         return max;
     }
 
-    public void setMax(float max) {
+    public void setMax(double max) {
         this.max = max;
     }
 

@@ -17,7 +17,7 @@ public class QuantityDataTypeBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String name, String unit, float min, float max) throws MyConstraintViolationException {
+    public void create(String name, String unit, double min, double max) throws MyConstraintViolationException {
         try {
             QuantitativeDataType quantitativeDataType = new QuantitativeDataType(name, unit, min, max);
             em.persist(quantitativeDataType);
@@ -28,17 +28,22 @@ public class QuantityDataTypeBean {
 
     public QuantitativeDataType findDataType(int id) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = em.find(QuantitativeDataType.class, id);
-        if (quantitativeDataType == null){
+        if (quantitativeDataType == null || quantitativeDataType.isDeleted()){
             throw new MyEntityNotFoundException("DataType not found!");
         }
         return quantitativeDataType;
     }
 
-    public List<QuantitativeDataType> getAllDataTypes(){
-        return (List<QuantitativeDataType>) em.createNamedQuery("getAllQuantitativeDataTypes").getResultList();
+    public List<QuantitativeDataType> getAllDataTypes(String type){
+        if (type.equals("full")){
+            return (List<QuantitativeDataType>) em.createNamedQuery("getAllQuantitativeDataTypes").getResultList();
+        }
+        else {
+            return (List<QuantitativeDataType>) em.createNamedQuery("getQuantitativeDataTypes").getResultList();
+        }
     }
 
-    public void update(int id, String name, String unit, float min, float max) throws MyEntityNotFoundException {
+    public void update(int id, String name, String unit, double min, double max) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = findDataType(id);
         em.lock(quantitativeDataType, LockModeType.OPTIMISTIC);
         if (name != null){
@@ -58,10 +63,18 @@ public class QuantityDataTypeBean {
 
     public void delete(int id) throws MyEntityNotFoundException {
         QuantitativeDataType quantitativeDataType = findDataType(id);
-        for (QualitativeDataType qualitativeDataType : quantitativeDataType.getDataTypes()) {
-            em.remove(qualitativeDataType);
+        if (quantitativeDataType.getObservations().isEmpty()){
+            //NORMAL DELETE
+            for (QualitativeDataType qualitativeDataType : quantitativeDataType.getDataTypes()) {
+                em.remove(qualitativeDataType);
+            }
+            em.remove(quantitativeDataType);
         }
-
-        em.remove(quantitativeDataType);
+        else {
+            //SOFTDELETE
+            em.lock(quantitativeDataType,LockModeType.OPTIMISTIC);
+            quantitativeDataType.setDeleted(true);
+            em.merge(quantitativeDataType);
+        }
     }
 }

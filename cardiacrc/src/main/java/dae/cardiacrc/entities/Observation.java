@@ -27,7 +27,7 @@ public class Observation {
     private Patient patient;
 
     @NotNull
-    private float value;
+    private double value;
 
     @ManyToOne
     @JoinColumn(name = "data_type")
@@ -45,7 +45,7 @@ public class Observation {
     public Observation() {
     }
 
-    public Observation(Patient patient, float value, QuantitativeDataType quantitativeDataType) {
+    public Observation(Patient patient, double value, QuantitativeDataType quantitativeDataType) {
         SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         this.patient = patient;
         this.value = value;
@@ -66,11 +66,11 @@ public class Observation {
         this.patient = patient;
     }
 
-    public float getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

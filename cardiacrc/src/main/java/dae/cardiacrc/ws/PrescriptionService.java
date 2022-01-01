@@ -39,7 +39,7 @@ public class PrescriptionService {
     }
 
     private PrescriptionDTO toDTO(Prescription prescription) {
-        PrescriptionDTO prescriptionDTO = new PrescriptionDTO(
+        return new PrescriptionDTO(
                 prescription.getId(),
                 prescription.getProfessional().getUsername(),
                 prescription.getProfessional().getName(),
@@ -47,9 +47,9 @@ public class PrescriptionService {
                 prescription.getName(),
                 prescription.getType().getId(),
                 prescription.getType().getName(),
-                prescription.getProgram().getId()
+                prescription.getProgram().getId(),
+                prescription.getFrequency()
         );
-        return prescriptionDTO;
     }
 
     @GET
@@ -72,7 +72,8 @@ public class PrescriptionService {
         prescriptionBean.create(principal.getName(),
                 prescriptionDTO.getDescription(),
                 prescriptionDTO.getName(),
-                prescriptionDTO.getProgramId());
+                prescriptionDTO.getProgramId(),
+                prescriptionDTO.getFrequency());
 
         return Response.status(Response.Status.CREATED).entity("Precription " + prescriptionDTO.getName() + " created!").build();
     }

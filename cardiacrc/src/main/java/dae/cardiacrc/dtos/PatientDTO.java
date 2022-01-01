@@ -14,6 +14,7 @@ public class PatientDTO {
     private List<PrescriptionDTO> inactivePrescriptionDTOs;
     private List<ObservationDTO> observationDTOS;
     private String passwordConfirmation;
+    private boolean deleted;
 
     public PatientDTO() {
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
@@ -21,11 +22,12 @@ public class PatientDTO {
         this.observationDTOS = new ArrayList<ObservationDTO>();
     }
 
-    public PatientDTO(String username, String name, String email, int healthNumber) {
+    public PatientDTO(String username, String name, String email, int healthNumber, boolean deleted) {
         this.username = username;
         this.name = name;
         this.email = email;
         this.healthNumber = healthNumber;
+        this.deleted = deleted;
         this.professionalDTOs = new ArrayList<ProfessionalDTO>();
         this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
@@ -56,14 +58,6 @@ public class PatientDTO {
         return professionalDTOs;
     }
 
-    public List<PrescriptionDTO> getActivePrescriptionDTOs() {
-        return activePrescriptionDTOs;
-    }
-
-    public List<PrescriptionDTO> getInactivePrescriptionDTOs() {
-        return inactivePrescriptionDTOs;
-    }
-
     public List<ObservationDTO> getPatientDataDTOS() {
         return observationDTOS;
     }
@@ -92,23 +86,27 @@ public class PatientDTO {
         this.professionalDTOs = professionalDTOs;
     }
 
-    public void setActivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
-        this.activePrescriptionDTOs = prescriptionDTOs;
-    }
-
-    public void setInactivePrescriptionDTOs(List<PrescriptionDTO> prescriptionDTOs) {
-        this.inactivePrescriptionDTOs = prescriptionDTOs;
-    }
-
-    public void setPatientDataDTOS(List<ObservationDTO> observationDTOS) {
-        this.observationDTOS = observationDTOS;
-    }
-
     public String getPasswordConfirmation() {
         return passwordConfirmation;
     }
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public List<ObservationDTO> getObservationDTOS() {
+        return observationDTOS;
+    }
+
+    public void setObservationDTOS(List<ObservationDTO> observationDTOS) {
+        this.observationDTOS = observationDTOS;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

@@ -49,7 +49,8 @@ public class ProfessionalService {
                 professional.getEmail(),
                 professional.getLicenseNumber(),
                 professional.getType().getId(),
-                professional.getType().getName()
+                professional.getType().getName(),
+                professional.isDeleted()
         );
     }
 
@@ -65,7 +66,8 @@ public class ProfessionalService {
                 professional.getEmail(),
                 professional.getLicenseNumber(),
                 professional.getType().getId(),
-                professional.getType().getName()
+                professional.getType().getName(),
+                professional.isDeleted()
         );
 
         List<PatientDTO> patientDTOS = patientsToDTOs(professional.getPatients());
@@ -152,7 +154,8 @@ public class ProfessionalService {
                 prescription.getName(),
                 prescription.getType().getId(),
                 prescription.getType().getName(),
-                prescription.getProgram().getId()
+                prescription.getProgram().getId(),
+                prescription.getFrequency()
         );
     }
 
@@ -178,7 +181,8 @@ public class ProfessionalService {
                 patient.getUsername(),
                 patient.getName(),
                 patient.getEmail(),
-                patient.getHealthNumber()
+                patient.getHealthNumber(),
+                patient.isDeleted()
         );
     }
 

@@ -12,6 +12,10 @@ import java.util.List;
         @NamedQuery(
                 name = "getAllQuantitativeDataTypes",
                 query = "SELECT d FROM QuantitativeDataType d ORDER BY d.name"
+        ),
+        @NamedQuery(
+                name = "getQuantitativeDataTypes",
+                query = "SELECT d FROM QuantitativeDataType d WHERE d.deleted = false ORDER BY d.name"
         )
 })
 @SequenceGenerator(name = "quantitativedatatype_id", sequenceName = "quantitativedatatype_id",  initialValue = 1)
@@ -28,27 +32,35 @@ public class QuantitativeDataType implements Serializable {
     private String unit;
 
     @NotNull
-    private float min;
+    private double min;
 
     @NotNull
-    private float max;
+    private double max;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Observation> observations;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<QualitativeDataType> dataTypes;
 
+    private boolean deleted;
+
     @Version
     private int version;
 
-    public QuantitativeDataType(String name, String unit, float min, float max) {
+    public QuantitativeDataType(String name, String unit, double min, double max) {
         this.name = name;
         this.unit = unit;
         this.min = min;
         this.max = max;
+        deleted = false;
         dataTypes = new ArrayList<QualitativeDataType>();
+        observations = new ArrayList<Observation>();
     }
 
     public QuantitativeDataType() {
         dataTypes = new ArrayList<QualitativeDataType>();
+        observations = new ArrayList<Observation>();
     }
 
     public int getId() {
@@ -71,24 +83,28 @@ public class QuantitativeDataType implements Serializable {
         this.unit = unit;
     }
 
-    public float getMin() {
+    public double getMin() {
         return min;
     }
 
-    public void setMin(float min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public float getMax() {
+    public double getMax() {
         return max;
     }
 
-    public void setMax(float max) {
+    public void setMax(double max) {
         this.max = max;
     }
 
     public List<QualitativeDataType> getDataTypes() {
         return dataTypes;
+    }
+
+    public List<Observation> getObservations() {
+        return observations;
     }
 
     public void addQualityDataType(QualitativeDataType dataType) {
@@ -99,7 +115,7 @@ public class QuantitativeDataType implements Serializable {
         dataTypes.remove(dataType);
     }
 
-    public String getQualitativeDataTypeName(float value){
+    public String getQualitativeDataTypeName(double value){
         String valueName = null;
         if (value < min){
             valueName = String.valueOf(min);
@@ -114,5 +130,13 @@ public class QuantitativeDataType implements Serializable {
             }
         }
         return valueName;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

@@ -15,6 +15,7 @@ public class ProfessionalDTO {
     private int type;
     private String typeName;
     private String passwordConfirmation;
+    private boolean deleted;
 
     public ProfessionalDTO() {
         this.prescriptionsDTOs = new ArrayList<PrescriptionDTO>();
@@ -22,13 +23,14 @@ public class ProfessionalDTO {
         this.patientDTOS = new ArrayList<PatientDTO>();
     }
 
-    public ProfessionalDTO(String username, String name, String email, int licenseNumber, int type, String typeName) {
+    public ProfessionalDTO(String username, String name, String email, int licenseNumber, int type, String typeName, boolean deleted) {
         this.username = username;
         this.name = name;
         this.email = email;
         this.licenseNumber = licenseNumber;
         this.type = type;
         this.typeName = typeName;
+        this.deleted = deleted;
         this.prescriptionsDTOs = new ArrayList<PrescriptionDTO>();
         this.programsDTOs = new ArrayList<ProgramDTO>();
         this.patientDTOS = new ArrayList<PatientDTO>();
@@ -122,4 +124,11 @@ public class ProfessionalDTO {
         this.passwordConfirmation = passwordConfirmation;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }

@@ -22,7 +22,7 @@ public class ProfessionalBean {
     private EntityManager em;
 
     public void create(String username, int licenseNumber, String name, String password, String email, int typeId) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
-        Professional professional =  em.find(Professional.class, username);
+        Person professional =  em.find(Person.class, username);
         if(professional != null) {
             throw new MyEntityExistsException("Professional already exists!");
         }
@@ -46,7 +46,7 @@ public class ProfessionalBean {
 
     public Professional findProfessional(String username) throws MyEntityNotFoundException {
         Professional professional = em.find(Professional.class, username);
-        if(professional == null) {
+        if(professional == null || professional.isDeleted()) {
             throw new MyEntityNotFoundException("Professional not found!");
         }
         return professional;
@@ -82,6 +82,12 @@ public class ProfessionalBean {
 
     public void delete(String username) throws MyEntityNotFoundException {
         Professional professional = findProfessional(username);
-        em.remove(professional);
+
+        //SOFT DELETE
+        em.lock(professional, LockModeType.OPTIMISTIC);
+        professional.setDeleted(true);
+        em.merge(professional);
+
+//        em.remove(professional);
     }
 }

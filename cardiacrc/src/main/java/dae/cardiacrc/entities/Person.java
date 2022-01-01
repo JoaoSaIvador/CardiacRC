@@ -35,11 +35,14 @@ public class Person implements Serializable {
     @Version
     private int version;
 
+    private boolean deleted;
+
     public Person(String username, String name, String password, String email) {
         this.username = username;
         this.name = name;
         this.password = hashPassword(password);
         this.email = email;
+        deleted = false;
     }
 
     public Person() {
@@ -91,4 +94,11 @@ public class Person implements Serializable {
         return new String(encoded);
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }

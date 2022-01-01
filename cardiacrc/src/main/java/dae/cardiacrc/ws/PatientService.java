@@ -28,20 +28,14 @@ public class PatientService {
     @Context
     private SecurityContext securityContext;
 
-    @GET // means: to call this endpoint, we need to use the HTTP GET method
-    @Path("/") // means: the relative url path is “/api/patients/”
-    @RolesAllowed({"Administrator","Professional"})
-    public List<PatientDTO> getAllPatientsWS() {
-        return toDTOsSimple(patientBean.getAllPatients());
-    }
-
     // Converts an entity Patient to a DTO Patient class
     private PatientDTO toDTOSimple(Patient patient) {
         return new PatientDTO(
                 patient.getUsername(),
                 patient.getName(),
                 patient.getEmail(),
-                patient.getHealthNumber()
+                patient.getHealthNumber(),
+                patient.isDeleted()
         );
     }
 
@@ -56,11 +50,12 @@ public class PatientService {
                 patient.getUsername(),
                 patient.getName(),
                 patient.getEmail(),
-                patient.getHealthNumber()
+                patient.getHealthNumber(),
+                patient.isDeleted()
         );
 
         patientDTO.setProfessionalDTOs(professionalToDTOs(patient.getProfessionals()));
-        patientDTO.setPatientDataDTOS(patientDataToDTOs(patient.getPatientObservations()));
+        patientDTO.setObservationDTOS(patientDataToDTOs(patient.getPatientObservations()));
 
         return patientDTO;
     }
@@ -70,91 +65,15 @@ public class PatientService {
         return patients.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    @POST
-    @Path("/")
-    @RolesAllowed("Professional")
-    public Response createNewPatient (PatientDTO patientDTO) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
-        patientBean.create(
-                patientDTO.getUsername(),
-                patientDTO.getHealthNumber(),
-                patientDTO.getName(),
-                patientDTO.getPassword(),
-                patientDTO.getEmail());
-        return Response.status(Response.Status.CREATED).entity("Patient " + patientDTO.getName() + " created!").build();
-    }
-
-    @GET
-    @Path("{username}")
-    public Response getPatientDetails(@PathParam("username") String username) throws MyEntityNotFoundException {
-        Patient patient = patientBean.findPatient(username);
-        Principal principal = securityContext.getUserPrincipal();
-        if(!(securityContext.isUserInRole("Administrator") ||
-                securityContext.isUserInRole("Professional") ||
-                securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername()))) {
-
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
-        return Response.ok(toDTO(patient)).build();
-    }
-
-    @PUT
-    @Path("{username}")
-    public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
-        Patient patient = patientBean.findPatient(username);
-        Principal principal = securityContext.getUserPrincipal();
-        if(!(securityContext.isUserInRole("Administrator") ||
-                securityContext.isUserInRole("Professional") ||
-                securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername()))) {
-
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
-        patientBean.update(
-                principal.getName(),
-                username,
-                patientDTO.getPasswordConfirmation(),
-                patientDTO.getHealthNumber(),
-                patientDTO.getName(),
-                patientDTO.getPassword(),
-                patientDTO.getEmail());
-        return Response.ok("Patient updated!").build();
-    }
-
-    @PATCH
-    @Path("{username}/addProfessional")
-    @RolesAllowed("Professional")
-    public Response addProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException {
-        patientBean.addProfessional(username, professionalDTO.getUsername());
-        return Response.ok("Professional added!").build();
-    }
-
-    @PATCH
-    @Path("{username}/removeProfessional")
-    @RolesAllowed("Professional")
-    public Response removeProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
-        patientBean.removeProfessional(username, professionalDTO.getUsername());
-        return Response.ok("Professional added!").build();
-    }
-
-    @DELETE
-    @Path("{username}")
-    public Response deletePatient (@PathParam("username") String username) throws MyEntityNotFoundException {
-        Patient patient = patientBean.findPatient(username);
-        Principal principal = securityContext.getUserPrincipal();
-        if(!(securityContext.isUserInRole("Professional"))) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
-        patientBean.delete(username);
-        return Response.ok("Patient deleted!").build();
-    }
-
     private ProfessionalDTO professionalToDTO(Professional professional) {
-        return  new ProfessionalDTO(
+        return new ProfessionalDTO(
                 professional.getUsername(),
                 professional.getName(),
                 professional.getEmail(),
                 professional.getLicenseNumber(),
                 professional.getType().getId(),
-                professional.getType().getName()
+                professional.getType().getName(),
+                professional.isDeleted()
         );
     }
 
@@ -178,21 +97,6 @@ public class PatientService {
         return programs.stream().map(this::programToDTO).collect(Collectors.toList());
     }
 
-    @GET
-    @Path("{username}/programs")
-    public Response getPatientPrograms(@PathParam("username") String username) throws MyEntityNotFoundException {
-        Patient patient = patientBean.findPatient(username);
-        Principal principal = securityContext.getUserPrincipal();
-        if(!(securityContext.isUserInRole("Professional") ||
-                securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername()))) {
-
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
-
-        List<ProgramDTO> dtos = programsToDTOs(patient.getPrograms());
-        return Response.ok(dtos).build();
-    }
-
     private ObservationDTO patientDataToDTO(Observation observation) {
         return  new ObservationDTO(
                 observation.getId(),
@@ -210,14 +114,139 @@ public class PatientService {
         return  patientData.stream().map(this::patientDataToDTO).collect(Collectors.toList());
     }
 
+    private boolean checkProfessional(Principal principal, Patient patient){
+        if (securityContext.isUserInRole("Professional")){
+            for (Professional professional : patient.getProfessionals()) {
+                if (professional.getUsername().equals(principal.getName())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @GET // means: to call this endpoint, we need to use the HTTP GET method
+    @Path("/") // means: the relative url path is “/api/patients/”
+    @RolesAllowed({"Administrator","Professional"})
+    public List<PatientDTO> getAllPatientsWS() {
+        if (securityContext.isUserInRole("Administrator")){
+            return toDTOsSimple(patientBean.getAllPatients("full"));
+        }
+        else {
+            return toDTOsSimple(patientBean.getAllPatients(null));
+        }
+    }
+
+    @POST
+    @Path("/")
+    @RolesAllowed({"Administrator","Professional"})
+    public Response createNewPatient (PatientDTO patientDTO) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
+        patientBean.create(
+                patientDTO.getUsername(),
+                patientDTO.getHealthNumber(),
+                patientDTO.getName(),
+                patientDTO.getPassword(),
+                patientDTO.getEmail());
+        return Response.status(Response.Status.CREATED).entity("Patient " + patientDTO.getName() + " created!").build();
+    }
+
     @GET
-    @Path("{username}/observations")
-    public Response getPatientData(@PathParam("username") String username) throws MyEntityNotFoundException {
+    @Path("{username}")
+    public Response getPatientDetails(@PathParam("username") String username) throws MyEntityNotFoundException {
         Patient patient = patientBean.findPatient(username);
         Principal principal = securityContext.getUserPrincipal();
-        if(!(securityContext.isUserInRole("Administrator") ||
-                securityContext.isUserInRole("Professional") ||
-                securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername()))) {
+        if (!(securityContext.isUserInRole("Administrator") ||
+                checkProfessional(principal,patient) ||
+                (securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername())))){
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        return Response.ok(toDTO(patient)).build();
+    }
+
+    @PUT
+    @Path("{username}")
+    public Response updatePatient (@PathParam("username") String username, PatientDTO patientDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if (!(securityContext.isUserInRole("Administrator") ||
+                checkProfessional(principal,patient) ||
+                (securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername())))){
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        patientBean.update(
+                principal.getName(),
+                username,
+                patientDTO.getPasswordConfirmation(),
+                patientDTO.getHealthNumber(),
+                patientDTO.getName(),
+                patientDTO.getPassword(),
+                patientDTO.getEmail());
+        return Response.ok("Patient updated!").build();
+    }
+
+    @PATCH
+    @Path("{username}/addProfessional")
+    @RolesAllowed("Professional")
+    public Response addProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException {
+        patientBean.addProfessional(username, professionalDTO.getUsername());
+        return Response.ok("Professional added!").build();
+    }
+
+    @PATCH
+    @Path("{username}/removeProfessional")
+    public Response removeProfessional (@PathParam("username") String username, ProfessionalDTO professionalDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if (!checkProfessional(principal,patient)){
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        patientBean.removeProfessional(username, professionalDTO.getUsername());
+        return Response.ok("Professional added!").build();
+    }
+
+    @DELETE
+    @Path("{username}")
+    public Response deletePatient (@PathParam("username") String username) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if (!(securityContext.isUserInRole("Administrator") ||
+                checkProfessional(principal,patient))){
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        patientBean.delete(username);
+        return Response.ok("Patient deleted!").build();
+    }
+
+    @GET
+    @Path("{username}/programs")
+    public Response getPatientPrograms(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if (!(checkProfessional(principal,patient) ||
+                (securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername())))){
+
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        List<ProgramDTO> dtos = programsToDTOs(patient.getPrograms());
+        return Response.ok(dtos).build();
+    }
+
+    @GET
+    @Path("{username}/observations")
+    public Response getPatientObservations(@PathParam("username") String username) throws MyEntityNotFoundException {
+        Patient patient = patientBean.findPatient(username);
+        Principal principal = securityContext.getUserPrincipal();
+        if (!(checkProfessional(principal,patient) ||
+                (securityContext.isUserInRole("Patient") && principal.getName().equals(patient.getUsername())))){
+
             return Response.status(Response.Status.FORBIDDEN).build();
         }
 

@@ -8,16 +8,18 @@ public class QuantitativeDataTypeDTO implements Serializable {
     private int id;
     private String name;
     private String unit;
-    private float min;
-    private float max;
+    private double min;
+    private double max;
     private List<QualitativeDataTypeDTO> qualitativeDataTypeDTOs;
+    private boolean deleted;
 
-    public QuantitativeDataTypeDTO(int id, String name, String unit, float min, float max) {
+    public QuantitativeDataTypeDTO(int id, String name, String unit, double min, double max, boolean deleted) {
         this.id = id;
         this.name = name;
         this.unit = unit;
         this.min = min;
         this.max = max;
+        this.deleted = deleted;
         qualitativeDataTypeDTOs = new ArrayList<QualitativeDataTypeDTO>();
     }
 
@@ -49,19 +51,19 @@ public class QuantitativeDataTypeDTO implements Serializable {
         this.unit = unit;
     }
 
-    public float getMin() {
+    public double getMin() {
         return min;
     }
 
-    public void setMin(float min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public float getMax() {
+    public double getMax() {
         return max;
     }
 
-    public void setMax(float max) {
+    public void setMax(double max) {
         this.max = max;
     }
 
@@ -72,4 +74,13 @@ public class QuantitativeDataTypeDTO implements Serializable {
     public void setQualitativeDataTypeDTOs(List<QualitativeDataTypeDTO> qualitativeDataTypeDTOs) {
         this.qualitativeDataTypeDTOs = qualitativeDataTypeDTOs;
     }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
 }

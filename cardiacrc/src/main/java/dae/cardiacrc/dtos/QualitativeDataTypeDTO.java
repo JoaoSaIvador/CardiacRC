@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class QualitativeDataTypeDTO implements Serializable {
     private int id;
     private String name;
-    private float min;
-    private float max;
+    private double min;
+    private double max;
 
-    public QualitativeDataTypeDTO(int id, String name, float min, float max) {
+    public QualitativeDataTypeDTO(int id, String name, double min, double max) {
         this.id = id;
         this.name = name;
         this.min = min;
@@ -34,19 +34,19 @@ public class QualitativeDataTypeDTO implements Serializable {
         this.name = name;
     }
 
-    public float getMin() {
+    public double getMin() {
         return min;
     }
 
-    public void setMin(float min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public float getMax() {
+    public double getMax() {
         return max;
     }
 
-    public void setMax(float max) {
+    public void setMax(double max) {
         this.max = max;
     }
 }

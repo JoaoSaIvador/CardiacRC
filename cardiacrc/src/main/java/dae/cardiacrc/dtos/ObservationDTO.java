@@ -4,7 +4,7 @@ public class ObservationDTO {
     private int id;
     private String patientUsername;
     private String patientName;
-    private float value;
+    private double value;
     private int dataTypeId;
     private String dataTypeName;
     private String date;
@@ -13,7 +13,7 @@ public class ObservationDTO {
     public ObservationDTO() {
     }
 
-    public ObservationDTO(int id, String patientUsername, String patientName, float value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
+    public ObservationDTO(int id, String patientUsername, String patientName, double value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
         this.id = id;
         this.patientUsername = patientUsername;
         this.patientName = patientName;
@@ -48,11 +48,11 @@ public class ObservationDTO {
         this.patientName = patientName;
     }
 
-    public float getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

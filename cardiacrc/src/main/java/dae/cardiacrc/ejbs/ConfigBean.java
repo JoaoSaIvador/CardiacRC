@@ -34,6 +34,9 @@ public class ConfigBean {
     @EJB
     ProgramBean programBean;
 
+    @EJB
+    ObservationBean observationBean;
+
     private static final Logger logger = Logger.getLogger("ejbs.ConfigBean");
 
     @PostConstruct
@@ -43,17 +46,25 @@ public class ConfigBean {
             typeBean.create("Nutrition");
             typeBean.create("Physiology");
 
+            quantityDataTypeBean.create("height", "m", 0, 3);
+            qualityDataTypeBean.create("dwarf",0,1,1);
+            qualityDataTypeBean.create("normal",1,2,1);
+            qualityDataTypeBean.create("toomuchmilk",2,3,1);
+
             professionalBean.create("tomasalves", 987654321, "Tomás Alves", "123456", "tomas.alves@mail.com", 1);
             professionalBean.create("marcopolo", 741852963, "Marco Polo", "123456", "marco.polo@mail.com", 2);
             professionalBean.create("carlossantos", 75348619, "Carlos Santos", "123456", "carlos.santos@mail.com", 3);
 
             patientBean.create("joaosalvador", 123456789, "João Salvador", "123456", "joao.salvador@mail.com");
+            patientBean.create("mario", 123456789, "It's a me a Mario", "123456", "mario@mail.com");
+
+            observationBean.create("mario",2.5,1);
 
             programBean.create("7","joaosalvador","marcopolo",null);
 
-            prescriptionBean.create("tomasalves","testeCardiologia", "prescricao1",1);
-            prescriptionBean.create("marcopolo","testeNutricao","prescricao2",1);
-            prescriptionBean.create("carlossantos","testeFisico","prescricao3",1);
+            prescriptionBean.create("tomasalves","testeCardiologia", "prescricao1",1,"10");
+            prescriptionBean.create("marcopolo","testeNutricao","prescricao2",1, "1");
+            prescriptionBean.create("carlossantos","testeFisico","prescricao3",1,"2");
 
             patientBean.addProfessional("joaosalvador", "tomasalves");
             patientBean.addProfessional("joaosalvador","carlossantos");
@@ -69,11 +80,6 @@ public class ConfigBean {
             administratorBean.create("admin8", "Admin 8", "123456", "admin8@mail.com");
             administratorBean.create("admin9", "Admin 9", "123456", "admin9@mail.com");
             administratorBean.create("admin10", "Admin 10", "123456", "admin10@mail.com");
-
-            quantityDataTypeBean.create("height", "m", 0, 3);
-            qualityDataTypeBean.create("dwarf",0,1,1);
-            qualityDataTypeBean.create("normal",1,2,1);
-            qualityDataTypeBean.create("toomuchmilk",2,3,1);
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }

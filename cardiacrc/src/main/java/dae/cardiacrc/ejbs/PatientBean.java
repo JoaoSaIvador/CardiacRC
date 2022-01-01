@@ -23,8 +23,7 @@ public class PatientBean {
     private EntityManager em;
 
     public void create(String username, int healthNumber, String name, String password, String email) throws MyEntityExistsException, MyEntityNotFoundException, MyConstraintViolationException {
-        Patient patient =  em.find(Patient.class, username);
-
+        Person patient =  em.find(Person.class, username);
         if(patient != null) {
             throw new MyEntityExistsException("Patient already exists!");
         }
@@ -37,13 +36,18 @@ public class PatientBean {
         }
     }
 
-    public List<Patient> getAllPatients() {
-        return (List<Patient>) em.createNamedQuery("getAllPatients").getResultList();
+    public List<Patient> getAllPatients(String type) {
+        if (type.equals("full")){
+            return (List<Patient>) em.createNamedQuery("getAllPatients").getResultList();
+        }
+        else {
+            return (List<Patient>) em.createNamedQuery("getPatients").getResultList();
+        }
     }
 
     public Patient findPatient(String username) throws MyEntityNotFoundException {
         Patient patient = em.find(Patient.class, username);
-        if(patient == null) {
+        if(patient == null || patient.isDeleted()) {
             throw new MyEntityNotFoundException("Patient not found!");
         }
         return patient;
@@ -102,11 +106,19 @@ public class PatientBean {
 
     public void delete(String username) throws MyEntityNotFoundException {
         Patient patient = findPatient(username);
-
         for (Professional professional : patient.getProfessionals()) {
             professional.removePatient(patient);
         }
 
-        em.remove(patient);
+        if (patient.getPatientObservations().isEmpty() && patient.getPrograms().isEmpty()){
+            //NORMAL DELETE
+            em.remove(patient);
+        }
+        else {
+            //SOFT DELETE
+            em.lock(patient, LockModeType.OPTIMISTIC);
+            patient.setDeleted(true);
+            em.merge(patient);
+        }
     }
 }

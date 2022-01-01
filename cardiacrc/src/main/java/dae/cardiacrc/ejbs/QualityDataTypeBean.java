@@ -17,7 +17,7 @@ public class QualityDataTypeBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String name, float min, float max, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String name, double min, double max, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
         QuantitativeDataType dataType = em.find(QuantitativeDataType.class, dataTypeId);
         if (dataType == null){
             throw new MyEntityNotFoundException("Datatype not found!");
@@ -45,7 +45,7 @@ public class QualityDataTypeBean {
         return qualitativeDataType;
     }
 
-    public void update(int dataTypeId, int qualityid, String name, float min, float max) throws MyEntityNotFoundException, MyIllegalArgumentException {
+    public void update(int dataTypeId, int qualityid, String name, double min, double max) throws MyEntityNotFoundException, MyIllegalArgumentException {
         QualitativeDataType qualitativeDataType = findQualityDataType(qualityid);
         QuantitativeDataType dataType = em.find(QuantitativeDataType.class,dataTypeId);
 

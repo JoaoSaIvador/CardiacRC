@@ -17,7 +17,7 @@ public class ObservationBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String patientUsername, float value, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String patientUsername, double value, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
         Patient patient =  em.find(Patient.class, patientUsername);
         if(patient == null) {
             throw new MyEntityNotFoundException("Patient does not exist!");
