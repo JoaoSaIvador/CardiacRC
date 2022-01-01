@@ -91,7 +91,7 @@ public class ProgramService {
 
     @GET
     @Path("/")
-    @RolesAllowed("Professional")
+    @RolesAllowed({"Professional", "Patient"})
     public List<ProgramDTO> getAllPrograms(){
         Principal principal = securityContext.getUserPrincipal();
         return toDTOs(programBean.getAllPrograms(principal.getName()));
@@ -102,7 +102,7 @@ public class ProgramService {
     public Response getProgramDetails(@PathParam("program") int programId) throws MyEntityNotFoundException {
         Program program = programBean.findProgram(programId);
         Principal principal = securityContext.getUserPrincipal();
-        if(!(securityContext.isUserInRole("Professional") || securityContext.isUserInRole("Patient") && program.getPatient().getUsername().equals(principal.getName()))) {
+        if(!(securityContext.isUserInRole("Professional") && program.getProfessional().getUsername().equals(principal.getName()) || securityContext.isUserInRole("Patient") && program.getPatient().getUsername().equals(principal.getName()))) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
 

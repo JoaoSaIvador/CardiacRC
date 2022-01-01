@@ -13,7 +13,7 @@ import java.util.Locale;
 @NamedQueries(
         @NamedQuery(
                 name = "getAllPrograms",
-                query = "SELECT p FROM Program p WHERE p.patient.username = :username"
+                query = "SELECT p FROM Program p WHERE p.patient.username = :username OR p.professional.username = :username"
         )
 )
 @Table(name = "programs")
