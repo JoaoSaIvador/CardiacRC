@@ -86,7 +86,7 @@
                         align-items-center
                         justify-content-center
                       "
-                      :to="`prescriptions/${row.item.id}/details`"
+                      :to="`/professionals/${$auth.user.sub}/prescriptions/${row.item.id}/details`"
                     >
                       <fa :icon="['fas', 'clipboard-list']" />
                     </b-button>
