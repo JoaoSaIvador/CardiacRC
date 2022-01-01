@@ -16,7 +16,7 @@ export default {
     return {
       dataTypes: null,
       observation: {
-        duration: null,
+        value: null,
         dataTypeId: null,
         patientUsername: this.$auth.user.sub,
       },
@@ -30,7 +30,7 @@ export default {
   methods: {
     createObservation(observation) {
       this.$axios
-        .$post("/api/observation", observation)
+        .$post("/api/observations", observation)
         .then(() => {
           this.$router.back();
         })

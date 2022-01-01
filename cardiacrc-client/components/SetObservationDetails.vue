@@ -14,17 +14,17 @@
       <form class="needs-validation" :disabled="!isFormValid">
         <div class="main-input">
           <b-form-group
-            label="Duration:"
-            label-for="duration"
-            :invalid-feedback="invalidDurationFeedback"
-            :state="isDurationValid"
+            label="Value:"
+            label-for="value"
+            :invalid-feedback="invalidValueFeedback"
+            :state="isValueValid"
           >
             <b-input
-              id="duration"
+              id="value"
               type="number"
-              placeholder="Enter a duration"
-              v-model.trim="localObservation.duration"
-              :state="isDurationValid"
+              placeholder="Enter a value"
+              v-model.trim="localObservation.value"
+              :state="isValueValid"
             ></b-input>
           </b-form-group>
         </div>
@@ -36,7 +36,7 @@
             :state="isDataTypeValid"
           >
             <b-select
-              id="patient"
+              id="dataType"
               v-model="localObservation.dataTypeId"
               :options="dataTypes"
               required
@@ -99,6 +99,7 @@ export default {
     return {
       errorMsg: false,
       localObservation: JSON.parse(JSON.stringify(this.observation)),
+      currentDataType: null,
     };
   },
   computed: {
@@ -106,27 +107,35 @@ export default {
       return this.mode == "create";
     },
 
-    invalidDurationFeedback() {
-      if (!this.localObservation.duration) {
+    invalidValueFeedback() {
+      if (!this.localObservation.value) {
         return null;
       }
 
-      if (this.localObservation.duration < 0) {
-        return "Duration must be a positive number!";
+      this.currentDataType = this.dataTypes.find((d) => {
+        return d.id == this.localObservation.dataTypeId;
+      });
+
+      if (this.localObservation.value < this.currentDataType.min) {
+        return "Value must be greater than Data Type's minimum value!";
+      }
+
+      if (this.localObservation.value > this.currentDataType.max) {
+        return "Value must be less than Data Type's maximum value!";
       }
 
       return "";
     },
 
-    isDurationValid() {
-      if (this.invalidDurationFeedback === null) {
+    isValueValid() {
+      if (this.invalidValueFeedback === null) {
         return null;
       }
-      return this.invalidDurationFeedback === "";
+      return this.invalidValueFeedback === "";
     },
 
     invalidDataTypeFeedback() {
-      if (!this.localObservation.dataType) {
+      if (!this.localObservation.dataTypeId) {
         return null;
       }
 
@@ -141,7 +150,7 @@ export default {
     },
 
     isFormValid() {
-      if (!this.isDurationValid) {
+      if (!this.isValueValid) {
         return false;
       }
 
@@ -154,3 +163,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+select {
+  text-transform: capitalize;
+}
+</style>
