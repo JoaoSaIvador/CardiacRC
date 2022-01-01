@@ -100,7 +100,7 @@
                 <b-input-group size="sm">
                   <b-form-input
                     id="filter-input"
-                    v-model="filter"
+                    v-model="filterObservations"
                     type="search"
                     placeholder="Type to Search"
                   ></b-form-input>
@@ -108,8 +108,8 @@
                   <b-input-group-append>
                     <b-button
                       variant="dark"
-                      :disabled="!filter"
-                      @click="filter = ''"
+                      :disabled="!filterObservations"
+                      @click="filterObservations = ''"
                       >Clear</b-button
                     >
                   </b-input-group-append>
@@ -118,7 +118,7 @@
             </div>
             <b-pagination
               v-if="observations.length > 0"
-              v-model="currentPage"
+              v-model="currentPageObservations"
               :total-rows="observations.length"
               :per-page="perPage"
               class="m-0"
@@ -131,40 +131,16 @@
             bordered
             head-variant="dark"
             :items="observations"
-            :fields="fields"
+            :fields="observationFields"
             :current-page="currentPageObservations"
             :per-page="perPage"
-            :filter="filter"
+            :filter="filterObservations"
             :sort-by.sync="sortBy"
             :sort-desc.sync="sortDesc"
             small
           >
             <template v-slot:cell(actions)="row">
               <div class="d-flex flex-row justify-content-center">
-                <b-button
-                  variant="success"
-                  class="
-                    table-button
-                    d-flex
-                    align-items-center
-                    justify-content-center
-                  "
-                  :to="`observations/${row.item.id}/details`"
-                >
-                  <fa :icon="['fas', 'clipboard-list']" />
-                </b-button>
-                <b-button
-                  variant="primary"
-                  class="
-                    table-button
-                    d-flex
-                    align-items-center
-                    justify-content-center
-                  "
-                  :to="`observations/${row.item.id}/update`"
-                >
-                  <fa :icon="['fas', 'pen']" />
-                </b-button>
                 <b-button
                   variant="danger"
                   class="
@@ -212,7 +188,7 @@
                 <b-input-group size="sm">
                   <b-form-input
                     id="filter-input"
-                    v-model="filter"
+                    v-model="filterPrograms"
                     type="search"
                     placeholder="Type to Search"
                   ></b-form-input>
@@ -220,8 +196,8 @@
                   <b-input-group-append>
                     <b-button
                       variant="dark"
-                      :disabled="!filter"
-                      @click="filter = ''"
+                      :disabled="!filterPrograms"
+                      @click="filterPrograms = ''"
                       >Clear</b-button
                     >
                   </b-input-group-append>
@@ -230,7 +206,7 @@
             </div>
             <b-pagination
               v-if="programs.length > 0"
-              v-model="currentPage"
+              v-model="currentPagePrograms"
               :total-rows="programs.length"
               :per-page="perPage"
               class="m-0"
@@ -243,10 +219,10 @@
             bordered
             head-variant="dark"
             :items="programs"
-            :fields="fields"
+            :fields="programFields"
             :current-page="currentPagePrograms"
             :per-page="perPage"
-            :filter="filter"
+            :filter="filterPrograms"
             :sort-by.sync="sortBy"
             :sort-desc.sync="sortDesc"
             small
@@ -304,7 +280,8 @@ export default {
       currentPagePrograms: 1,
       perPage: 10,
       sortDesc: false,
-      filter: null,
+      filterObservations: null,
+      filterPrograms: null,
       isShowConfirmation: false,
       affectedLine: null,
     };

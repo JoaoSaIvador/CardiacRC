@@ -51,8 +51,14 @@ export default {
         { title: "Manage Patients", path: `/patients` },
       ],
       cards2: [
-        { title: "Manage Prescriptions", path: `/prescriptions` },
-        { title: "Manage CRPs", path: `/programs` },
+        {
+          title: "Manage Prescriptions",
+          path: `/professionals/${this.$auth.user.sub}/prescriptions`,
+        },
+        {
+          title: "Manage CRPs",
+          path: `/professionals/${this.$auth.user.sub}/programs`,
+        },
       ],
       counters: [
         {

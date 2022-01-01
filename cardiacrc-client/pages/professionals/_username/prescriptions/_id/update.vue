@@ -28,7 +28,7 @@ export default {
   methods: {
     updatePrescription(prescription) {
       if (this.prescription.name == prescription.name) {
-        dataType.name = null;
+        prescription.name = null;
       }
       if (this.prescription.frequency == prescription.frequency) {
         prescription.frequency = null;
@@ -37,7 +37,7 @@ export default {
       this.$axios
         .$put(`/api/prescriptions/${this.id}`, prescription)
         .then(() => {
-          this.$router.push("/prescriptions");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

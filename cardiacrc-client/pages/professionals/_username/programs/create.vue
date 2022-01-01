@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  middleware: "professional",
+  middleware: "professionalSelf",
   data() {
     return {
       username: this.$auth.user.sub,
@@ -47,7 +47,7 @@ export default {
       this.$axios
         .$post("/api/programs", program)
         .then(() => {
-          this.$router.push("/professionals/dashboard");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

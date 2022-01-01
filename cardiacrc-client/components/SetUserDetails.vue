@@ -383,12 +383,12 @@ export default {
         return false;
       }
 
-      if (this.localUser.password != null && this.localUser.password != "") {
-        if (!this.isPasswordValid) {
-          return false;
-        }
-      } else if (!this.isCreate) {
-        this.localUser.password = null;
+      if (!this.isCreate && !this.localUser.password) {
+        return true;
+      }
+
+      if (!this.isPasswordValid) {
+        return false;
       }
 
       return true;

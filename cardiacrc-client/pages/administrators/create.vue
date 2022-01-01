@@ -25,7 +25,7 @@ export default {
       this.$axios
         .$post("/api/administrators", user)
         .then(() => {
-          this.$router.push("/administrators/dashboard");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

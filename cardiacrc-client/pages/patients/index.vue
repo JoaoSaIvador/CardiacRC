@@ -40,6 +40,8 @@ export default {
         .then((associatedPatients) => {
           this.associatedPatients = associatedPatients;
         });
+    } else {
+      this.associatedPatients = [];
     }
   },
   methods: {

@@ -34,7 +34,7 @@ export default {
       this.$axios
         .$post("/api/patients", user)
         .then(() => {
-          auxiliary.goToDashboard(this.$auth.user, this.$router);
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

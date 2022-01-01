@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import * as auxiliary from "../../utils/auxiliary.js";
-
 export default {
   middleware: "admin",
   data() {
@@ -29,7 +27,7 @@ export default {
       this.$axios
         .$post("/api/professionals", user)
         .then(() => {
-          auxiliary.goToDashboard(this.$auth.user, this.$router);
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

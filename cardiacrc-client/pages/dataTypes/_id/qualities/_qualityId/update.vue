@@ -43,7 +43,7 @@ export default {
           quality
         )
         .then(() => {
-          this.$router.push(`/dataTypes/${this.id}`);
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

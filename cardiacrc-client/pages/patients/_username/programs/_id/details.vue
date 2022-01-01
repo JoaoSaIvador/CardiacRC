@@ -112,13 +112,6 @@
             >
               Back
             </b-button>
-            <b-button
-              class="main-button"
-              variant="dark"
-              :to="`/programs/${program.id}/update`"
-            >
-              Update
-            </b-button>
           </div>
         </form>
       </b-container>
@@ -129,7 +122,7 @@
 
 <script>
 export default {
-  middleware: "professional",
+  middleware: "patientSelf",
   data() {
     return {
       program: null,

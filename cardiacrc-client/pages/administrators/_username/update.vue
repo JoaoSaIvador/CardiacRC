@@ -40,7 +40,7 @@ export default {
       this.$axios
         .$put(`/api/administrators/${this.username}`, user)
         .then(() => {
-          this.$router.push("/administrators/dashboard");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;
