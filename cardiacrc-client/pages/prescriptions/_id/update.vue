@@ -37,7 +37,7 @@ export default {
       this.$axios
         .$put(`/api/prescriptions/${this.id}`, prescription)
         .then(() => {
-          this.$router.push("/prescriptions");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

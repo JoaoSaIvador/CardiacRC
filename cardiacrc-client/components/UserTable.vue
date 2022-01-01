@@ -19,7 +19,13 @@
             Back
           </b-button>
           <b-button
-            v-if="!$auth.user.groups.includes('Patient')"
+            v-if="
+              !$auth.user.groups.includes('Patient') &&
+              !(
+                group == 'patients' &&
+                $auth.user.groups.includes('Administrator')
+              )
+            "
             variant="dark"
             :to="`${group}/create`"
           >

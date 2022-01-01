@@ -37,7 +37,7 @@ export default {
       this.$axios
         .$put(`/api/dataTypes/${this.id}`, dataType)
         .then(() => {
-          this.$router.push("/dataTypes");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

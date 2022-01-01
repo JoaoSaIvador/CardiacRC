@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import * as auxiliary from "../../../utils/auxiliary.js";
-
 export default {
   middleware: "professionalUpdate",
   data() {
@@ -44,7 +42,7 @@ export default {
       this.$axios
         .$put(`/api/professionals/${this.username}`, user)
         .then(() => {
-          auxiliary.goToDashboard(this.$auth.user, this.$router);
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

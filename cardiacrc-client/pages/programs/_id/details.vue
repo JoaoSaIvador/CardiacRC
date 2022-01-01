@@ -129,7 +129,7 @@
 
 <script>
 export default {
-  middleware: "professional",
+  middleware: "patient",
   data() {
     return {
       program: null,

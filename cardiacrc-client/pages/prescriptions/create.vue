@@ -25,7 +25,7 @@ export default {
       this.$axios
         .$post("/api/prescriptions", prescription)
         .then(() => {
-          this.$router.push("/professionals/dashboard");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

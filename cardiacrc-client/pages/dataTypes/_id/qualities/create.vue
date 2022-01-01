@@ -33,7 +33,7 @@ export default {
       this.$axios
         .$post(`/api/dataTypes/${this.id}/qualitatives`, quality)
         .then(() => {
-          this.$router.push("/administrators/dashboard");
+          this.$router.back();
         })
         .catch((error) => {
           //this.errorMsg = error.response.data;

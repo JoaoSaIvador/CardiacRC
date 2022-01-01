@@ -12,10 +12,13 @@
           type="password"
           v-model.trim="passwordConfirmation"
           placeholder="Enter your password"
+          :state="isPasswordValid"
         ></b-input>
+
         <div class="input-group-append">
           <b-button
             variant="dark"
+            :disabled="!isFormValid"
             @click="$emit('confirmPassword', passwordConfirmation)"
           >
             Confirm
@@ -32,6 +35,30 @@ export default {
     return {
       passwordConfirmation: null,
     };
+  },
+  computed: {
+    invalidPasswordFeedback() {
+      if (!this.passwordConfirmation) {
+        return "You must insert a password.";
+      }
+
+      return "";
+    },
+
+    isPasswordValid() {
+      if (this.invalidPasswordFeedback === null) {
+        return null;
+      }
+      return this.invalidPasswordFeedback === "";
+    },
+
+    isFormValid() {
+      if (!this.isPasswordValid) {
+        return false;
+      }
+
+      return true;
+    },
   },
 };
 </script>

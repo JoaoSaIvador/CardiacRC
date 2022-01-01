@@ -118,7 +118,7 @@
             </div>
             <b-pagination
               v-if="observations.length > 0"
-              v-model="currentPage"
+              v-model="currentPageObservations"
               :total-rows="observations.length"
               :per-page="perPage"
               class="m-0"
@@ -230,7 +230,7 @@
             </div>
             <b-pagination
               v-if="programs.length > 0"
-              v-model="currentPage"
+              v-model="currentPagePrograms"
               :total-rows="programs.length"
               :per-page="perPage"
               class="m-0"
@@ -243,7 +243,7 @@
             bordered
             head-variant="dark"
             :items="programs"
-            :fields="fields"
+            :fields="programFields"
             :current-page="currentPagePrograms"
             :per-page="perPage"
             :filter="filter"
@@ -261,7 +261,7 @@
                     align-items-center
                     justify-content-center
                   "
-                  :to="`programs/${row.item.id}/details`"
+                  :to="`/programs/${row.item.id}/details`"
                 >
                   <fa :icon="['fas', 'clipboard-list']" />
                 </b-button>
