@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  middleware: "professional",
+  middleware: "professionalSelf",
   data() {
     return {
       prescription: null,

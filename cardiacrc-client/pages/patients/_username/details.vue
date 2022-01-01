@@ -108,8 +108,8 @@
                   <b-input-group-append>
                     <b-button
                       variant="dark"
-                      :disabled="!filter"
-                      @click="filter = ''"
+                      :disabled="!filterObservations"
+                      @click="filterObservations = ''"
                       >Clear</b-button
                     >
                   </b-input-group-append>
@@ -134,7 +134,7 @@
             :fields="fields"
             :current-page="currentPageObservations"
             :per-page="perPage"
-            :filter="filter"
+            :filter="filterObservations"
             :sort-by.sync="sortBy"
             :sort-desc.sync="sortDesc"
             small
@@ -212,7 +212,7 @@
                 <b-input-group size="sm">
                   <b-form-input
                     id="filter-input"
-                    v-model="filter"
+                    v-model="filterPrograms"
                     type="search"
                     placeholder="Type to Search"
                   ></b-form-input>
@@ -220,8 +220,8 @@
                   <b-input-group-append>
                     <b-button
                       variant="dark"
-                      :disabled="!filter"
-                      @click="filter = ''"
+                      :disabled="!filterPrograms"
+                      @click="filterPrograms = ''"
                       >Clear</b-button
                     >
                   </b-input-group-append>
@@ -246,7 +246,7 @@
             :fields="programFields"
             :current-page="currentPagePrograms"
             :per-page="perPage"
-            :filter="filter"
+            :filter="filterPrograms"
             :sort-by.sync="sortBy"
             :sort-desc.sync="sortDesc"
             small
@@ -261,7 +261,7 @@
                     align-items-center
                     justify-content-center
                   "
-                  :to="`/programs/${row.item.id}/details`"
+                  :to="`programs/${row.item.id}/details`"
                 >
                   <fa :icon="['fas', 'clipboard-list']" />
                 </b-button>
@@ -304,7 +304,8 @@ export default {
       currentPagePrograms: 1,
       perPage: 10,
       sortDesc: false,
-      filter: null,
+      filterObservations: null,
+      filterPrograms: null,
       isShowConfirmation: false,
       affectedLine: null,
     };

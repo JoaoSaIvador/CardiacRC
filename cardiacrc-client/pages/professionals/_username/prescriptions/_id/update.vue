@@ -28,7 +28,7 @@ export default {
   methods: {
     updatePrescription(prescription) {
       if (this.prescription.name == prescription.name) {
-        dataType.name = null;
+        prescription.name = null;
       }
       if (this.prescription.frequency == prescription.frequency) {
         prescription.frequency = null;
