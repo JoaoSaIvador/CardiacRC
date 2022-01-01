@@ -17,7 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +37,6 @@ public class DataTypeService {
     @Path("/") // means: the relative url path is “/api/dataTypes/”
     @RolesAllowed({"Administrator", "Patient"})
     public List<QuantitativeDataTypeDTO> getAllDataTypesWS() {
-        Principal principal = securityContext.getUserPrincipal();
         if (securityContext.isUserInRole("Administrator")) {
             return toDTOs(quantityDataTypeBean.getAllDataTypes("full"));
         }

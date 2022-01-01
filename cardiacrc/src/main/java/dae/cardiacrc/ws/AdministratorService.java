@@ -1,7 +1,6 @@
 package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.AdministratorDTO;
-import dae.cardiacrc.dtos.AuthDTO;
 import dae.cardiacrc.ejbs.AdministratorBean;
 import dae.cardiacrc.entities.Administrator;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;

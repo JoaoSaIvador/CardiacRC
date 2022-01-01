@@ -44,7 +44,7 @@ public class PatientService {
         return patients.stream().map(this::toDTOSimple).collect(Collectors.toList());
     }
 
-    // Converts an entity Student to a DTO Student class
+    // Converts an entity Patient to a DTO Patient class
     private PatientDTO toDTO(Patient patient) {
         PatientDTO patientDTO = new PatientDTO(
                 patient.getUsername(),

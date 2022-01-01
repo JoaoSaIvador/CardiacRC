@@ -1,12 +1,9 @@
 package dae.cardiacrc.ws;
 
-import dae.cardiacrc.dtos.AdministratorDTO;
 import dae.cardiacrc.dtos.TypeDTO;
 import dae.cardiacrc.ejbs.TypeBean;
-import dae.cardiacrc.entities.Administrator;
 import dae.cardiacrc.entities.Type;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
-import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 
 import javax.annotation.security.RolesAllowed;

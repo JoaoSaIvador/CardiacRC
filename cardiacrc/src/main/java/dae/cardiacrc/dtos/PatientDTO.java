@@ -10,16 +10,15 @@ public class PatientDTO {
     private String email;
     private int healthNumber;
     private List<ProfessionalDTO> professionalDTOs;
-    private List<PrescriptionDTO> activePrescriptionDTOs;
-    private List<PrescriptionDTO> inactivePrescriptionDTOs;
     private List<ObservationDTO> observationDTOS;
+    private List<ProgramDTO> programDTOS;
     private String passwordConfirmation;
     private boolean deleted;
 
     public PatientDTO() {
-        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
-        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
+        this.professionalDTOs = new ArrayList<ProfessionalDTO>();
         this.observationDTOS = new ArrayList<ObservationDTO>();
+        this.programDTOS = new ArrayList<ProgramDTO>();
     }
 
     public PatientDTO(String username, String name, String email, int healthNumber, boolean deleted) {
@@ -29,9 +28,8 @@ public class PatientDTO {
         this.healthNumber = healthNumber;
         this.deleted = deleted;
         this.professionalDTOs = new ArrayList<ProfessionalDTO>();
-        this.activePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
-        this.inactivePrescriptionDTOs = new ArrayList<PrescriptionDTO>();
         this.observationDTOS = new ArrayList<ObservationDTO>();
+        this.programDTOS = new ArrayList<ProgramDTO>();
     }
 
     public String getUsername() {
@@ -108,5 +106,13 @@ public class PatientDTO {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public List<ProgramDTO> getProgramDTOS() {
+        return programDTOS;
+    }
+
+    public void setProgramDTOS(List<ProgramDTO> programDTOS) {
+        this.programDTOS = programDTOS;
     }
 }

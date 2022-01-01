@@ -4,7 +4,6 @@ import dae.cardiacrc.dtos.PrescriptionDTO;
 import dae.cardiacrc.dtos.ProgramDTO;
 import dae.cardiacrc.ejbs.ProgramBean;
 import dae.cardiacrc.entities.Prescription;
-import dae.cardiacrc.entities.Professional;
 import dae.cardiacrc.entities.Program;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
@@ -62,7 +61,7 @@ public class ProgramService {
 
     // converts an entire list of entities into a list of DTOs
     private List<ProgramDTO> toDTOs(List<Program> programs) {
-        return programs.stream().map(this::toDTO).collect(Collectors.toList());
+        return programs.stream().map(this::toDTOsimple).collect(Collectors.toList());
     }
 
     private PrescriptionDTO prescriptionToDTO(Prescription prescription) {

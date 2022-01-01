@@ -1,7 +1,6 @@
 package dae.cardiacrc.ws;
 
 import dae.cardiacrc.dtos.ObservationDTO;
-import dae.cardiacrc.dtos.PatientDTO;
 import dae.cardiacrc.ejbs.ObservationBean;
 import dae.cardiacrc.ejbs.PatientBean;
 import dae.cardiacrc.entities.Observation;
