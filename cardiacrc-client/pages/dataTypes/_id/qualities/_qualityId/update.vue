@@ -42,12 +42,12 @@ export default {
           `/api/dataTypes/${this.id}/qualitatives/${this.qualityId}`,
           quality
         )
-        .then(() => {
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
           this.$router.back();
         })
         .catch((error) => {
-          //this.errorMsg = error.response.data;
-          //Notification
+          this.$toast.error(error.response.data).goAway(3000);
         });
     },
   },

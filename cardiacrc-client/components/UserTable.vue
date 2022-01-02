@@ -243,12 +243,12 @@ export default {
         .$patch(`/api/patients/${patientUsername}/addProfessional`, {
           username: this.$auth.user.sub,
         })
-        .then(() => {
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
           window.location.reload();
         })
         .catch((error) => {
-          //this.errorMsg = error.response.data;
-          //Notification
+          this.$toast.error(error.response.data).goAway(3000);
         });
     },
     disassociatePatient(patientUsername) {
@@ -256,12 +256,12 @@ export default {
         .$patch(`/api/patients/${patientUsername}/removeProfessional`, {
           username: this.$auth.user.sub,
         })
-        .then(() => {
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
           window.location.reload();
         })
         .catch((error) => {
-          //this.errorMsg = error.response.data;
-          //Notification
+          this.$toast.error(error.response.data).goAway(3000);
         });
     },
   },

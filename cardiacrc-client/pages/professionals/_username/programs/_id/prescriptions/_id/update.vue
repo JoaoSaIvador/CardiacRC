@@ -42,12 +42,12 @@ export default {
 
       this.$axios
         .$put(`/api/prescriptions/${this.id}`, prescription)
-        .then(() => {
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
           this.$router.back();
         })
         .catch((error) => {
-          //this.errorMsg = error.response.data;
-          //Notification
+          this.$toast.error(error.response.data).goAway(3000);
         });
     },
   },

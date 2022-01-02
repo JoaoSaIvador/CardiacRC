@@ -42,8 +42,12 @@ export default {
     deleteQuality(id) {
       this.$axios
         .$delete(`/api/dataTypes/${this.id}/qualitatives/${id}`)
-        .then(() => {
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
           window.location.reload();
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data).goAway(3000);
         });
     },
   },

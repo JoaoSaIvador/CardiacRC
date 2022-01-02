@@ -35,9 +35,15 @@ export default {
   },
   methods: {
     deleteAdministrator(username) {
-      this.$axios.$delete(`/api/administrators/${username}`).then(() => {
-        window.location.reload();
-      });
+      this.$axios
+        .$delete(`/api/administrators/${username}`)
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
+          window.location.reload();
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data).goAway(3000);
+        });
     },
   },
 };
