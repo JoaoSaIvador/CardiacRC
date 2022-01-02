@@ -41,7 +41,7 @@ public class DataTypeService {
             return toDTOs(quantityDataTypeBean.getAllDataTypes("full"));
         }
         else {
-            return toDTOs(quantityDataTypeBean.getAllDataTypes(null));
+            return toDTOs(quantityDataTypeBean.getAllDataTypes("normal"));
         }
     }
 

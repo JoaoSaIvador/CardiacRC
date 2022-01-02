@@ -133,7 +133,7 @@ public class PatientService {
             return toDTOsSimple(patientBean.getAllPatients("full"));
         }
         else {
-            return toDTOsSimple(patientBean.getAllPatients(null));
+            return toDTOsSimple(patientBean.getAllPatients("normal"));
         }
     }
 
