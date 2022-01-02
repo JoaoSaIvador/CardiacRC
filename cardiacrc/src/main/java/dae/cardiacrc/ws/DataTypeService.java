@@ -35,7 +35,7 @@ public class DataTypeService {
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/dataTypes/”
-    @RolesAllowed({"Administrator", "Patient"})
+    @RolesAllowed({"Administrator", "Patient","Professional"})
     public List<QuantitativeDataTypeDTO> getAllDataTypesWS() {
         if (securityContext.isUserInRole("Administrator")) {
             return toDTOs(quantityDataTypeBean.getAllDataTypes("full"));
