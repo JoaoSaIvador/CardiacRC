@@ -114,7 +114,7 @@ public class DataTypeService {
 
     @GET
     @Path("{dataType}")
-    @RolesAllowed({"Administrator", "Patient"})
+    @RolesAllowed({"Administrator", "Patient","Professional"})
     public Response getDataTypeDetails(@PathParam("dataType") int dataTypeId) throws MyEntityNotFoundException {
         QuantitativeDataType dataType = quantityDataTypeBean.findDataType(dataTypeId);
         return Response.ok(toDTO(dataType)).build();
