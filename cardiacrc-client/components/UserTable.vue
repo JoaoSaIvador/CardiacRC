@@ -142,7 +142,12 @@
               <span class="button-text">&nbsp;Disassociate</span>
             </b-button>
             <b-button
-              v-if="group == 'prescriptions' || group == 'programs'"
+              v-if="
+                group == 'prescriptions' ||
+                group == 'programs' ||
+                ($auth.user.groups.includes('Professional') &&
+                  group == 'patients')
+              "
               variant="success"
               class="
                 table-button
@@ -150,7 +155,9 @@
                 align-items-center
                 justify-content-center
               "
-              :to="`${group}/${row.item.id}/details`"
+              :to="`${group}/${
+                row.item.username ? row.item.username : row.item.id
+              }/details`"
             >
               <fa :icon="['fas', 'clipboard-list']" />
             </b-button>

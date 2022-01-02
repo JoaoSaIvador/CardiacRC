@@ -253,7 +253,7 @@
 
 <script>
 export default {
-  middleware: "patientSelf",
+  middleware: "patientSelfOrProfessional",
   data() {
     return {
       patient: null,
@@ -292,17 +292,11 @@ export default {
     },
   },
   created() {
-    this.$axios
-      .$get(`/api/patients/${this.username}`)
-      .then((patient) => (this.patient = patient || {}));
-
-    this.$axios
-      .$get(`/api/patients/${this.username}/observations`)
-      .then((observations) => (this.observations = observations || {}));
-
-    this.$axios
-      .$get(`/api/patients/${this.username}/programs`)
-      .then((programs) => (this.programs = programs || {}));
+    this.$axios.$get(`/api/patients/${this.username}`).then((patient) => {
+      this.patient = patient || {};
+      this.observations = patient.observations || {};
+      this.programs = patient.programs || {};
+    });
   },
   methods: {
     showConfirmation(affectedLine) {
@@ -311,7 +305,11 @@ export default {
     },
     confirm(confirmation) {
       if (confirmation) {
-        //this.$emit("delete", this.affectedLine);
+        this.$axios
+          .$delete(`/api/observations/${this.affectedLine}`)
+          .then(() => {
+            window.location.reload();
+          });
       }
     },
   },

@@ -86,7 +86,7 @@
                         align-items-center
                         justify-content-center
                       "
-                      :to="`/professionals/${$auth.user.sub}/prescriptions/${row.item.id}/details`"
+                      :to="`prescriptions/${row.item.id}/details`"
                     >
                       <fa :icon="['fas', 'clipboard-list']" />
                     </b-button>
@@ -112,12 +112,15 @@
             >
               Back
             </b-button>
+            <b-button class="main-button" variant="dark" :to="`update`">
+              Update
+            </b-button>
             <b-button
               class="main-button"
               variant="dark"
-              :to="`/programs/${program.id}/update`"
+              :to="`prescriptions/create`"
             >
-              Update
+              Add Prescription
             </b-button>
           </div>
         </form>
