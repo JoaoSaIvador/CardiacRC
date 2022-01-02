@@ -11,8 +11,11 @@ import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,8 @@ import java.util.stream.Collectors;
 public class AdministratorService {
     @EJB
     private AdministratorBean administratorBean;
+    @Context
+    private SecurityContext securityContext;
 
     @GET // means: to call this endpoint, we need to use the HTTP GET method
     @Path("/") // means: the relative url path is “/api/administrators/”
@@ -74,8 +79,12 @@ public class AdministratorService {
 
     @PUT
     @Path("{username}")
-    @RolesAllowed("Administrator")
     public Response updateAdministrator (@PathParam("username") String username, AdministratorDTO administratorDTO) throws MyEntityNotFoundException, MyIllegalArgumentException {
+        Principal principal = securityContext.getUserPrincipal();
+        Administrator administrator = administratorBean.findAdministrator(username);
+        if (!(securityContext.isUserInRole("Administrator") && administrator.getUsername().equals(principal.getName()))){
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
         administratorBean.update(
                 username,
                 administratorDTO.getPasswordConfirmation(),
