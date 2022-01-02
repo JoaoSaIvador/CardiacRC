@@ -15,7 +15,10 @@ import java.util.Objects;
                 query = "SELECT p FROM Professional p ORDER BY p.name"
         )
 })
-@Table(name = "professionals")
+@Table(
+        name = "professionals",
+        uniqueConstraints =
+            @UniqueConstraint(columnNames = {"licenseNumber"}))
 public class Professional extends Person implements Serializable {
     @NotNull
     private int licenseNumber;

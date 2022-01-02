@@ -56,6 +56,7 @@ public class PatientService {
 
         patientDTO.setProfessionalDTOs(professionalToDTOs(patient.getProfessionals()));
         patientDTO.setObservationDTOS(patientDataToDTOs(patient.getPatientObservations()));
+        patientDTO.setProgramDTOS(programsToDTOs(patient.getPrograms()));
 
         return patientDTO;
     }

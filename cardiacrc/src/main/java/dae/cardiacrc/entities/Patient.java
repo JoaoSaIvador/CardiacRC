@@ -18,7 +18,10 @@ import java.util.List;
                 query = "SELECT p FROM Patient p ORDER BY p.name"
         )
 })
-@Table(name = "patients")
+@Table(
+        name = "patients",
+        uniqueConstraints =
+            @UniqueConstraint(columnNames = {"healthNumber"}))
 public class Patient extends Person implements Serializable {
     @NotNull
     private int healthNumber;
