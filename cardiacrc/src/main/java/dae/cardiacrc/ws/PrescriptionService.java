@@ -89,7 +89,8 @@ public class PrescriptionService {
         prescriptionBean.update(id,
                 prescriptionDTO.getProfessionalUsername(),
                 prescriptionDTO.getDescription(),
-                prescriptionDTO.getName());
+                prescriptionDTO.getName(),
+                prescriptionDTO.getFrequency());
 
         return Response.ok("Prescription updated!").build();
     }

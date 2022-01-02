@@ -52,7 +52,7 @@ public class PrescriptionBean {
         return prescription;
     }
 
-    public void update(int id, String professionalUsername, String description, String name) throws MyEntityNotFoundException {
+    public void update(int id, String professionalUsername, String description, String name, String frequency) throws MyEntityNotFoundException {
         Prescription prescription = findPrescription(id);
 
         em.lock(prescription, LockModeType.OPTIMISTIC);
@@ -74,6 +74,9 @@ public class PrescriptionBean {
         }
         if (description != null){
             prescription.setDescription(description);
+        }
+        if (frequency != null){
+            prescription.setFrequency(frequency);
         }
         em.merge(prescription);
     }
