@@ -15,6 +15,7 @@ export default {
       prescription: {
         name: null,
         frequency: null,
+        frequencyText: "Per day",
         description: null,
         programId: this.$route.params.id,
       },
@@ -22,6 +23,9 @@ export default {
   },
   methods: {
     createPrescription(prescription) {
+      prescription.frequency =
+        prescription.frequency + " " + prescription.frequencyText;
+
       this.$axios
         .$post("/api/prescriptions", prescription)
         .then(() => {

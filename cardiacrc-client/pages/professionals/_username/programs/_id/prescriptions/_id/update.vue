@@ -23,6 +23,9 @@ export default {
   created() {
     this.$axios.$get(`/api/prescriptions/${this.id}`).then((prescription) => {
       this.prescription = prescription || {};
+      let frequency = prescription.frequency.split(" ");
+      prescription.frequency = frequency[0];
+      prescription.frequencyText = frequency[1] + " " + frequency[2];
     });
   },
   methods: {
@@ -33,6 +36,9 @@ export default {
       if (this.prescription.frequency == prescription.frequency) {
         prescription.frequency = null;
       }
+
+      prescription.frequency =
+        prescription.frequency + " " + prescription.frequencyText;
 
       this.$axios
         .$put(`/api/prescriptions/${this.id}`, prescription)

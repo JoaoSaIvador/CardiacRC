@@ -294,8 +294,8 @@ export default {
   created() {
     this.$axios.$get(`/api/patients/${this.username}`).then((patient) => {
       this.patient = patient || {};
-      this.observations = patient.observations || {};
-      this.programs = patient.programs || {};
+      this.observations = patient.observationDTOS || {};
+      this.programs = patient.programDTOS || {};
     });
   },
   methods: {

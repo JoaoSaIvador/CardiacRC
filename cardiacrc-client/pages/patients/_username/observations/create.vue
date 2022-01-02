@@ -11,14 +11,14 @@
 
 <script>
 export default {
-  middleware: "patientSelf",
+  middleware: "patientSelfOrProfessional",
   data() {
     return {
       dataTypes: null,
       observation: {
         value: null,
         dataTypeId: null,
-        patientUsername: this.$auth.user.sub,
+        patientUsername: this.$route.params.username,
       },
     };
   },

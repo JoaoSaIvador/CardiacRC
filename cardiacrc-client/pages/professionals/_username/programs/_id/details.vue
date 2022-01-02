@@ -90,6 +90,18 @@
                     >
                       <fa :icon="['fas', 'clipboard-list']" />
                     </b-button>
+                    <b-button
+                      variant="primary"
+                      class="
+                        table-button
+                        d-flex
+                        align-items-center
+                        justify-content-center
+                      "
+                      :to="`prescriptions/${row.item.id}/update`"
+                    >
+                      <fa :icon="['fas', 'pen']" />
+                    </b-button>
                   </div>
                 </template>
               </b-table>
@@ -140,6 +152,7 @@ export default {
         { key: "id", sortable: true },
         { key: "name", sortable: true },
         { key: "frequency", sortable: true },
+        { key: "typeName", sortable: true },
         { key: "actions", sortable: false },
       ],
       sortBy: "id",

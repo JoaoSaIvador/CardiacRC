@@ -146,7 +146,10 @@
                 group == 'prescriptions' ||
                 group == 'programs' ||
                 ($auth.user.groups.includes('Professional') &&
-                  group == 'patients')
+                  group == 'patients' &&
+                  associatedPatients.filter(
+                    (p) => p.username == row.item.username
+                  ).length > 0)
               "
               variant="success"
               class="

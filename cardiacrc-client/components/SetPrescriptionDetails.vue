@@ -10,9 +10,7 @@
         bg-light
       "
     >
-      <h2 class="main-title text-center">
-        {{ group.charAt(0).toUpperCase() + group.slice(1) }} Details
-      </h2>
+      <h2 class="main-title text-center">Prescription Details</h2>
       <form class="needs-validation" :disabled="!isFormValid">
         <div class="main-input">
           <b-form-group
@@ -36,13 +34,24 @@
             :invalid-feedback="invalidFrequencyFeedback"
             :state="isFrequencyValid"
           >
-            <b-input
-              id="frequency"
-              type="number"
-              placeholder="Enter a frequency"
-              v-model.trim="localPrescription.frequency"
-              :state="isFrequencyValid"
-            ></b-input>
+            <div class="d-flex flex-row">
+              <b-input
+                class="col-7"
+                id="frequency"
+                type="number"
+                placeholder="Enter a frequency"
+                v-model.trim="localPrescription.frequency"
+                :state="isFrequencyValid"
+              ></b-input>
+              <b-select
+                class="col-5 ml-1"
+                id="frequencyText"
+                v-model="localPrescription.frequencyText"
+                :options="frequencies"
+                required
+              >
+              </b-select>
+            </div>
           </b-form-group>
         </div>
         <div class="main-input">
@@ -105,6 +114,7 @@ export default {
     return {
       errorMsg: false,
       localPrescription: JSON.parse(JSON.stringify(this.prescription)),
+      frequencies: ["Per day", "Per week", "Per month", "Per Year"],
     };
   },
   computed: {

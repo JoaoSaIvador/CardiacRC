@@ -112,16 +112,18 @@ export default {
         return null;
       }
 
-      this.currentDataType = this.dataTypes.find((d) => {
-        return d.id == this.localObservation.dataTypeId;
-      });
+      if (this.localObservation.dataTypeId != null) {
+        this.currentDataType = this.dataTypes.find((d) => {
+          return d.id == this.localObservation.dataTypeId;
+        });
 
-      if (this.localObservation.value < this.currentDataType.min) {
-        return "Value must be greater than Data Type's minimum value!";
-      }
+        if (this.localObservation.value < this.currentDataType.min) {
+          return "Value must be greater than Data Type's minimum value!";
+        }
 
-      if (this.localObservation.value > this.currentDataType.max) {
-        return "Value must be less than Data Type's maximum value!";
+        if (this.localObservation.value > this.currentDataType.max) {
+          return "Value must be less than Data Type's maximum value!";
+        }
       }
 
       return "";
@@ -154,7 +156,7 @@ export default {
         return false;
       }
 
-      if (!this.localObservation.dataTypeId && !this.isDataTypeValid) {
+      if (this.localObservation.dataTypeId != null && !this.isDataTypeValid) {
         return false;
       }
 
