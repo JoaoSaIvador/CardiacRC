@@ -7,7 +7,6 @@
       group="prescription"
       mode="create"
       :professionalPatients="patients"
-      :prescriptions="prescriptions"
     />
     <LoadingPage v-else />
   </div>
@@ -20,12 +19,10 @@ export default {
     return {
       username: this.$auth.user.sub,
       patients: null,
-      prescriptions: null,
       program: {
         duration: null,
         patientUsername: null,
         professionalUsername: this.$auth.user.sub,
-        prescriptionIds: [],
       },
     };
   },
@@ -34,12 +31,6 @@ export default {
       .$get(`/api/professionals/${this.username}/patients`)
       .then((patients) => {
         this.patients = patients;
-      });
-
-    this.$axios
-      .$get(`/api/professionals/${this.username}/prescriptions`)
-      .then((prescriptions) => {
-        this.prescriptions = prescriptions;
       });
   },
   methods: {

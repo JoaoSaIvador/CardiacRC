@@ -50,6 +50,13 @@
             >
               Save
             </b-button>
+            <b-button
+              class="main-button"
+              variant="dark"
+              :to="`prescriptions/create`"
+            >
+              Add Prescription
+            </b-button>
           </div>
         </form>
       </b-container>
@@ -99,12 +106,8 @@ export default {
   },
   methods: {
     updateProgram(program) {
-      if (this.program.duration == program.duration) {
-        program.duration = null;
-      }
-
       this.$axios
-        .$put(`/api/programs/${this.id}`, program)
+        .$patch(`/api/programs/${this.id}`, program)
         .then(() => {
           this.$router.back();
         })

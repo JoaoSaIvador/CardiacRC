@@ -16,7 +16,7 @@ export default {
         name: null,
         frequency: null,
         description: null,
-        professionalUsername: this.$auth.user.sub,
+        programId: this.$route.params.id,
       },
     };
   },

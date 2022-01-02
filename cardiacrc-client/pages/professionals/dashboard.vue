@@ -48,12 +48,15 @@ export default {
           title: "Account Details",
           path: `/professionals/${this.$auth.user.sub}/details`,
         },
-        { title: "Manage Patients", path: `/patients` },
+        {
+          title: "Update Account Details",
+          path: `/professionals/${this.$auth.user.sub}/update`,
+        },
       ],
       cards2: [
         {
-          title: "Manage Prescriptions",
-          path: `/professionals/${this.$auth.user.sub}/prescriptions`,
+          title: "Manage Patients",
+          path: `/patients`,
         },
         {
           title: "Manage CRPs",
