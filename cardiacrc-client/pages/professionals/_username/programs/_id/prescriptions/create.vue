@@ -15,6 +15,7 @@ export default {
       prescription: {
         name: null,
         frequency: null,
+        frequencyText: "Per day",
         description: null,
         programId: this.$route.params.id,
       },
@@ -22,14 +23,17 @@ export default {
   },
   methods: {
     createPrescription(prescription) {
+      prescription.frequency =
+        prescription.frequency + " " + prescription.frequencyText;
+
       this.$axios
         .$post("/api/prescriptions", prescription)
-        .then(() => {
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
           this.$router.back();
         })
         .catch((error) => {
-          //this.errorMsg = error.response.data;
-          //Notification
+          this.$toast.error(error.response.data).goAway(3000);
         });
     },
   },

@@ -294,8 +294,8 @@ export default {
   created() {
     this.$axios.$get(`/api/patients/${this.username}`).then((patient) => {
       this.patient = patient || {};
-      this.observations = patient.observations || {};
-      this.programs = patient.programs || {};
+      this.observations = patient.observationDTOS || {};
+      this.programs = patient.programDTOS || {};
     });
   },
   methods: {
@@ -307,8 +307,12 @@ export default {
       if (confirmation) {
         this.$axios
           .$delete(`/api/observations/${this.affectedLine}`)
-          .then(() => {
+          .then((response) => {
+            this.$toast.success(response).goAway(3000);
             window.location.reload();
+          })
+          .catch((error) => {
+            this.$toast.error(error.response.data).goAway(3000);
           });
       }
     },

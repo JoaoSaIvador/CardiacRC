@@ -23,6 +23,9 @@ export default {
   created() {
     this.$axios.$get(`/api/prescriptions/${this.id}`).then((prescription) => {
       this.prescription = prescription || {};
+      let frequency = prescription.frequency.split(" ");
+      prescription.frequency = frequency[0];
+      prescription.frequencyText = frequency[1] + " " + frequency[2];
     });
   },
   methods: {
@@ -34,14 +37,17 @@ export default {
         prescription.frequency = null;
       }
 
+      prescription.frequency =
+        prescription.frequency + " " + prescription.frequencyText;
+
       this.$axios
         .$put(`/api/prescriptions/${this.id}`, prescription)
-        .then(() => {
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
           this.$router.back();
         })
         .catch((error) => {
-          //this.errorMsg = error.response.data;
-          //Notification
+          this.$toast.error(error.response.data).goAway(3000);
         });
     },
   },

@@ -46,9 +46,15 @@ export default {
   },
   methods: {
     deletePatient(username) {
-      this.$axios.$delete(`/api/patients/${username}`).then(() => {
-        window.location.reload();
-      });
+      this.$axios
+        .$delete(`/api/patients/${username}`)
+        .then((response) => {
+          this.$toast.success(response).goAway(3000);
+          window.location.reload();
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data).goAway(3000);
+        });
     },
   },
 };

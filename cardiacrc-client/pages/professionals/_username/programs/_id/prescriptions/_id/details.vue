@@ -46,11 +46,7 @@
             >
               Back
             </b-button>
-            <b-button
-              class="main-button"
-              variant="dark"
-              :to="`/prescriptions/${prescription.id}/update`"
-            >
+            <b-button class="main-button" variant="dark" :to="`update`">
               Update
             </b-button>
           </div>
