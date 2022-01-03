@@ -23,6 +23,7 @@ export default {
         { key: "unit", sortable: true },
         { key: "min", sortable: true },
         { key: "max", sortable: true },
+        { key: "deleted", sortable: true },
         { key: "actions", sortable: false },
       ],
       dataTypes: null,
