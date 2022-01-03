@@ -23,6 +23,7 @@ export default {
         { key: "email", sortable: true },
         { key: "licenseNumber", sortable: true },
         { key: "typeName", sortable: true },
+        { key: "deleted", sortable: true },
         { key: "actions", sortable: false },
       ],
       professionals: null,

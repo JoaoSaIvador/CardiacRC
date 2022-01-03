@@ -18,16 +18,31 @@ export default {
   middleware: "adminOrProfessional",
   data() {
     return {
-      fields: [
-        { key: "username", sortable: true },
-        { key: "name", sortable: true },
-        { key: "email", sortable: true },
-        { key: "healthNumber", sortable: true },
-        { key: "actions", sortable: false },
-      ],
       patients: null,
       associatedPatients: null,
     };
+  },
+  computed: {
+    fields() {
+      if (this.$auth.user.groups.includes("Administrator")) {
+        return [
+          { key: "username", sortable: true },
+          { key: "name", sortable: true },
+          { key: "email", sortable: true },
+          { key: "healthNumber", sortable: true },
+          { key: "deleted", sortable: true },
+          { key: "actions", sortable: false },
+        ];
+      } else {
+        return [
+          { key: "username", sortable: true },
+          { key: "name", sortable: true },
+          { key: "email", sortable: true },
+          { key: "healthNumber", sortable: true },
+          { key: "actions", sortable: false },
+        ];
+      }
+    },
   },
   created() {
     this.$axios.$get("/api/patients").then((patients) => {
