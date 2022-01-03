@@ -17,7 +17,7 @@ public class ObservationBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String patientUsername, double value, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String ownerUsername, String patientUsername, double value, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
         Patient patient =  em.find(Patient.class, patientUsername);
         if(patient == null) {
             throw new MyEntityNotFoundException("Patient does not exist!");
@@ -30,7 +30,7 @@ public class ObservationBean {
 
         try {
 
-            Observation observation = new Observation(patient, value, quantitativeDataType);
+            Observation observation = new Observation(ownerUsername, patient, value, quantitativeDataType);
             em.persist(observation);
             patient.addPatientData(observation);
         } catch (ConstraintViolationException e) {

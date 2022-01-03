@@ -17,23 +17,24 @@ public class QualityDataTypeBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String name, double min, double max, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String name, double min, double max, int dataTypeId) throws MyEntityNotFoundException, MyConstraintViolationException, MyIllegalArgumentException {
         QuantitativeDataType dataType = em.find(QuantitativeDataType.class, dataTypeId);
         if (dataType == null){
             throw new MyEntityNotFoundException("Datatype not found!");
         }
+        if (dataType.getMin() > min){
+            throw new MyIllegalArgumentException("Invalid minimum for qualitative dataType!");
+        }
+        if (dataType.getMax() < max){
+            throw new MyIllegalArgumentException("Invalid maximum for qualitative dataType!");
+        }
+        verifyIntervals(dataType, min, max);
         try {
-            if (dataType.getMin() > min){
-                throw new MyIllegalArgumentException("Invalid minimum for qualitative dataType!");
-            }
-            if (dataType.getMax() < max){
-                throw new MyIllegalArgumentException("Invalid maximum for qualitative dataType!");
-            }
             QualitativeDataType qualitativeDataType = new QualitativeDataType(name,min,max,dataType);
             dataType.addQualityDataType(qualitativeDataType);
             em.persist(qualitativeDataType);
-        }catch (ConstraintViolationException | MyIllegalArgumentException e){
-            throw new MyConstraintViolationException((ConstraintViolationException) e);
+        }catch (ConstraintViolationException e){
+            throw new MyConstraintViolationException(e);
         }
     }
 
@@ -63,6 +64,7 @@ public class QualityDataTypeBean {
         if (max != -1 && max < dataType.getMax()){
             qualitativeDataType.setMax(max);
         }
+        verifyIntervals(dataType,qualitativeDataType.getMin(), qualitativeDataType.getMax());
         em.merge(qualitativeDataType);
     }
 
@@ -76,5 +78,16 @@ public class QualityDataTypeBean {
 
         qualitativeDataType.getQuantitativeDataType().removeQualityDataType(qualitativeDataType);
         em.remove(qualitativeDataType);
+    }
+
+    protected void verifyIntervals(QuantitativeDataType dataType, double min, double max) throws MyIllegalArgumentException {
+        for (QualitativeDataType type : dataType.getDataTypes()) {
+            if (min >= type.getMax()){
+                continue;
+            }
+            if (!(max <= dataType.getMin())){
+                throw new MyIllegalArgumentException("Invalid interval for qualitative dataType!");
+            }
+        }
     }
 }

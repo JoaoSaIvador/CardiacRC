@@ -71,6 +71,7 @@ public class ProfessionalService {
         );
 
         List<PatientDTO> patientDTOS = patientsToDTOs(professional.getPatients());
+        patientDTOS.removeIf(PatientDTO::isDeleted);
         professionalDTO.setPatientDTOs(patientDTOS);
 
         List<ProgramDTO> programDTOS = programsToDTOs(professional.getPrograms());

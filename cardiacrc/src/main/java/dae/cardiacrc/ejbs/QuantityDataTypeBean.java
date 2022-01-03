@@ -4,6 +4,7 @@ import dae.cardiacrc.entities.QualitativeDataType;
 import dae.cardiacrc.entities.QuantitativeDataType;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
+import dae.cardiacrc.exceptions.MyIllegalArgumentException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,7 +18,11 @@ public class QuantityDataTypeBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String name, String unit, double min, double max) throws MyConstraintViolationException {
+    public void create(String name, String unit, double min, double max) throws MyConstraintViolationException, MyIllegalArgumentException {
+        if (min > max){
+            throw new MyIllegalArgumentException("Minimum value is greater than maximum value");
+        }
+
         try {
             QuantitativeDataType quantitativeDataType = new QuantitativeDataType(name, unit, min, max);
             em.persist(quantitativeDataType);
@@ -53,10 +58,14 @@ public class QuantityDataTypeBean {
             quantitativeDataType.setUnit(unit);
         }
         if (min != -1){
-            quantitativeDataType.setMin(min);
+            if (min < quantitativeDataType.getMax()){
+                quantitativeDataType.setMin(min);
+            }
         }
         if (max != -1){
-            quantitativeDataType.setMax(max);
+            if (max > quantitativeDataType.getMin()){
+                quantitativeDataType.setMax(max);
+            }
         }
         em.merge(quantitativeDataType);
     }

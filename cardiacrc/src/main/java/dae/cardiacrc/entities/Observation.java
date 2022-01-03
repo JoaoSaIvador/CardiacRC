@@ -21,6 +21,8 @@ public class Observation {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "datatype_id")
     private int id;
 
+    private String observer;
+
     @ManyToOne
     @JoinColumn(name = "patient_username")
     @NotNull
@@ -45,8 +47,9 @@ public class Observation {
     public Observation() {
     }
 
-    public Observation(Patient patient, double value, QuantitativeDataType quantitativeDataType) {
+    public Observation(String observer, Patient patient, double value, QuantitativeDataType quantitativeDataType) {
         SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        this.observer = observer;
         this.patient = patient;
         this.value = value;
         this.quantitativeDataType = quantitativeDataType;
@@ -93,5 +96,13 @@ public class Observation {
     public void setDate(String date) {
         SimpleDateFormat formatter= new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
         this.date = formatter.format(date);
+    }
+
+    public String getObserver() {
+        return observer;
+    }
+
+    public void setObserver(String observer) {
+        this.observer = observer;
     }
 }

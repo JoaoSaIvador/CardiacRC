@@ -91,7 +91,7 @@ public class DataTypeService {
     @POST
     @Path("/")
     @RolesAllowed("Administrator")
-    public Response createNewDataType(QuantitativeDataTypeDTO quantitativeDataTypeDTO) throws MyConstraintViolationException {
+    public Response createNewDataType(QuantitativeDataTypeDTO quantitativeDataTypeDTO) throws MyConstraintViolationException, MyIllegalArgumentException {
         quantityDataTypeBean.create(
                 quantitativeDataTypeDTO.getName(),
                 quantitativeDataTypeDTO.getUnit(),
@@ -103,7 +103,7 @@ public class DataTypeService {
     @POST
     @Path("{dataType}/qualitatives")
     @RolesAllowed("Administrator")
-    public Response createNewQualitativeDataType(@PathParam("dataType") int id, QualitativeDataTypeDTO qualitativeDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
+    public Response createNewQualitativeDataType(@PathParam("dataType") int id, QualitativeDataTypeDTO qualitativeDTO) throws MyConstraintViolationException, MyEntityNotFoundException, MyIllegalArgumentException {
         qualitativeDataTypeBean.create(
                 qualitativeDTO.getName(),
                 qualitativeDTO.getMin(),

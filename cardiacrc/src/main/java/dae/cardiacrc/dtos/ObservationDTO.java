@@ -2,6 +2,7 @@ package dae.cardiacrc.dtos;
 
 public class ObservationDTO {
     private int id;
+    private String observer;
     private String patientUsername;
     private String patientName;
     private double value;
@@ -13,7 +14,7 @@ public class ObservationDTO {
     public ObservationDTO() {
     }
 
-    public ObservationDTO(int id, String patientUsername, String patientName, double value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
+    public ObservationDTO(int id, String observer, String patientUsername, String patientName, double value, int dataTypeId, String dataTypeName, String qualitativeName, String date) {
         this.id = id;
         this.patientUsername = patientUsername;
         this.patientName = patientName;
@@ -86,5 +87,13 @@ public class ObservationDTO {
 
     public void setQualitativeName(String qualitativeName) {
         this.qualitativeName = qualitativeName;
+    }
+
+    public String getObserver() {
+        return observer;
+    }
+
+    public void setObserver(String observer) {
+        this.observer = observer;
     }
 }

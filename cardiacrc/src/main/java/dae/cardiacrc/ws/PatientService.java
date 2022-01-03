@@ -101,6 +101,7 @@ public class PatientService {
     private ObservationDTO patientDataToDTO(Observation observation) {
         return  new ObservationDTO(
                 observation.getId(),
+                observation.getObserver(),
                 observation.getPatient().getUsername(),
                 observation.getPatient().getName(),
                 observation.getValue(),

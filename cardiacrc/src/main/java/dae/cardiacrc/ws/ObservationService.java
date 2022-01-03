@@ -32,10 +32,11 @@ public class ObservationService {
     @Context
     private SecurityContext securityContext;
 
-    // Converts an entity Program to a DTO Program class
+    // Converts an entity Observation to a DTO Observation class
     private ObservationDTO toDTO(Observation observation) {
         return new ObservationDTO(
                 observation.getId(),
+                observation.getObserver(),
                 observation.getPatient().getUsername(),
                 observation.getPatient().getName(),
                 observation.getValue(),
@@ -74,7 +75,7 @@ public class ObservationService {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
 
-        observationBean.create(observationDTO.getPatientUsername(), observationDTO.getValue(), observationDTO.getDataTypeId());
+        observationBean.create(principal.getName(), observationDTO.getPatientUsername(), observationDTO.getValue(), observationDTO.getDataTypeId());
         return Response.status(Response.Status.CREATED).entity("Observation created!").build();
     }
 

@@ -58,7 +58,7 @@ public class ConfigBean {
             patientBean.create("joaosalvador", 123456789, "João Salvador", "123456", "joao.salvador@mail.com");
             patientBean.create("mario", 123446789, "It's a me a Mario", "123456", "mario@mail.com");
 
-            observationBean.create("mario",2.5,1);
+            observationBean.create("mario", "mario",2.5,1);
 
             programBean.create("7","joaosalvador","marcopolo",null);
 
