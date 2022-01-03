@@ -10,11 +10,11 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(
-                name = "getAllPatients",
+                name = "getPatients",
                 query = "SELECT p FROM Patient p WHERE p.deleted = false ORDER BY p.name"
         ),
         @NamedQuery(
-                name = "getPatients",
+                name = "getAllPatients",
                 query = "SELECT p FROM Patient p ORDER BY p.name"
         )
 })
