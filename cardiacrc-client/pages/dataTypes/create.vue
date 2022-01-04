@@ -10,6 +10,11 @@
 <script>
 export default {
   middleware: "admin",
+  head() {
+    return {
+      title: "Data Type Details",
+    };
+  },
   data() {
     return {
       dataType: {

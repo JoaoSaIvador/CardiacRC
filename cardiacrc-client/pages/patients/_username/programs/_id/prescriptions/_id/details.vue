@@ -57,6 +57,11 @@
 <script>
 export default {
   middleware: "patientSelf",
+  head() {
+    return {
+      title: "Prescription Details",
+    };
+  },
   data() {
     return {
       prescription: null,

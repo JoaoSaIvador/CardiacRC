@@ -12,6 +12,11 @@ import * as auxiliary from "../../utils/auxiliary.js";
 
 export default {
   middleware: "professional",
+  head() {
+    return {
+      title: "Patient Details",
+    };
+  },
   data() {
     return {
       patient: {

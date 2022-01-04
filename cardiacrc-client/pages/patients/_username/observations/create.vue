@@ -12,6 +12,11 @@
 <script>
 export default {
   middleware: "patientSelfOrProfessional",
+  head() {
+    return {
+      title: "Observation Details",
+    };
+  },
   data() {
     return {
       dataTypes: null,

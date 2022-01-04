@@ -15,6 +15,11 @@
 <script>
 export default {
   middleware: "professionalSelf",
+  head() {
+    return {
+      title: "Program Details",
+    };
+  },
   data() {
     return {
       username: this.$auth.user.sub,

@@ -12,6 +12,11 @@
 <script>
 export default {
   middleware: "professionalSelf",
+  head() {
+    return {
+      title: "Professional Details",
+    };
+  },
   data() {
     return {
       professional: null,

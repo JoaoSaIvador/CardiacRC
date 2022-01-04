@@ -14,6 +14,11 @@
 <script>
 export default {
   middleware: "adminSelf",
+  head() {
+    return {
+      title: "Administrator Details",
+    };
+  },
   data() {
     return {
       administrator: null,

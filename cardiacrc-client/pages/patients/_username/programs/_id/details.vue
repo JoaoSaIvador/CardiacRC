@@ -123,6 +123,11 @@
 <script>
 export default {
   middleware: "patientSelf",
+  head() {
+    return {
+      title: "Program Details",
+    };
+  },
   data() {
     return {
       program: null,

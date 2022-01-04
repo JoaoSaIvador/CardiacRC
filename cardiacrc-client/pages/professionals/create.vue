@@ -10,6 +10,11 @@
 <script>
 export default {
   middleware: "admin",
+  head() {
+    return {
+      title: "Professional Details",
+    };
+  },
   data() {
     return {
       professional: {

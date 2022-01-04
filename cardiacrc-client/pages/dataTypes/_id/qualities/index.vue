@@ -20,6 +20,11 @@ export default {
   components: {
     UserTable,
   },
+  head() {
+    return {
+      title: "Qualities",
+    };
+  },
   data() {
     return {
       fields: [

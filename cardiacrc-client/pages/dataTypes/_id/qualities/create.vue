@@ -12,6 +12,11 @@
 <script>
 export default {
   middleware: "admin",
+  head() {
+    return {
+      title: "Quality Details",
+    };
+  },
   data() {
     return {
       dataType: null,

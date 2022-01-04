@@ -40,6 +40,11 @@
 <script>
 export default {
   middleware: "professional",
+  head() {
+    return {
+      title: "Professional Dashboard",
+    };
+  },
   data() {
     return {
       counterData: null,

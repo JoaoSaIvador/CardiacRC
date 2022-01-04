@@ -10,6 +10,11 @@
 <script>
 export default {
   middleware: "professionalSelf",
+  head() {
+    return {
+      title: "Prescription Details",
+    };
+  },
   data() {
     return {
       prescription: {

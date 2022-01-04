@@ -122,6 +122,11 @@
 <script>
 export default {
   middleware: "professionalSelf",
+  head() {
+    return {
+      title: "Manage Associated Patients",
+    };
+  },
   data() {
     return {
       fields: [

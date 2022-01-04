@@ -14,6 +14,11 @@
 <script>
 export default {
   middleware: "patientUpdate",
+  head() {
+    return {
+      title: "Patient Details",
+    };
+  },
   data() {
     return {
       patient: null,

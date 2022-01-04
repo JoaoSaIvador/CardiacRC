@@ -16,6 +16,11 @@
 <script>
 export default {
   middleware: "admin",
+  head() {
+    return {
+      title: "Manage Data Types",
+    };
+  },
   data() {
     return {
       fields: [

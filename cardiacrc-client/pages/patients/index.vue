@@ -17,6 +17,11 @@
 <script>
 export default {
   middleware: "adminOrProfessional",
+  head() {
+    return {
+      title: "Manage Patients",
+    };
+  },
   data() {
     return {
       patients: null,

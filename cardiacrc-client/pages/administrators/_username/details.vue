@@ -12,6 +12,11 @@
 <script>
 export default {
   middleware: "adminSelf",
+  head() {
+    return {
+      title: "Administrator Details",
+    };
+  },
   data() {
     return {
       username: this.$route.params.username,

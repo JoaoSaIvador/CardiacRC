@@ -15,6 +15,11 @@
 <script>
 export default {
   middleware: "professionalSelf",
+  head() {
+    return {
+      title: "Manage Prescriptions",
+    };
+  },
   data() {
     return {
       fields: [

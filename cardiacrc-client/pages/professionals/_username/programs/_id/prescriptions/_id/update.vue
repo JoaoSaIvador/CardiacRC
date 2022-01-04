@@ -14,6 +14,11 @@
 <script>
 export default {
   middleware: "professional",
+  head() {
+    return {
+      title: "Prescription Details",
+    };
+  },
   data() {
     return {
       prescription: null,

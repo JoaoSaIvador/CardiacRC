@@ -16,6 +16,11 @@
 <script>
 export default {
   middleware: "admin",
+  head() {
+    return {
+      title: "Manage Professionals",
+    };
+  },
   data() {
     return {
       fields: [

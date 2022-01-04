@@ -16,6 +16,11 @@
 <script>
 export default {
   middleware: "admin",
+  head() {
+    return {
+      title: "Manage Administrators",
+    };
+  },
   data() {
     return {
       fields: [
@@ -50,9 +55,11 @@ export default {
       this.$axios
         .$get("/api/administrators/export", { responseType: "arraybuffer" })
         .then((file) => {
-          const url = window.URL.createObjectURL(new Blob([file],{
-            type: 'application/vnd.ms-excel'
-          }));
+          const url = window.URL.createObjectURL(
+            new Blob([file], {
+              type: "application/vnd.ms-excel",
+            })
+          );
           const link = document.createElement("a");
           link.href = url;
           link.setAttribute("download", "administrators.xlsx");

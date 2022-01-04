@@ -37,6 +37,11 @@
 <script>
 export default {
   middleware: "admin",
+  head() {
+    return {
+      title: "Administrator Dashboard",
+    };
+  },
   data() {
     return {
       counterData: null,

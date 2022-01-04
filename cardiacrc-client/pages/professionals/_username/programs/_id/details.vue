@@ -145,6 +145,11 @@
 <script>
 export default {
   middleware: "professionalSelf",
+  head() {
+    return {
+      title: "Program Details",
+    };
+  },
   data() {
     return {
       program: null,

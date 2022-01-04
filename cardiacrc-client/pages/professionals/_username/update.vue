@@ -14,6 +14,11 @@
 <script>
 export default {
   middleware: "professionalUpdate",
+  head() {
+    return {
+      title: "Professional Details",
+    };
+  },
   data() {
     return {
       professional: null,

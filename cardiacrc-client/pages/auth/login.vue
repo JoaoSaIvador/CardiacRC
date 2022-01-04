@@ -58,6 +58,11 @@ import * as auxiliary from "../../utils/auxiliary.js";
 export default {
   layout: "login",
   auth: false,
+  head() {
+    return {
+      title: "CardiacRC",
+    };
+  },
   data() {
     return {
       username: null,

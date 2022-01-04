@@ -254,6 +254,11 @@
 <script>
 export default {
   middleware: "patientSelfOrProfessional",
+  head() {
+    return {
+      title: "Patient Dashboard",
+    };
+  },
   data() {
     return {
       patient: null,
