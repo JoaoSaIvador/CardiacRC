@@ -51,10 +51,14 @@ export default {
       this.$axios
         .$get("/api/professionals/export", { responseType: "arraybuffer" })
         .then((file) => {
-          const url = window.URL.createObjectURL(new Blob([file]));
+          const url = window.URL.createObjectURL(
+            new Blob([file], {
+              type: "application/vnd.ms-excel",
+            })
+          );
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", fileToDownload.filename);
+          link.setAttribute("download", "professionals.xlsx");
           document.body.appendChild(link);
           link.click();
         });
