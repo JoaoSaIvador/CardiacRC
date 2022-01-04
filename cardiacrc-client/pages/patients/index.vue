@@ -24,8 +24,29 @@ export default {
     };
   },
   computed: {
+    isPatient() {
+      if (this.$auth.user ?? false) {
+        return this.$auth.user.groups.includes("Patient");
+      }
+      return false;
+    },
+
+    isProfessional() {
+      if (this.$auth.user ?? false) {
+        return this.$auth.user.groups.includes("Professional");
+      }
+      return false;
+    },
+
+    isAdministrator() {
+      if (this.$auth.user ?? false) {
+        return this.$auth.user.groups.includes("Administrator");
+      }
+      return false;
+    },
+
     fields() {
-      if (this.$auth.user.groups.includes("Administrator")) {
+      if (this.isAdministrator) {
         return [
           { key: "username", sortable: true },
           { key: "name", sortable: true },
@@ -50,7 +71,7 @@ export default {
       this.patients = patients;
     });
 
-    if (this.$auth.user.groups.includes("Professional")) {
+    if (this.isProfessional) {
       this.$axios
         .$get(`/api/professionals/${this.$auth.user.sub}/patients`)
         .then((associatedPatients) => {

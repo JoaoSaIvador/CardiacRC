@@ -19,29 +19,21 @@
             Back
           </b-button>
           <b-button
-            v-if="
-              !$auth.user.groups.includes('Patient') &&
-              !(
-                group == 'patients' &&
-                $auth.user.groups.includes('Administrator')
-              )
-            "
+            v-if="!isPatient && !(group == 'patients' && isAdministrator)"
             variant="dark"
             :to="`${group}/create`"
           >
             Create
           </b-button>
           <b-button
-            v-if="
-              group == 'patients' && $auth.user.groups.includes('Professional')
-            "
+            v-if="group == 'patients' && isProfessional"
             variant="dark"
             :to="`professionals/${this.$auth.user.sub}/associatedPatients`"
           >
             Associated Patients
           </b-button>
           <b-button
-            v-if="$auth.user.groups.includes('Administrator')"
+            v-if="isAdministrator"
             variant="dark"
             @click.prevent="$emit('export')"
           >
@@ -112,7 +104,7 @@
             <b-button
               v-if="
                 group == 'patients' &&
-                $auth.user.groups.includes('Professional') &&
+                isProfessional &&
                 !associatedPatients.filter(
                   (p) => p.username == row.item.username
                 ).length > 0
@@ -131,10 +123,7 @@
               <span class="button-text">&nbsp;Associate</span>
             </b-button>
             <b-button
-              v-else-if="
-                group == 'patients' &&
-                $auth.user.groups.includes('Professional')
-              "
+              v-else-if="group == 'patients' && isProfessional"
               variant="dark"
               class="
                 table-button
@@ -152,7 +141,7 @@
               v-if="
                 group == 'prescriptions' ||
                 group == 'programs' ||
-                ($auth.user.groups.includes('Professional') &&
+                (isProfessional &&
                   group == 'patients' &&
                   associatedPatients.filter(
                     (p) => p.username == row.item.username
@@ -172,7 +161,15 @@
               <fa :icon="['fas', 'clipboard-list']" />
             </b-button>
             <b-button
-              v-if="group != 'administrators' && !row.item.deleted"
+              v-if="
+                group != 'administrators' &&
+                !row.item.deleted &&
+                isProfessional &&
+                group == 'patients' &&
+                associatedPatients.filter(
+                  (p) => p.username == row.item.username
+                ).length > 0
+              "
               variant="primary"
               class="
                 table-button
@@ -235,6 +232,28 @@ export default {
       isShowConfirmation: false,
       affectedLine: null,
     };
+  },
+  computed: {
+    isPatient() {
+      if (this.$auth.user ?? false) {
+        return this.$auth.user.groups.includes("Patient");
+      }
+      return false;
+    },
+
+    isProfessional() {
+      if (this.$auth.user ?? false) {
+        return this.$auth.user.groups.includes("Professional");
+      }
+      return false;
+    },
+
+    isAdministrator() {
+      if (this.$auth.user ?? false) {
+        return this.$auth.user.groups.includes("Administrator");
+      }
+      return false;
+    },
   },
   methods: {
     showConfirmation(affectedLine) {
