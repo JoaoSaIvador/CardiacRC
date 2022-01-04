@@ -172,7 +172,7 @@
               <fa :icon="['fas', 'clipboard-list']" />
             </b-button>
             <b-button
-              v-if="group != 'administrators'"
+              v-if="group != 'administrators' && !row.item.deleted"
               variant="primary"
               class="
                 table-button
@@ -187,6 +187,7 @@
               <fa :icon="['fas', 'pen']" />
             </b-button>
             <b-button
+              v-if="!row.item.deleted"
               variant="danger"
               class="
                 table-button
