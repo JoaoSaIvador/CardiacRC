@@ -85,7 +85,7 @@ public class ProgramService {
     @POST
     @Path("/")
     public Response createNewProgram(ProgramDTO programDTO) throws MyConstraintViolationException, MyEntityNotFoundException {
-        programBean.create(programDTO.getDuration(), programDTO.getPatientUsername(), programDTO.getProfessionalUsername(), programDTO.getPrescriptionIds());
+        programBean.create(programDTO.getDuration(), programDTO.getPatientUsername(), programDTO.getProfessionalUsername());
         return Response.status(Response.Status.CREATED).entity("Program created!").build();
     }
 

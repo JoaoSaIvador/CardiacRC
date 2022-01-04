@@ -119,6 +119,7 @@ public class AdministratorService {
         Sheet sheet = workbook.createSheet("Administrators");
         sheet.setColumnWidth(0, 6000);
         sheet.setColumnWidth(1, 4000);
+        sheet.setColumnWidth(2, 7000);
 
         Row header = sheet.createRow(0);
 
@@ -172,8 +173,8 @@ public class AdministratorService {
         workbook.write(outputStream);
         workbook.close();
 
-        File file = new File(path + File.separator + filename);
-        System.out.println(path + File.separator + filename);
+        File file = new File(fileLocation);
+
 
         Response.ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition", "attachment;filename=" +

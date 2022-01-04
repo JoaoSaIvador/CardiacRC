@@ -12,7 +12,6 @@ public class ProgramDTO implements Serializable {
     private String startDate;
     private String patientUsername;
     private String patientName;
-    private int prescriptionIds[];
     private List<PrescriptionDTO> prescriptionsDTOs;
 
     public ProgramDTO(int id, String professionalUsername, String professionalName ,String patientUsername, String patientName, String startDate, String duration) {
@@ -93,13 +92,5 @@ public class ProgramDTO implements Serializable {
 
     public void setPatientName(String patientName) {
         this.patientName = patientName;
-    }
-
-    public int[] getPrescriptionIds() {
-        return prescriptionIds;
-    }
-
-    public void setPrescriptionIds(int[] prescriptionIds) {
-        this.prescriptionIds = prescriptionIds;
     }
 }

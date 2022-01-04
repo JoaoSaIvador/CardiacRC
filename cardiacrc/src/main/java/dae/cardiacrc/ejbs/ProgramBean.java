@@ -20,7 +20,7 @@ public class ProgramBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String duration, String patientUserName, String professionalUsername, int prescriptionIds[]) throws MyEntityNotFoundException, MyConstraintViolationException {
+    public void create(String duration, String patientUserName, String professionalUsername) throws MyEntityNotFoundException, MyConstraintViolationException {
         Patient patient = em.find(Patient.class, patientUserName);
         if (patient == null){
             throw new MyEntityNotFoundException("Patient not found!");
@@ -34,15 +34,6 @@ public class ProgramBean {
             Program program = new Program(duration, patient, professional);
             professional.addProgram(program);
             patient.addProgram(program);
-            if (prescriptionIds != null){
-                for (int prescriptionId : prescriptionIds) {
-                    Prescription prescription = em.find(Prescription.class,prescriptionId);
-                    if (prescription == null){
-                        throw new MyEntityNotFoundException("Prescription not found!");
-                    }
-                    program.addPrescription(prescription);
-                }
-            }
             em.persist(program);
         }catch (ConstraintViolationException e){
             throw new MyConstraintViolationException(e);

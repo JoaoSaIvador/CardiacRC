@@ -60,7 +60,7 @@ public class ConfigBean {
 
             observationBean.create("mario", "mario",2.5,1);
 
-            programBean.create("7","joaosalvador","marcopolo",null);
+            programBean.create("7","joaosalvador","marcopolo");
 
             prescriptionBean.create("tomasalves","testeCardiologia", "prescricao1",1,"10");
             prescriptionBean.create("marcopolo","testeNutricao","prescricao2",1, "1");
