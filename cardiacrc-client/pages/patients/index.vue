@@ -7,6 +7,7 @@
       sortBy="username"
       group="patients"
       @delete="deletePatient"
+      @export="exportPatients"
       :associatedPatients="associatedPatients"
     />
     <LoadingPage v-else />
@@ -70,6 +71,9 @@ export default {
         .catch((error) => {
           this.$toast.error(error.response.data).goAway(3000);
         });
+    },
+    exportPatients() {
+      this.$axios.$get("/api/patients/export");
     },
   },
 };

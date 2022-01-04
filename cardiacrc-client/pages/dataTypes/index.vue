@@ -7,6 +7,7 @@
       sortBy="id"
       group="dataTypes"
       @delete="deleteDataType"
+      @export="exportDataTypes"
     />
     <LoadingPage v-else />
   </div>
@@ -45,6 +46,9 @@ export default {
         .catch((error) => {
           this.$toast.error(error.response.data).goAway(3000);
         });
+    },
+    exportDataTypes() {
+      this.$axios.$get("/api/dataTypes/export");
     },
   },
 };

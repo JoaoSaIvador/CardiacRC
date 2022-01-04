@@ -7,6 +7,7 @@
       sortBy="username"
       group="professionals"
       @delete="deleteProfessional"
+      @export="exportProfessionals"
     />
     <LoadingPage v-else />
   </div>
@@ -45,6 +46,9 @@ export default {
         .catch((error) => {
           this.$toast.error(error.response.data).goAway(3000);
         });
+    },
+    exportProfessionals() {
+      this.$axios.$get("/api/professionals/export");
     },
   },
 };
