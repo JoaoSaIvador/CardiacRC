@@ -7,6 +7,7 @@
       sortBy="username"
       group="administrators"
       @delete="deleteAdministrator"
+      @export="exportAdministrators"
     />
     <LoadingPage v-else />
   </div>
@@ -44,6 +45,9 @@ export default {
         .catch((error) => {
           this.$toast.error(error.response.data).goAway(3000);
         });
+    },
+    exportAdministrators() {
+      this.$axios.$get("/api/administrators/export");
     },
   },
 };

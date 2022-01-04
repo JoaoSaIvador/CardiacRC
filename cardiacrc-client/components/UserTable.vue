@@ -40,6 +40,13 @@
           >
             Associated Patients
           </b-button>
+          <b-button
+            v-if="$auth.user.groups.includes('Administrator')"
+            variant="dark"
+            @click.prevent="$emit('export')"
+          >
+            Export
+          </b-button>
         </div>
         <div v-if="items.length > 0">
           <b-form-group style="margin: 0">
