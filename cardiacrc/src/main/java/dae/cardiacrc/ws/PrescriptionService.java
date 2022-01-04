@@ -58,7 +58,8 @@ public class PrescriptionService {
         Prescription prescription = prescriptionBean.findPrescription(id);
         Principal principal = securityContext.getUserPrincipal();
         if(!(securityContext.isUserInRole("Administrator") ||
-                securityContext.isUserInRole("Professional")  && prescription.getProfessional().getUsername().equals(principal.getName()))) {
+                securityContext.isUserInRole("Professional")  && prescription.getProfessional().getUsername().equals(principal.getName()) ||
+                securityContext.isUserInRole("Patient") && prescription.getProgram().getPatient().getUsername().equals(principal.getName()))) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
         return Response.ok(toDTO(prescription)).build();
