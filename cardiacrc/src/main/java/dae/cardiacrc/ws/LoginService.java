@@ -31,6 +31,9 @@ public class LoginService {
         try {
             Person person = administratorBean.authenticate(authDTO.getUsername(), authDTO.getPassword());
             if (person != null) {
+                if (person.isDeleted()){
+                    return Response.status(Response.Status.UNAUTHORIZED).build();
+                }
                 if (person.getUsername() != null) {
                     log.info("Generating JWT for user " + person.getUsername());
                 }
