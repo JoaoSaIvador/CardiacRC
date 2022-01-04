@@ -110,7 +110,7 @@ public class AdministratorService {
 
     @GET
     @Path("/export")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+//    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("Administrator")
     public Response export() throws IOException {
         String filename = "administrators.xlsx";
@@ -174,7 +174,6 @@ public class AdministratorService {
         workbook.close();
 
         File file = new File(fileLocation);
-
 
         Response.ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition", "attachment;filename=" +

@@ -175,7 +175,7 @@ public class DataTypeService {
 
     @GET
     @Path("/export")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+//    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("Administrator")
     public Response export() throws IOException {
         String filename = "dataTypes.xlsx";

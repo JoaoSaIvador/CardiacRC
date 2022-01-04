@@ -47,7 +47,18 @@ export default {
         });
     },
     exportAdministrators() {
-      this.$axios.$get("/api/administrators/export");
+      this.$axios
+        .$get("/api/administrators/export", { responseType: "arraybuffer" })
+        .then((file) => {
+          const url = window.URL.createObjectURL(new Blob([file],{
+            type: 'application/vnd.ms-excel'
+          }));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "administrators.xlsx");
+          document.body.appendChild(link);
+          link.click();
+        });
     },
   },
 };

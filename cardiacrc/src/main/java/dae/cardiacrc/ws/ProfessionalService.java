@@ -228,7 +228,7 @@ public class ProfessionalService {
 
     @GET
     @Path("/export")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+//    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("Administrator")
     public Response export() throws IOException {
         String filename = "professionals.xlsx";
