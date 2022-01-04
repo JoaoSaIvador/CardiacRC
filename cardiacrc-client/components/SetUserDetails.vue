@@ -197,14 +197,15 @@ export default {
   computed: {
     isAdminToPatient() {
       return (
-        this.$auth.user.groups.includes("Administrator") && this.to == "patient"
+        (this.$auth.user.groups.includes("Administrator") ?? false) &&
+        this.to == "patient"
       );
     },
 
     isPatient() {
       return (
-        this.$auth.user.groups.includes("Patient") ||
-        (this.$auth.user.groups.includes("Professional") &&
+        (this.$auth.user.groups.includes("Patient") ?? false) ||
+        ((this.$auth.user.groups.includes("Professional") ?? false) &&
           this.to == "patient")
       );
     },

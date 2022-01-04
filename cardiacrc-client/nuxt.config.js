@@ -102,7 +102,7 @@ export default {
   auth: {
     redirect: {
       login: "/auth/login",
-      logout: "/",
+      logout: "/auth/login",
       home: "/",
     },
     watchLoggedIn: true,
