@@ -73,7 +73,16 @@ export default {
         });
     },
     exportPatients() {
-      this.$axios.$get("/api/patients/export");
+      this.$axios
+        .$get("/api/patients/export", { responseType: "arraybuffer" })
+        .then((file) => {
+          const url = window.URL.createObjectURL(new Blob([file]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", fileToDownload.filename);
+          document.body.appendChild(link);
+          link.click();
+        });
     },
   },
 };
