@@ -4,11 +4,15 @@ import dae.cardiacrc.dtos.QualitativeDataTypeDTO;
 import dae.cardiacrc.dtos.QuantitativeDataTypeDTO;
 import dae.cardiacrc.ejbs.QualityDataTypeBean;
 import dae.cardiacrc.ejbs.QuantityDataTypeBean;
+import dae.cardiacrc.entities.Administrator;
 import dae.cardiacrc.entities.QualitativeDataType;
 import dae.cardiacrc.entities.QuantitativeDataType;
 import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 import dae.cardiacrc.exceptions.MyIllegalArgumentException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -17,6 +21,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -164,5 +171,96 @@ public class DataTypeService {
     public Response deleteQualitativeDataType(@PathParam("dataType") int dataTypeId, @PathParam("qualitative") int qualitativeId) throws MyEntityNotFoundException, MyIllegalArgumentException {
         qualitativeDataTypeBean.delete(dataTypeId, qualitativeId);
         return Response.ok("Qualitative DataType deleted!").build();
+    }
+
+    @GET
+    @Path("/export")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @RolesAllowed("Administrator")
+    public Response export() throws IOException {
+        String filename = "dataTypes.xlsx";
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("DataTypes");
+        sheet.setColumnWidth(0, 1000);
+        sheet.setColumnWidth(1, 6000);
+        sheet.setColumnWidth(2, 1500);
+        sheet.setColumnWidth(3, 1500);
+        sheet.setColumnWidth(4, 10500);
+
+        Row header = sheet.createRow(0);
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+        font.setFontName("Arial");
+        font.setFontHeightInPoints((short) 16);
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+        Cell headerCell = header.createCell(0);
+        headerCell.setCellValue("Id");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Name");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(2);
+        headerCell.setCellValue("Min");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(3);
+        headerCell.setCellValue("Max");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(4);
+        headerCell.setCellValue("Nº of Qualitative DataTypes");
+        headerCell.setCellStyle(headerStyle);
+
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
+
+        List<QuantitativeDataType> dataTypes = quantityDataTypeBean.getAllDataTypes("full");
+        for (int i = 0; i < dataTypes.size(); i++) {
+            Row row = sheet.createRow(i+1);
+            Cell cell = row.createCell(0);
+            cell.setCellValue(dataTypes.get(i).getId());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(1);
+            cell.setCellValue(dataTypes.get(i).getName());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(2);
+            cell.setCellValue(dataTypes.get(i).getMin());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(3);
+            cell.setCellValue(dataTypes.get(i).getMax());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(4);
+            cell.setCellValue(dataTypes.get(i).getDataTypes().size());
+            cell.setCellStyle(style);
+        }
+
+        File currDir = new File(".");
+        String path = currDir.getAbsolutePath();
+        String fileLocation = path.substring(0, path.length() - 1) + filename;
+
+        FileOutputStream outputStream = new FileOutputStream(fileLocation);
+        workbook.write(outputStream);
+        workbook.close();
+
+        File file = new File(fileLocation);
+
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition", "attachment;filename=" +
+                filename);
+
+        return response.build();
     }
 }

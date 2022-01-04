@@ -9,8 +9,7 @@ Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ0b21hc2Fsd
   "name": "My firstProgram",
   "duration": 2,
   "professionalUsername": "marcopolo",
-  "patientUsername": "joaosalvador",
-  "prescriptionIds": [1,2,3]
+  "patientUsername": "joaosalvador"
 }
 
 ###GET ALL PROGRAMS

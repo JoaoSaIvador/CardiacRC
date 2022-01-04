@@ -46,28 +46,29 @@ public class ConfigBean {
             typeBean.create("Nutrition");
             typeBean.create("Physiology");
 
-            quantityDataTypeBean.create("height", "m", 0, 3);
-            qualityDataTypeBean.create("dwarf",0,1,1);
-            qualityDataTypeBean.create("normal",1,2,1);
-            qualityDataTypeBean.create("toomuchmilk",2,3,1);
+            quantityDataTypeBean.create("height", "m", 0, 2.5);
+            qualityDataTypeBean.create("short",0,1.65,1);
+            qualityDataTypeBean.create("average",1.65,1.8,1);
+            qualityDataTypeBean.create("tall",1.8,2.5,1);
 
             professionalBean.create("tomasalves", 987654321, "Tomás Alves", "123456", "tomas.alves@mail.com", 1);
             professionalBean.create("marcopolo", 741852963, "Marco Polo", "123456", "marco.polo@mail.com", 2);
             professionalBean.create("carlossantos", 75348619, "Carlos Santos", "123456", "carlos.santos@mail.com", 3);
 
             patientBean.create("joaosalvador", 123456789, "João Salvador", "123456", "joao.salvador@mail.com");
-            patientBean.create("mario", 123446789, "It's a me a Mario", "123456", "mario@mail.com");
+            patientBean.create("mariasantos", 123446789, "Maria Santos", "123456", "mariasantos@mail.com");
 
-            observationBean.create("mario", "mario",2.5,1);
+            patientBean.addProfessional("joaosalvador", "tomasalves");
+            patientBean.addProfessional("joaosalvador","carlossantos");
+
+            observationBean.create("mariasantos", "mariasantos",2.5,1);
+            observationBean.create("tomasalves","joaosalvador",1.7,1);
 
             programBean.create("7","joaosalvador","marcopolo");
 
             prescriptionBean.create("tomasalves","testeCardiologia", "prescricao1",1,"10");
             prescriptionBean.create("marcopolo","testeNutricao","prescricao2",1, "1");
             prescriptionBean.create("carlossantos","testeFisico","prescricao3",1,"2");
-
-            patientBean.addProfessional("joaosalvador", "tomasalves");
-            patientBean.addProfessional("joaosalvador","carlossantos");
 
             administratorBean.create("jacksparrow", "Jack Sparrow", "123456", "jack.sparrow@mail.com");
             administratorBean.create("admin1", "Admin 1", "123456", "admin1@mail.com");

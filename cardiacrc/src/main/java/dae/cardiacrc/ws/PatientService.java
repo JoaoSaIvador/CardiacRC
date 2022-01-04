@@ -7,6 +7,9 @@ import dae.cardiacrc.exceptions.MyConstraintViolationException;
 import dae.cardiacrc.exceptions.MyEntityExistsException;
 import dae.cardiacrc.exceptions.MyEntityNotFoundException;
 import dae.cardiacrc.exceptions.MyIllegalArgumentException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -15,6 +18,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -254,6 +260,124 @@ public class PatientService {
 
         List<ObservationDTO> dtos = patientDataToDTOs(patient.getPatientObservations());
         return Response.ok(dtos).build();
+    }
+
+    @GET
+    @Path("/export")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @RolesAllowed("Administrator")
+    public Response export() throws IOException {
+        String filename = "patients.xlsx";
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("Patients");
+        sheet.setColumnWidth(0, 6000);
+        sheet.setColumnWidth(1, 4000);
+        sheet.setColumnWidth(2, 7000);
+        sheet.setColumnWidth(3, 5500);
+        sheet.setColumnWidth(4, 10000);
+        sheet.setColumnWidth(5, 10000);
+        sheet.setColumnWidth(6, 10000);
+        sheet.setColumnWidth(7, 4000);
+
+        Row header = sheet.createRow(0);
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+        font.setFontName("Arial");
+        font.setFontHeightInPoints((short) 16);
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+        Cell headerCell = header.createCell(0);
+        headerCell.setCellValue("Username");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Name");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(2);
+        headerCell.setCellValue("Email");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(3);
+        headerCell.setCellValue("HealthNumber");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(4);
+        headerCell.setCellValue("Nº of Professionals");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(5);
+        headerCell.setCellValue("Nº of Programs");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(6);
+        headerCell.setCellValue("Nº of Observations");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(7);
+        headerCell.setCellValue("Is deleted");
+        headerCell.setCellStyle(headerStyle);
+
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
+
+        List<Patient> patients = patientBean.getAllPatients("full");
+        for (int i = 0; i < patients.size(); i++) {
+            Row row = sheet.createRow(i+1);
+            Cell cell = row.createCell(0);
+            cell.setCellValue(patients.get(i).getUsername());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(1);
+            cell.setCellValue(patients.get(i).getName());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(2);
+            cell.setCellValue(patients.get(i).getEmail());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(3);
+            cell.setCellValue(patients.get(i).getHealthNumber());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(4);
+            cell.setCellValue(patients.get(i).getProfessionals().size());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(5);
+            cell.setCellValue(patients.get(i).getPrograms().size());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(6);
+            cell.setCellValue(patients.get(i).getPatientObservations().size());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(7);
+            cell.setCellValue(patients.get(i).isDeleted());
+            cell.setCellStyle(style);
+        }
+
+        File currDir = new File(".");
+        String path = currDir.getAbsolutePath();
+        String fileLocation = path.substring(0, path.length() - 1) + filename;
+
+        FileOutputStream outputStream = new FileOutputStream(fileLocation);
+        workbook.write(outputStream);
+        workbook.close();
+
+        File file = new File(fileLocation);
+
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition", "attachment;filename=" +
+                filename);
+
+        return response.build();
     }
 }
 

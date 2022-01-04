@@ -6,9 +6,9 @@ Content-Type: application/json
 Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ0b21hc2FsdmVzIiwiaXNzIjoicXVpY2tzdGFydC1qd3QtaXNzdWVyIiwiYXVkIjoiand0LWF1ZGllbmNlIiwiZ3JvdXBzIjpbIlByb2Zlc3Npb25hbCJdLCJleHAiOjE2NDA4MjY0ODN9.WDKtj7I05lKh21dkG_HV5iKZKZZohsl2byTj8xEZivPfFAKopbjYtP1qp_MlyV2w6-jGDcFOpGg_hxWGUzu52I8TKDMqSUYi1LVR3YZG8ybg9pY1ahhNrQxgjThgiD1uuhS-XRVcu0i7QW9-zATyV5D4sjdoZezfSTR9zPCNmsGbX05LRDuzvksVpkSFk_hiCnSJzyIz-ulb-yXrIN46jDhf1dO8Z745toH0IlNQd_JhCY7MRevDyz4Xl5TB4JiDAm4KunRP8Yfa-9rVFTzUZ_za_ae2XTpKRlv0jFIjR7jGs6n-u9XOgxOJzDIwWZIeD37gvcQjpVq_iJXzDT8kJQ
 
 {
-  "description": "Got milk?",
+  "description": "Drink Water",
   "name": "Drink",
-  "frequency": "FOREVER",
+  "frequency": "7 times per day",
   "programId": 1
 }
 
@@ -29,7 +29,7 @@ Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ0b21hc2Fsd
 
 {
   "name": "Eat",
-  "description": "Got Food?"
+  "description": "Eat healthy"
 }
 
 ### DELETE PRESCRIPTION

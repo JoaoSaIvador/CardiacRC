@@ -33,7 +33,7 @@ Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJqYWNrc3Bhc
   "healthNumber": "999999999",
   "name": "Jack Sparow",
   "password": "98765",
-  "email": "cash@money.com",
+  "email": "sparow@mail.pt",
   "professionalUsername": "tomasalves"
 }
 
@@ -53,3 +53,8 @@ Content-Type: application/json
 {
   "username": "marcopolo"
 }
+
+### EXPORT PATIENTS
+GET http://localhost:8080/cardiacrc/api/patients/export HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJqd3QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbjEiLCJpc3MiOiJxdWlja3N0YXJ0LWp3dC1pc3N1ZXIiLCJhdWQiOiJqd3QtYXVkaWVuY2UiLCJncm91cHMiOlsiQWRtaW5pc3RyYXRvciJdLCJleHAiOjE2NDEzMjAzMDd9.ZYdPJntoWaoyW4s1ytglKFEMF7--WcfkcaywVdOEjGS0zTZaCv0RSw3AcNCY85SIvHY7dqAXcG_IsHhcjEAc3-6pTQeZAY_TE70IzYsyfj_bcflr3zUbFiablJEvLTyZeTldNlJ2pxb0PqLUBLZUwaxJKkMrdaA09fTm6ZdyCa_hw7PvgLAxYyUoIKxiudExuxnTjcu6F0Otj4RebBS79DdvPMBlZm5uP0RLGKXq_XEMCKbz1kd8MD_h9Kam_jTYplq8AdtaY0qUP5laLjAjayOngyMDxwlWF2c7ntTiHXr_lQyad_th1jvmgNPaQ02V6KsM8mWWW1USk7sf4axlJQ

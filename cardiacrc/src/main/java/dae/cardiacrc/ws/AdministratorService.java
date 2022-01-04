@@ -109,7 +109,7 @@ public class AdministratorService {
     }
 
     @GET
-    @Path("export")
+    @Path("/export")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("Administrator")
     public Response export() throws IOException {
