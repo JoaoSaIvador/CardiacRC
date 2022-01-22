@@ -161,15 +161,7 @@
               <fa :icon="['fas', 'clipboard-list']" />
             </b-button>
             <b-button
-              v-if="
-                group != 'administrators' &&
-                !row.item.deleted &&
-                isProfessional &&
-                group == 'patients' &&
-                associatedPatients.filter(
-                  (p) => p.username == row.item.username
-                ).length > 0
-              "
+              v-if="group != 'administrators' && !row.item.deleted"
               variant="primary"
               class="
                 table-button
